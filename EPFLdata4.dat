@@ -1,0 +1,133 @@
+############################################################################################
+# Course: Modelling and optimisation of energy systems
+# course spring semester 2017
+# EPFL Campus optimization
+
+# IPESE, EPFL
+############################################################################################
+
+# This datfile is incomplete! Several parameters values can be found in the references 
+# listed in the project presentation. 
+
+
+############################################################################################
+# SETS
+############################################################################################
+set BUILDINGS := EPFLlow EPFLhigh;
+set TIME := 1 2 3 4 5 6 7 8 9 10 11 12;
+
+############################################################################################
+# PARAMETERS
+############################################################################################
+
+param: TIMEsteps := 	
+1 744					# hour per month in 2017, Sylvain
+2 672
+3 744
+4 720
+5 744
+6 720
+7 744
+8 744
+9 720
+10 744
+11 720
+12 744
+;
+
+/*******************************************************/
+# Meteo parameters 	 #(Wikipedia) -> http://www.meteoswiss.admin.ch/product/output/climate-data/climate-diagrams-normal-values-station-processing/PUY/climsheet_PUY_np8110_e.pdf #jannik dimitri
+/*******************************************************/
+param: external_temp := 	#en °C
+1 2.2						   
+2 3.0
+3 6.6
+4 10.0
+5 14.4
+6 17.8
+7 20.3
+8 19.7
+9 15.8
+10 11.6
+11 6.1
+12 3.2
+;
+
+param: solar_radiation :=	 #kwh/m2	par mois	#Selon feuille excel DATA (PUlly, 2005),  Sylvain
+1	35.039
+2	55.277
+3	100.49
+4	133.668
+5	164.208
+6	181.002
+7	182.547
+8	155.156
+9	111.443
+10	71.052
+11	38.314
+12	27.365
+;
+
+/*******************************************************/
+# Economic parameters
+/*******************************************************/
+param c_el_in := 0.15;         	    # http://exploitation-energies.epfl.ch/files/content/sites/exploitation-energies/files/Documents%20pdf/electricite_grilles_tarifs_2016.pdf  #dimitri vincent
+param c_el_out := 0.1275;         	# 0.85* c_el_in # vincent dimitri
+param c_ng_in := 0.0662;         	# http://www.sig-ge.ch/nous-connaitre/support-et-communications/Documents/Tarifs%20et%20r%C3%A9glements/Gaz%20et%20chaleur/tarifs_fourniture_gaz_naturel.pdf #dimitri vincent
+
+
+/*******************************************************/
+# Building parameters
+/*******************************************************/
+param temp_threshold :=
+EPFLlow 16                                     # Helms2009, p. 35
+EPFLhigh 16 
+;
+
+param: k1, k2 :=
+EPFLlow -0.2659 5.2087         #From 1.7.10 Signatures chauffage dans le cahier des charges          
+EPFLhigh -0.188 3.7292         #Par Sylvain
+;
+
+param: floor_area :=
+#EPFL 384854                                 # m^2, SRE, 2007, Vuille2008, p. 20
+EPFLlow 200000
+EPFLhigh 200000
+;
+
+param: spec_annual_heat_demand, spec_annual_elec_demand :=
+EPFLlow 65.8 116.6                             # kWh/m^2/y, 2007, Vuille2008, p. 20
+EPFLhigh 65.8 116.6   
+;
+
+param: temp_supply_low, temp_return_low :=  #Selon feuille excel DATA, Onglet 3
+EPFLlow	1	38.74	29.84
+EPFLlow	2	38.00	29.50
+EPFLlow	3	34.68	27.98
+EPFLlow	4	31.54	26.54
+EPFLlow	5	27.48	24.68
+EPFLlow	6	24.34	23.24
+EPFLlow	7	22.03	22.18
+EPFLlow	8	22.58	22.43
+EPFLlow	9	26.18	24.08
+EPFLlow	10	30.06	25.86
+EPFLlow	11	35.14	28.19
+EPFLlow	12	37.82	29.42
+;
+
+param: temp_supply_high, temp_return_high :=  #Selon feuille excel DATA, Onglet 3
+EPFLhigh	1	47.64	35.62
+EPFLhigh	2	46.50	35.00
+EPFLhigh	3	41.38	32.23
+EPFLhigh	4	36.54	29.62
+EPFLhigh	5	30.28	26.23
+EPFLhigh	6	25.44	23.62
+EPFLhigh	7	21.88	21.69
+EPFLhigh	8	22.73	22.15
+EPFLhigh	9	28.28	25.15
+EPFLhigh	10	34.26	28.38
+EPFLhigh	11	42.09	32.62
+EPFLhigh	12	46.22	34.85
+;
+
+end;
