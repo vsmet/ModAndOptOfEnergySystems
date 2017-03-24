@@ -83,7 +83,6 @@ subject to Elec_Demand_Constr{b in BUILDINGS, t in TIME}:
 # CONSTRAINTS
 ############################################################################################
 
-#********** BOILER MODEL *************
 # BOILER MODEL
 param Efficiency_Boiler := 0.98;
 
@@ -97,7 +96,7 @@ subject to Boiler_Energy_Balance_Constr{t in TIME}:
 subject to Boiler_Size_Constr{t in TIME}:
   Heat_Supple_Boiler[t] <= Capacity_Boiler;							#kW
 
-<<<<<<< HEAD
+
 
 #*********** HP MODEL *****************
 
@@ -114,11 +113,9 @@ subject to HP_Size_Constr{t in TIME}:
   Heat_Supple_HP[t] <= Capacity_HP;             #kW
 
 
-#*********** Balance the diffrent components *****************
 
-=======
+
 #*********** Balance the diffrent components *****************
-=======
 #SOLAR PANEL MODEL
 param Efficiency_SolarPanels := 0.15; #Get a reference !!!!!!!!
 param solarfarm_area := 15500; #m^2
@@ -128,38 +125,27 @@ var El_Available_Solar{t in TIME} >=0;
 subject to El_available_Constr{t in TIME}:
   El_Available_Solar[t] = solarfarm_area*Efficiency_SolarPanels*solar_radiation[t]; #kW
   
->>>>>>> origin/master
+
 
 
 # MASS BALANCE NATURAL GAS
 var NG_Demand_grid{t in TIME} >= 0;
 
 subject to Natural_gas_Demand_Constr{t in TIME}:
-
-# POWER BALANCE ELECTRICITY
-var EL_Demand_grid{t in TIME} >= 0;
-
-subject to EL_Demand_Constr{t in TIME}:
-  EL_Demand_grid[t] = EL_Demand_HP[t];    #kW
   NG_Demand_grid[t] = NG_Demand_Boiler[t];		#kW
   
 
 # HEAT BALANCE 
-<<<<<<< HEAD
+
 subject to EL_balance_Constr{t in TIME}:
   Heat_Supple_HP[t]+Heat_Supple_Boiler[t] = sum{b in BUILDINGS} Heat_Demand[b,t];   #kW
 
-
-
-=======
-subject to Natural_gas_balance_Constr{t in TIME}:
-  Heat_Supple_Boiler[t] = sum{b in BUILDINGS} Heat_Demand[b,t];		#kW
 
 #ELECTRICITY BALANCE
 
 subject to Electricity_balance_Constr{t in TIME}:
   El_Available_Solar[t] + El_Buy[t] - El_Sell[t] = sum{b in BUILDINGS} Elec_Demand[b,t]; #kW
->>>>>>> origin/master
+
 
 
   
@@ -185,18 +171,9 @@ sum{t in TIME}(c_ng_in*NG_Demand_grid[t]*TIMEsteps[t]);
 solve;
 
 # To do!
-<<<<<<< HEAD
-display Heat_Supple_Boiler;
-display Heat_Supple_HP;
-display k1,k2;
 
-end;
-=======
-#display Heat_Supple_Boiler;
-#display k1,k2;
 display El_Available_Solar;
 display El_Buy;
 display El_Sell;
 
 end;
->>>>>>> origin/master
