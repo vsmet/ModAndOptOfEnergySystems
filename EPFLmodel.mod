@@ -83,7 +83,7 @@ subject to Elec_Demand_Constr{b in BUILDINGS, t in TIME}:
 # CONSTRAINTS
 ############################################################################################
 
-# BOILER MODEL
+#********** BOILER MODEL *************
 param Efficiency_Boiler := 0.98;
 
 var NG_Demand_Boiler{t in TIME} >= 0;
@@ -96,16 +96,46 @@ subject to Boiler_Energy_Balance_Constr{t in TIME}:
 subject to Boiler_Size_Constr{t in TIME}:
   Heat_Supple_Boiler[t] <= Capacity_Boiler;							#kW
 
+
+#*********** HP MODEL *****************
+
+param HP_COP :=  4.5  ;   # File: veuille 2008 page 6
+
+var EL_Demand_HP{t in TIME} >=0;
+var Heat_Supple_HP{t in TIME} >= 0;
+var Capacity_HP >= 0;
+
+subject to HP_Energy_Balance_Constr{t in TIME}:
+  Heat_Supple_HP[t] = HP_COP*EL_Demand_HP[t];  #kW
+  
+subject to HP_Size_Constr{t in TIME}:
+  Heat_Supple_HP[t] <= Capacity_HP;             #kW
+
+
+#*********** Balance the diffrent components *****************
+
+
+
 # MASS BALANCE NATURAL GAS
 var NG_Demand_grid{t in TIME} >= 0;
 
 subject to Natural_gas_Demand_Constr{t in TIME}:
-  NG_Demand_grid[t] = NG_Demand_Boiler[t];		#kW
-  
+  NG_Demand_grid[t] = NG_Demand_Boiler[t];    #kW
+
+# POWER BALANCE ELECTRICITY
+var EL_Demand_grid{t in TIME} >= 0;
+
+subject to EL_Demand_Constr{t in TIME}:
+  EL_Demand_grid[t] = EL_Demand_HP[t];    #kW
 
 # HEAT BALANCE 
-subject to Natural_gas_balance_Constr{t in TIME}:
-  Heat_Supple_Boiler[t] = sum{b in BUILDINGS} Heat_Demand[b,t];		#kW
+subject to EL_balance_Constr{t in TIME}:
+  Heat_Supple_HP[t]+Heat_Supple_Boiler[t] = sum{b in BUILDINGS} Heat_Demand[b,t];   #kW
+
+
+
+
+
   
   
   
@@ -130,6 +160,7 @@ solve;
 
 # To do!
 display Heat_Supple_Boiler;
+display Heat_Supple_HP;
 display k1,k2;
 
 end;
