@@ -123,7 +123,9 @@ subject to HP_Energy_Balance_Constr{t in TIME}:
 subject to HP1_Size_Constr{t in TIME}:
   Heat_Supple_HP2[t] <= Capacity_HP2;             #kW  
 
-
+var COP{b in BUILDINGS,t in TIME}>=0;
+subject to COP_function{b in BUILDINGS,t in TIME}:
+COP[b,t]=7.2-(7.2-4.7)/20*(-30+temp_supply[b,t]);
 
 
 
@@ -149,13 +151,13 @@ subject to Natural_gas_Demand_Constr{t in TIME}:
 # HEAT BALANCE 
 
 subject to EL_balance_Constr{t in TIME}:
-  Heat_Supple_HP1[t]+Heat_Supple_HP2[t]+Heat_Supple_Boiler[t] = sum{b in BUILDINGS} Heat_Demand[b,t];   #kW --->>> To diffrent heat demands... 
+  Heat_Supple_HP[t]+Heat_Supple_Boiler[t] = sum{b in BUILDINGS} Heat_Demand[b,t];   #kW
 
 
 #ELECTRICITY BALANCE
 
 subject to Electricity_balance_Constr{t in TIME}:
-  El_Available_Solar[t] + El_Buy[t] - El_Sell[t] - EL_Demand_HP1[t]-EL_Demand_HP2[t]= sum{b in BUILDINGS} Elec_Demand[b,t]; #kW
+  El_Available_Solar[t] + El_Buy[t] - El_Sell[t] - EL_Demand_HP[t]= sum{b in BUILDINGS} Elec_Demand[b,t]; #kW
 
 
 
