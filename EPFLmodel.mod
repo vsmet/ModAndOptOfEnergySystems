@@ -74,7 +74,7 @@ subject to Heat_Demand_Constr{b in BUILDINGS, t in TIME}:
 # TIME-DEPENDENT ELEC DEMAND
 var Elec_Demand{b in BUILDINGS, t in TIME} >= 0;
 subject to Elec_Demand_Constr{b in BUILDINGS, t in TIME}:
-  Elec_Demand[b,t] = Annual_Elec_Demand[b] / 8760;		#kW
+  Elec_Demand[b,t] = Annual_Elec_Demand[b] / 12;		#kW
  
  
  
@@ -115,7 +115,7 @@ subject to HP_Size_Constr{t in TIME}:
 
 
 
-#*********** Balance the diffrent components *****************
+
 #SOLAR PANEL MODEL
 param Efficiency_SolarPanels := 0.15; #Get a reference !!!!!!!!
 param solarfarm_area := 15500; #m^2
@@ -144,7 +144,7 @@ subject to EL_balance_Constr{t in TIME}:
 #ELECTRICITY BALANCE
 
 subject to Electricity_balance_Constr{t in TIME}:
-  El_Available_Solar[t] + El_Buy[t] - El_Sell[t] = sum{b in BUILDINGS} Elec_Demand[b,t]; #kW
+  El_Available_Solar[t] + El_Buy[t] - El_Sell[t] - EL_Demand_HP[t]= sum{b in BUILDINGS} Elec_Demand[b,t]; #kW
 
 
 
@@ -165,7 +165,7 @@ param c_ng_in;
 
 # To do!
 minimize opex:
-sum{t in TIME}(c_ng_in*NG_Demand_grid[t]*TIMEsteps[t]);
+sum{t in TIME}((c_ng_in*NG_Demand_grid[t] + c_el_in*El_Buy + c_el_out*El_Sell)*TIMEsteps[t]);
 
 
 solve;
