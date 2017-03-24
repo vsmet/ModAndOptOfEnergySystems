@@ -101,12 +101,12 @@ subject to Boiler_Size_Constr{t in TIME}:
 #*********** HP MODEL *****************
 
 var COP{b in BUILDINGS,t in TIME}>=0;
-var EL_Demand_HP1{t in TIME} >=0;
-var Heat_Supple_HP1{t in TIME} >= 0;
+var EL_Demand_HP1{b in BUILDINGS, t in TIME} >=0;
+var Heat_Supple_HP1{b in BUILDINGS, t in TIME} >= 0;
 var Capacity_HP1 >= 0;
 
-subject to HP_Energy_Balance_Constr{t in TIME}:
-  Heat_Supple_HP1[t] = COP[EPFLlow,t]*EL_Demand_HP1[t];  #kW
+subject to HP_Energy_Balance_Constr{b in BUILDINGS, t in TIME}:
+  Heat_Supple_HP1[b,t] = COP[b,t]*EL_Demand_HP1[b,t];  #kW
   
 subject to HP1_Size_Constr{t in TIME}:
   Heat_Supple_HP1[t] <= Capacity_HP1;             #kW
