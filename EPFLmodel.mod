@@ -74,7 +74,11 @@ subject to Heat_Demand_Constr{b in BUILDINGS, t in TIME}:
 # TIME-DEPENDENT ELEC DEMAND
 var Elec_Demand{b in BUILDINGS, t in TIME} >= 0;
 subject to Elec_Demand_Constr{b in BUILDINGS, t in TIME}:
-  Elec_Demand[b,t] = Annual_Elec_Demand[b] / 8760;		#kW
+  Elec_Demand[b,t] = Annual_Elec_Demand[b] / (365*24);		#kW
+
+#Feed in and Feed out GRID
+var El_Buy{t in TIME} >= 0;
+var El_Sell{t in TIME} >= 0;
  
  
  
@@ -96,6 +100,17 @@ subject to Boiler_Energy_Balance_Constr{t in TIME}:
 subject to Boiler_Size_Constr{t in TIME}:
   Heat_Supple_Boiler[t] <= Capacity_Boiler;							#kW
 
+#SOLAR PANEL MODEL
+param Efficiency_SolarPanels := 0.15; #Get a reference !!!!!!!!
+param solarfarm_area := 15500; #m^2
+
+var El_Available_Solar{t in TIME} >=0;
+
+subject to El_available_Constr{t in TIME}:
+  El_Available_Solar[t] = solarfarm_area*Efficiency_SolarPanels*solar_radiation[t]; #kW
+
+
+
 # MASS BALANCE NATURAL GAS
 var NG_Demand_grid{t in TIME} >= 0;
 
@@ -106,6 +121,13 @@ subject to Natural_gas_Demand_Constr{t in TIME}:
 # HEAT BALANCE 
 subject to Natural_gas_balance_Constr{t in TIME}:
   Heat_Supple_Boiler[t] = sum{b in BUILDINGS} Heat_Demand[b,t];		#kW
+
+#ELECTRICITY BALANCE
+
+subject to Electricity_balance_Constr{t in TIME}:
+  El_Available_Solar[t] + El_Buy[t] - El_Sell[t] = sum{b in BUILDINGS} Elec_Demand[b,t]; #kW
+
+
   
   
   
@@ -129,7 +151,10 @@ sum{t in TIME}(c_ng_in*NG_Demand_grid[t]*TIMEsteps[t]);
 solve;
 
 # To do!
-display Heat_Supple_Boiler;
-display k1,k2;
+#display Heat_Supple_Boiler;
+#display k1,k2;
+display El_Available_Solar;
+display El_Buy;
+display El_Sell;
 
 end;
