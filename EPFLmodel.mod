@@ -74,7 +74,7 @@ subject to Heat_Demand_Constr{b in BUILDINGS, t in TIME}:
 # TIME-DEPENDENT ELEC DEMAND
 var Elec_Demand{b in BUILDINGS, t in TIME} >= 0;
 subject to Elec_Demand_Constr{b in BUILDINGS, t in TIME}:
-  Elec_Demand[b,t] = Annual_Elec_Demand[b] / (365*24);		#kW
+  Elec_Demand[b,t] = Annual_Elec_Demand[b] / (12);		#kW
 
 #Feed in and Feed out GRID
 var El_Buy{t in TIME} >= 0;
@@ -145,7 +145,7 @@ param c_ng_in;
 
 # To do!
 minimize opex:
-sum{t in TIME}(c_ng_in*NG_Demand_grid[t]*TIMEsteps[t]);
+sum{t in TIME}((c_ng_in*NG_Demand_grid[t] + c_el_in*El_Buy[t] + c_el_out*El_Sell[t])*TIMEsteps[t]);
 
 
 solve;
