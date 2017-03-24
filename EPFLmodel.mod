@@ -74,7 +74,11 @@ subject to Heat_Demand_Constr{b in BUILDINGS, t in TIME}:
 # TIME-DEPENDENT ELEC DEMAND
 var Elec_Demand{b in BUILDINGS, t in TIME} >= 0;
 subject to Elec_Demand_Constr{b in BUILDINGS, t in TIME}:
-  Elec_Demand[b,t] = Annual_Elec_Demand[b] / 8760;		#kW
+  Elec_Demand[b,t] = Annual_Elec_Demand[b] / (12);		#kW
+
+#Feed in and Feed out GRID
+var El_Buy{t in TIME} >= 0;
+var El_Sell{t in TIME} >= 0;
  
  
  
@@ -96,6 +100,7 @@ subject to Boiler_Energy_Balance_Constr{t in TIME}:
 subject to Boiler_Size_Constr{t in TIME}:
   Heat_Supple_Boiler[t] <= Capacity_Boiler;							#kW
 
+<<<<<<< HEAD
 
 #*********** HP MODEL *****************
 
@@ -113,6 +118,16 @@ subject to HP_Size_Constr{t in TIME}:
 
 
 #*********** Balance the diffrent components *****************
+=======
+#SOLAR PANEL MODEL
+param Efficiency_SolarPanels := 0.15; #Get a reference !!!!!!!!
+param solarfarm_area := 15500; #m^2
+
+var El_Available_Solar{t in TIME} >=0;
+
+subject to El_available_Constr{t in TIME}:
+  El_Available_Solar[t] = solarfarm_area*Efficiency_SolarPanels*solar_radiation[t]; #kW
+>>>>>>> origin/master
 
 
 
@@ -129,11 +144,21 @@ subject to EL_Demand_Constr{t in TIME}:
   EL_Demand_grid[t] = EL_Demand_HP[t];    #kW
 
 # HEAT BALANCE 
+<<<<<<< HEAD
 subject to EL_balance_Constr{t in TIME}:
   Heat_Supple_HP[t]+Heat_Supple_Boiler[t] = sum{b in BUILDINGS} Heat_Demand[b,t];   #kW
 
 
 
+=======
+subject to Natural_gas_balance_Constr{t in TIME}:
+  Heat_Supple_Boiler[t] = sum{b in BUILDINGS} Heat_Demand[b,t];		#kW
+
+#ELECTRICITY BALANCE
+
+subject to Electricity_balance_Constr{t in TIME}:
+  El_Available_Solar[t] + El_Buy[t] - El_Sell[t] = sum{b in BUILDINGS} Elec_Demand[b,t]; #kW
+>>>>>>> origin/master
 
 
   
@@ -153,14 +178,22 @@ param c_ng_in;
 
 # To do!
 minimize opex:
-sum{t in TIME}(c_ng_in*NG_Demand_grid[t]*TIMEsteps[t]);
+sum{t in TIME}((c_ng_in*NG_Demand_grid[t] + c_el_in*El_Buy[t] + c_el_out*El_Sell[t])*TIMEsteps[t]);
 
 
 solve;
 
 # To do!
+<<<<<<< HEAD
 display Heat_Supple_Boiler;
 display Heat_Supple_HP;
 display k1,k2;
+=======
+#display Heat_Supple_Boiler;
+#display k1,k2;
+display El_Available_Solar;
+display El_Buy;
+display El_Sell;
+>>>>>>> origin/master
 
 end;
