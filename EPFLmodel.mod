@@ -110,7 +110,7 @@ COP[t]=temp_supply[t]-30; # 1.7.2 Etudes production chaleur Weinmann 2012 #Dimit
 
 
 subject to HP_Energy_Balance_Constr{t in TIME}:
-  Heat_Supple_HP1[t] = COP[t]*EL_Demand_HP1[t];  #kW
+  Heat_Supple_HP1[t] = COP[t].*EL_Demand_HP1[t];  #kW
   
 subject to HP1_Size_Constr{t in TIME}:
   Heat_Supple_HP1[t] <= Capacity_HP1;             #kW
