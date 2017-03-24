@@ -100,17 +100,28 @@ subject to Boiler_Size_Constr{t in TIME}:
 
 #*********** HP MODEL *****************
 
-param HP_COP1 :=  4.5  ;   # File: veuille 2008 page 6
 
 var EL_Demand_HP1{t in TIME} >=0;
 var Heat_Supple_HP1{t in TIME} >= 0;
 var Capacity_HP1 >= 0;
 
 subject to HP_Energy_Balance_Constr{t in TIME}:
-  Heat_Supple_HP1[t] = HP_COP1[t]*EL_Demand_HP1[t];  #kW
+  Heat_Supple_HP1[t] = COP_low[t]*EL_Demand_HP1[t];  #kW
   
 subject to HP1_Size_Constr{t in TIME}:
   Heat_Supple_HP1[t] <= Capacity_HP1;             #kW
+
+
+
+var EL_Demand_HP2{t in TIME} >=0;
+var Heat_Supple_HP2{t in TIME} >= 0;
+var Capacity_HP2 >= 0;
+
+subject to HP_Energy_Balance_Constr{t in TIME}:
+  Heat_Supple_HP2[t] = COP_high[t]*EL_Demand_HP2[t];  #kW
+  
+subject to HP1_Size_Constr{t in TIME}:
+  Heat_Supple_HP2[t] <= Capacity_HP2;             #kW  
 
 
 
@@ -165,7 +176,7 @@ param c_ng_in;
 
 # To do!
 minimize opex:
-sum{t in TIME}((c_ng_in*NG_Demand_grid[t] + c_el_in*El_Buy + c_el_out*El_Sell)*TIMEsteps[t]);
+sum{t in TIME}((c_ng_in*NG_Demand_grid[t] + c_el_in*El_Buy - c_el_out*El_Sell)*TIMEsteps[t]);
 
 
 solve;
