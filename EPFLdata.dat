@@ -113,6 +113,8 @@ EPFLlow	9	26.18	24.08
 EPFLlow	10	30.06	25.86
 EPFLlow	11	35.14	28.19
 EPFLlow	12	37.82	29.42
+
+param: temp_supply_2, temp_return_2 :=
 EPFLhigh	1	47.64	35.62
 EPFLhigh	2	46.50	35.00
 EPFLhigh	3	41.38	32.23
