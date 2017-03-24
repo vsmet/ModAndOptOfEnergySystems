@@ -125,7 +125,7 @@ subject to HP1_Size_Constr{t in TIME}:
 
 
 subject to COP_function{b in BUILDINGS,t in TIME}:
-COP[b,t]=7.2-(7.2-4.7)/20*(-30+temp_supply[b,t]);
+COP[b,t]=7.2-(7.2-4.7)/20*(-30+temp_supply[b,t]); # 1.7.2 Etudes production chaleur Weinmann 2012 #Dimitri
 
 
 
