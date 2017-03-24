@@ -100,17 +100,17 @@ subject to Boiler_Size_Constr{t in TIME}:
 
 #*********** HP MODEL *****************
 
-param HP_COP :=  4.5  ;   # File: veuille 2008 page 6
+param HP_COP1 :=  4.5  ;   # File: veuille 2008 page 6
 
-var EL_Demand_HP{t in TIME} >=0;
-var Heat_Supple_HP{t in TIME} >= 0;
-var Capacity_HP >= 0;
+var EL_Demand_HP1{t in TIME} >=0;
+var Heat_Supple_HP1{t in TIME} >= 0;
+var Capacity_HP1 >= 0;
 
 subject to HP_Energy_Balance_Constr{t in TIME}:
-  Heat_Supple_HP[t] = HP_COP*EL_Demand_HP[t];  #kW
+  Heat_Supple_HP1[t] = HP_COP1[t]*EL_Demand_HP1[t];  #kW
   
-subject to HP_Size_Constr{t in TIME}:
-  Heat_Supple_HP[t] <= Capacity_HP;             #kW
+subject to HP1_Size_Constr{t in TIME}:
+  Heat_Supple_HP1[t] <= Capacity_HP1;             #kW
 
 
 
