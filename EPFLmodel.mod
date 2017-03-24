@@ -149,13 +149,13 @@ subject to Natural_gas_Demand_Constr{t in TIME}:
 # HEAT BALANCE 
 
 subject to EL_balance_Constr{t in TIME}:
-  Heat_Supple_HP[t]+Heat_Supple_Boiler[t] = sum{b in BUILDINGS} Heat_Demand[b,t];   #kW
+  Heat_Supple_HP1[t]+Heat_Supple_HP2[t]+Heat_Supple_Boiler[t] = sum{b in BUILDINGS} Heat_Demand[b,t];   #kW --->>> To diffrent heat demands... 
 
 
 #ELECTRICITY BALANCE
 
 subject to Electricity_balance_Constr{t in TIME}:
-  El_Available_Solar[t] + El_Buy[t] - El_Sell[t] - EL_Demand_HP[t]= sum{b in BUILDINGS} Elec_Demand[b,t]; #kW
+  El_Available_Solar[t] + El_Buy[t] - El_Sell[t] - EL_Demand_HP1[t]-EL_Demand_HP2[t]= sum{b in BUILDINGS} Elec_Demand[b,t]; #kW
 
 
 
