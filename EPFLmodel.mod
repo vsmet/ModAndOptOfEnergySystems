@@ -31,10 +31,10 @@ param solar_radiation{t in TIME};
 /*******************************************************/
 param floor_area{b in BUILDINGS} >= 0;				#m2
 param temp_threshold{b in BUILDINGS};				#deg C
-param temp_supply{t in TIME} >= 0;	#deg C
-param temp_return_low{b in BUILDINGS,t in TIME} >= 0;	#deg C
-param temp_supply_high{b in BUILDINGS,t in TIME} >= 0;	#deg C
-param temp_return_high{b in BUILDINGS,t in TIME} >= 0;	#deg C
+param temp_supply{b in BUILDINGS,t in TIME} >= 0;	#deg C
+param temp_return{b in BUILDINGS,t in TIME} >= 0;	#deg C
+#param temp_supply_high{b in BUILDINGS,t in TIME} >= 0;	#deg C
+#param temp_return_high{b in BUILDINGS,t in TIME} >= 0;	#deg C
 
 /*******************************************************/
 # Demand parameters
@@ -100,17 +100,17 @@ subject to Boiler_Size_Constr{t in TIME}:
 
 #*********** HP MODEL *****************
 
-param COP{t in TIME}>=0;
+param COP{b in BUILDINGS, t in TIME}>=0;
 
 var EL_Demand_HP1{t in TIME} >=0;
 var Heat_Supple_HP1{t in TIME} >= 0;
 var Capacity_HP1 >= 0;
-subject to COP_function{t in TIME}:
-COP[t]=7.2-(7.2-4.7)/20*(-30+temp_supply[t]); # 1.7.2 Etudes production chaleur Weinmann 2012 #Dimitri
+subject to COP_function{b in BUILDINGS,t in TIME}:
+COP[b,t]=7.2-(7.2-4.7)/20*(-30+temp_supply[b,t]); # 1.7.2 Etudes production chaleur Weinmann 2012 #Dimitri
 
 
 subject to HP_Energy_Balance_Constr_1{t in TIME}:
-  Heat_Supple_HP1[t] = COP[t]*EL_Demand_HP1[t];  #kW
+  Heat_Supple_HP1[t] = COP[1,t]*EL_Demand_HP1[t];  #kW
   
 subject to HP1_Size_Constr_1{t in TIME}:
   Heat_Supple_HP1[t] <= Capacity_HP1;             #kW
@@ -122,7 +122,7 @@ var Heat_Supple_HP2{t in TIME} >= 0;
 var Capacity_HP2 >= 0;
 
 subject to HP_Energy_Balance_Constr_2{t in TIME}:
-  Heat_Supple_HP2[t] = COP[t]*EL_Demand_HP2[t];  #kW
+  Heat_Supple_HP2[t] = COP[2,t]*EL_Demand_HP2[t];  #kW
   
 subject to HP1_Size_Constr_2{t in TIME}:
   Heat_Supple_HP2[t] <= Capacity_HP2;             #kW  
