@@ -8,7 +8,7 @@
 
 # This datfile is incomplete! Several parameters values can be found in the references 
 # listed in the project presentation. 
- # essai sylvain
+
 
 ############################################################################################
 # SETS
@@ -36,36 +36,38 @@ param: TIMEsteps :=
 ;
 
 /*******************************************************/
-# Meteo parameters 	 #(Wikipedia) -> http://www.meteoswiss.admin.ch/product/output/climate-data/climate-diagrams-normal-values-station-processing/PUY/climsheet_PUY_np8110_e.pdf #jannik dimitri
+# Meteo parameters 	 #Depuis METEONORM 2007, voir aussi excel sheet DATA, Sylvain
 /*******************************************************/
 param: external_temp := 	#en °C
-1 2.2						   
-2 3.0
-3 6.6
-4 10.0
-5 14.4
-6 17.8
-7 20.3
-8 19.7
-9 15.8
-10 11.6
-11 6.1
-12 3.2
+1	2.5
+2	3.7
+3	6.9
+4	10.7
+5	15.3
+6	19.3
+7	20.2
+8	20
+9	16
+10	12.2
+11	6.8
+12	3.2
+
 ;
 
-param: solar_radiation :=	 #kwh/m2	par mois	#Selon feuille excel DATA (PUlly, 2005),  Sylvain
-1	35.039
-2	55.277
-3	100.49
-4	133.668
-5	164.208
-6	181.002
-7	182.547
-8	155.156
-9	111.443
-10	71.052
-11	38.314
-12	27.365
+param: solar_radiation :=	 #kwh/m2	
+1	35
+2	55
+3	101
+4	134
+5	164
+6	181
+7	183
+8	155
+9	111
+10	71
+11	38
+12	27
+
 ;
 
 /*******************************************************/
@@ -91,7 +93,7 @@ EPFLhigh -0.188 3.7292         #Par Sylvain
 
 param: floor_area :=
 #EPFL 384854                                 # m^2, SRE, 2007, Vuille2008, p. 20
-EPFLlow 200000
+EPFLlow 184854
 EPFLhigh 200000
 ;
 
@@ -127,4 +129,4 @@ EPFLhigh	11	42.09	32.62
 EPFLhigh	12	46.22	34.85
 ;
 
-#param: temp_supply_2, temp_return_2 :=
+end;
