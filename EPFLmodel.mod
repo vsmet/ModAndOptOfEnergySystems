@@ -100,6 +100,7 @@ subject to Boiler_Size_Constr{t in TIME}:
 
 param COP{b in BUILDINGS, t in TIME}>=0;
 
+
 var EL_Demand_HP1{t in TIME} >=0;
 var Heat_Supple_HP1{t in TIME} >= 0;
 var Capacity_HP1 >= 0;
