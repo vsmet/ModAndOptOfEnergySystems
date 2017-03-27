@@ -9,7 +9,7 @@
 # This datfile is incomplete! Several parameters values can be found in the references 
 # listed in the project presentation. 
 
-#essai dim
+
 ############################################################################################
 # SETS
 ############################################################################################
@@ -103,7 +103,7 @@ EPFLhigh 65.8 116.6
 ;
 
 param: temp_supply, temp_return :=  #Selon feuille excel DATA, Onglet 3
-EPFLlow 1	38.74	29.84
+EPFLlow 1   38.74   29.84
 EPFLlow 2	38.00	29.50
 EPFLlow 3	34.68	27.98
 EPFLlow 4	31.54	26.54
