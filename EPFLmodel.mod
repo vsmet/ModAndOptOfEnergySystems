@@ -98,38 +98,23 @@ subject to Boiler_Size_Constr{t in TIME}:
 
 #*********** HP MODEL *****************
 
-param COP{b in BUILDINGS, t in TIME}>=0;
+param COP{b in BUILDINGS, t in TIME} := 7.2-(7.2-4.7)/(20*(-30+temp_supply[b,t]));
+display COP;
 
 
-var EL_Demand_HP1{t in TIME} >=0;
-var Heat_Supple_HP1{t in TIME} >= 0;
-var Capacity_HP1 >= 0;
-subject to COP_function{b in BUILDINGS,t in TIME}:
-COP[b,t]=7.2-(7.2-4.7)/20*(-30+temp_supply[b,t]); # 1.7.2 Etudes production chaleur Weinmann 2012 #Dimitri
+var EL_Demand_HP{b in BUILDINGS,t in TIME} >=0;
+var Heat_Supple_HP{b in BUILDINGS,t in TIME} >= 0;
+var Capacity_HP{b in BUILDINGS} >= 0;
 
 
-subject to HP_Energy_Balance_Constr_1{t in TIME}:
-  Heat_Supple_HP1[t] = COP[1,t]*EL_Demand_HP1[t];  #kW
+subject to HP_Energy_Balance_Constr_1{b in BUILDINGS,t in TIME}:
+  Heat_Supple_HP[b,t] = COP[b,t]*EL_Demand_HP[b,t];  #kW
   
-subject to HP1_Size_Constr_1{t in TIME}:
-  Heat_Supple_HP1[t] <= Capacity_HP1;             #kW
+subject to HP1_Size_Constr_1{b in BUILDINGS,t in TIME}:
+  Heat_Supple_HP[b,t] <= Capacity_HP[b];             #kW
 
 
 
-var EL_Demand_HP2{t in TIME} >=0;
-var Heat_Supple_HP2{t in TIME} >= 0;
-var Capacity_HP2 >= 0;
-
-subject to HP_Energy_Balance_Constr_2{t in TIME}:
-  Heat_Supple_HP2[t] = COP[2,t]*EL_Demand_HP2[t];  #kW
-  
-subject to HP1_Size_Constr_2{t in TIME}:
-  Heat_Supple_HP2[t] <= Capacity_HP2;             #kW  
-
-#Electricité totale demandée
-var EL_Demand_HP{t in TIME} >=0;
-subject to EL_demand_balance{t in TIME}:
-EL_Demand_HP[t]=EL_Demand_HP1[t]+EL_Demand_HP2[t];
 
 
 #SOLAR PANEL MODEL#########################################
@@ -152,14 +137,15 @@ subject to Natural_gas_Demand_Constr{t in TIME}:
 # HEAT BALANCE 
 
 subject to Heat_balance_Constr{t in TIME}:
-  Heat_Supple_HP1[t]+Heat_Supple_HP2[t] +Heat_Supple_Boiler[t]= sum{b in BUILDINGS} Heat_Demand[b,t];   #kW
+  sum{b in BUILDINGS} Heat_Supple_HP[b,t] +Heat_Supple_Boiler[t]= sum{b in BUILDINGS} Heat_Demand[b,t];   #kW
 
 
 #ELECTRICITY BALANCE
 
 var El_Buy{t in TIME} >=0;
+var El_Sell{t in TIME}>=0;
 subject to Electricity_balance_Constr{t in TIME}:
-  El_Available_Solar[t] + El_Buy[t] - EL_Demand_HP[t]= sum{b in BUILDINGS} Elec_Demand[b,t]; #kW
+  El_Available_Solar[t] + El_Buy[t] - El_Sell[t] - sum{b in BUILDINGS} EL_Demand_HP[b,t]= sum{b in BUILDINGS} Elec_Demand[b,t]; #kW
 
   
   
@@ -177,7 +163,7 @@ param c_ng_in;
 
 # To do!
 minimize opex:
-sum{t in TIME}((c_ng_in*NG_Demand_grid[t] + c_el_in*El_Buy[t])*TIMEsteps[t]);
+sum{t in TIME}((c_ng_in*NG_Demand_grid[t] + c_el_in*El_Buy[t] - c_el_out*El_Sell[t])*TIMEsteps[t]);
 
 
 solve;
