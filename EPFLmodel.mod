@@ -98,7 +98,7 @@ subject to Boiler_Size_Constr{t in TIME}:
 
 #*********** HP MODEL *****************
 
-param COP{b in BUILDINGS, t in TIME} := 7.2-(7.2-4.7)/(20*(-30+temp_supply[b,t]));
+param COP{b in BUILDINGS, t in TIME} := 7.2-(7.2-4.7)/20*(temp_supply[b,t]-30); #1.7.2 Etude production chaleur Weinmann 2012 p15 #Dimitri
 display COP;
 
 
