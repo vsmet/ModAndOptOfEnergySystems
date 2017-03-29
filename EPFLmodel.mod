@@ -98,8 +98,7 @@ subject to Boiler_Size_Constr{t in TIME}:
 
 #*********** HP MODEL *****************
 
-param COP{b in BUILDINGS, t in TIME} := 7.2-(7.2-4.7)/20*(temp_supply[b,t]-30); #1.7.2 Etude production chaleur Weinmann 2012 p15 #Dimitri
-display COP;
+param COP{b in BUILDINGS, t in TIME} := (7.2-(7.2-4.7)/(20*(-30+temp_supply[b,t])));
 
 
 var EL_Demand_HP{b in BUILDINGS,t in TIME} >=0;
@@ -137,7 +136,7 @@ subject to Natural_gas_Demand_Constr{t in TIME}:
 # HEAT BALANCE 
 
 subject to Heat_balance_Constr{t in TIME}:
-  sum{b in BUILDINGS} Heat_Supple_HP[b,t] +Heat_Supple_Boiler[t]= sum{b in BUILDINGS} Heat_Demand[b,t];   #kW
+  sum{b in BUILDINGS} Heat_Supple_HP[b,t] + Heat_Supple_Boiler[t]= sum{b in BUILDINGS} Heat_Demand[b,t];   #kW
 
 
 #ELECTRICITY BALANCE
@@ -166,12 +165,13 @@ minimize opex:
 sum{t in TIME}((c_ng_in*NG_Demand_grid[t] + c_el_in*El_Buy[t] - c_el_out*El_Sell[t])*TIMEsteps[t]);
 
 
+
 solve;
 
 # To do!
-
-display El_Available_Solar;
-display El_Buy;
+display opex;
+#display El_Available_Solar;
+#display El_Buy;
 
 
 end;
