@@ -130,8 +130,6 @@ var EL_Demand_HP{b in BUILDINGS,t in TIME} >=0;
 var Heat_Supple_HP{b in BUILDINGS,t in TIME} >= 0;
 var Capacity_HP{b in BUILDINGS} >= 0;
 
-
-
 #Energy model
 subject to HP_Energy_Balance_Constr{b in BUILDINGS,t in TIME}:
   Heat_Supple_HP[b,t] = COP[b,t]*EL_Demand_HP[b,t];  #kW  
@@ -165,6 +163,11 @@ subject to MidHigh_Circuit_Constr{b in BUILDINGS,t in TIME}:
   Heat_Supple_HP[b,t] <= Heat_Demand[b,t];
 subject to Heat_balance_Constr{t in TIME}:
   Heat_Supple_Boiler[t]= sum{b in BUILDINGS}( Heat_Demand[b,t] - Heat_Supple_HP[b,t]);   #kW
+subject to EightyeightPerc_Constr:
+  sum{b in BUILDINGS, t in TIME}(Heat_Supple_HP[b,t]) >= 0.88*sum{b in BUILDINGS,t in TIME}(Heat_Demand[b,t]); #SYSTEM REQUIREMENTS
+subject to Peak:
+  25000 - Capacity["HEATPUMPLOW"] - Capacity["HEATPUMPHIGH"] <= Capacity["BOILER"]; 
+
 
 
 #ELECTRICITY BALANCE
