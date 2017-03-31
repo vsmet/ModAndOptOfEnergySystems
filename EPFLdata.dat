@@ -15,6 +15,7 @@
 ############################################################################################
 set BUILDINGS := EPFLlow EPFLhigh;
 set TIME := 1 2 3 4 5 6 7 8 9 10 11 12;
+set COMPONENTS := BOILER HEATPUMPHIGH HEATPUMPLOW;
 
 ############################################################################################
 # PARAMETERS
@@ -129,4 +130,53 @@ EPFLhigh	11	42.09	32.62
 EPFLhigh	12	46.22	34.85
 ;
 
+#INVESTMENT COST DATA - USD
+param ex_USD_CHF := 1; #Exchange rate 31 March
+param interest_rate := 0.235; #20 year Swiss bond 31 March
+param lifetime := 20;
+
+
+###Assumption: Boiler: Field erected with FLUID FUEL (Nat GAS)
+###Assumption: Heatpump: industrial scale
+param  Ref_ind := 1179;  #Assumed this to be same for all components
+param  Year_ind:= 1462.9; #2009 Index
+param  F_BM    := 
+BOILER 1.8
+HEATPUMPHIGH 1.6
+HEATPUMPLOW 1.6
+;
+param  F_T     := 
+BOILER 1.15
+HEATPUMPHIGH 1
+HEATPUMPLOW 1
+;
+param  F_P     := 
+BOILER 1.13
+HEATPUMPHIGH 1
+HEATPUMPLOW 1
+;
+param  C_min   := 
+BOILER 1000
+HEATPUMPHIGH 1500
+HEATPUMPLOW 1500
+;
+param  C_max   := 
+BOILER 10000
+HEATPUMPHIGH 2500
+HEATPUMPLOW 2500
+;
+param  alpha_2 := 0.35; #LectureNotes Advanced Energetics
+param  alpha_1 := 0.18; #LectureNotes Advanced Energetics
+param PC_min :=
+BOILER 31988.9510969140
+HEATPUMPHIGH 1617148.40502288
+HEATPUMPLOW 1617148.40502288
+;
+param PC_max := 
+BOILER 174984.668862466
+HEATPUMPHIGH 2197147.06164143
+HEATPUMPLOW 2197147.06164143
+;
 end;
+
+
