@@ -143,20 +143,29 @@ subject to HP_Size_2:
 
 #SOLAR PANEL MODEL#########################################
 param Efficiency_SolarPanels := 0.11327;  #Voir feuille excel DATA, Sylvain
-param solarfarm_area := 15500;            #m^2, donnée du projet
+param solarfarm_area := 15500;            #m^2, donnée du projet  
 
+var solarfarm_area_increase >= 0, <= 3500; #m^2, Valeur max estimated quickly from Maps
 var El_Available_Solar{t in TIME} >=0;
 
-subject to El_available_Constr{t in TIME}:
-  El_Available_Solar[t] = solarfarm_area*Efficiency_SolarPanels*solar_radiation[t]; #kW
-  
+subject to El_available_Constr{t in TIME}: #AJOUTER COUTS DES NOUVEAUX PANNEAUX!
+  El_Available_Solar[t] = (solarfarm_area*Efficiency_SolarPanels+solarfarm_area_increase*Efficiency_SolarPanels)*solar_radiation[t]; #kW
 
 #MASS BALANCE NATURAL GAS
 var NG_Demand_grid{t in TIME} >= 0;
 
 subject to Natural_gas_Demand_Constr{t in TIME}:
   NG_Demand_grid[t] = NG_Demand_Boiler[t];    #kW
-  
+
+#COOLING LOOP
+param vol_cooling_water{t in TIME}; # m3/mois
+param pumping_cost := 0.304 ; #kWh/m3,  calculé depuis http://exploitation-energies.epfl.ch/bilans_energetiques/details/cct, Sylvain
+#param cooling_water_Tin = 6 ; # °C, 1.7.1. page 5
+#param cooling_water_Tout = 13; # °C, 1.7.1. page 5
+var El_pump_cooling{t in TIME} >= 0;
+
+subject to El_pump_cooling_water{t in TIME}:
+  El_pump_cooling[t]=vol_cooling_water[t]*pumping_cost;
 
 # HEAT BALANCE 
 subject to MidHigh_Circuit_Constr{b in BUILDINGS,t in TIME}:
@@ -174,7 +183,7 @@ subject to Peak:
 var El_Buy{t in TIME} >=0;
 var El_Sell{t in TIME}>=0;
 subject to Electricity_balance_Constr{t in TIME}:
-  El_Available_Solar[t] + El_Buy[t] - El_Sell[t] - sum{b in BUILDINGS} EL_Demand_HP[b,t]= sum{b in BUILDINGS} Elec_Demand[b,t]; #kW
+  El_Available_Solar[t] + El_Buy[t] + El_pump_cooling[t] - El_Sell[t] - sum{b in BUILDINGS} EL_Demand_HP[b,t]= sum{b in BUILDINGS} Elec_Demand[b,t]; #kW
 
 #INVESTMENT
 subject to PC_Con{c in COMPONENTS}:
@@ -212,6 +221,7 @@ solve;
 # To do!
 display opex;
 display Capacity;
+
 
 
 end;
