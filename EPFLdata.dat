@@ -15,7 +15,7 @@
 ############################################################################################
 set BUILDINGS := EPFLlow EPFLhigh;
 set TIME := 1 2 3 4 5 6 7 8 9 10 11 12;
-set COMPONENTS := BOILER HEATPUMPHIGH HEATPUMPLOW;
+set COMPONENTS := BOILER HEATPUMPHIGH HEATPUMPLOW SOFC;
 
 ############################################################################################
 # PARAMETERS
@@ -164,26 +164,31 @@ param  F_BM    :=
 BOILER 1.8
 HEATPUMPHIGH 1.6
 HEATPUMPLOW 1.6
+SOFC 1.6 #dimitri , inventé
 ;
 param  F_T     := 
 BOILER 1.15
 HEATPUMPHIGH 1
 HEATPUMPLOW 1
+SOFC 1 #dimitri , inventé
 ;
 param  F_P     := 
 BOILER 1.13
 HEATPUMPHIGH 1
 HEATPUMPLOW 1
+SOFC 1 #dimitri , inventé
 ;
 param  C_min   := 
 BOILER 1000
 HEATPUMPHIGH 1500
 HEATPUMPLOW 1500
+SOFC 1500 #dimitri , inventé
 ;
 param  C_max   := 
 BOILER 20000
 HEATPUMPHIGH 10000
 HEATPUMPLOW 10000
+SOFC 10000 #dimitri , inventé
 ;
 param  alpha_2 := 0.35; #LectureNotes Advanced Energetics
 param  alpha_1 := 0.18; #LectureNotes Advanced Energetics
@@ -191,11 +196,13 @@ param PC_min :=
 BOILER 31988.9510969140
 HEATPUMPHIGH 178544.428736573
 HEATPUMPLOW 178544.428736573
+SOFC 150000 #dimitri , inventé
 ;
 param PC_max := 
 BOILER 148415.893301207
 HEATPUMPHIGH 984609.836013398
 HEATPUMPLOW 984609.836013398
+SOFC 150000 #dimitri , inventé
 ;
 
 
@@ -240,10 +247,27 @@ BOILER 11	100
 BOILER 12	100
 ;
 
+SOFC 1 40 #dimitri , inventé
+SOFC 2 40
+SOFC 3 40
+SOFC 4 40
+SOFC 5 40
+SOFC 6 40
+SOFC 7 40
+SOFC 8 40
+SOFC 9 40
+SOFC 10 40
+SOFC 11 40
+SOFC 12 40
+
+
 set HP :=
 HEATPUMPLOW
 HEATPUMPHIGH
 ;
+
+set COGENERATION :=
+SOFC;
 
 
 end;
