@@ -1,4 +1,4 @@
-############################################################################################
+#####################################################################################################
 # Course: Modelling and optimisation of energy systems
 # course spring semester 2017
 # EPFL Campus optimization
@@ -68,6 +68,7 @@ param: solar_radiation :=	 #kwh/m2
 10	71
 11	38
 12	27
+
 ;
 
 /*******************************************************/
@@ -97,10 +98,10 @@ EPFLlow 184854
 EPFLhigh 200000
 ;
 
-param: spec_annual_heat_demand, spec_annual_elec_demand :=
-EPFLlow 65.8 116.6                             # kWh/m^2/y, 2007, Vuille2008, p. 20
-EPFLhigh 65.8 116.6   
-;
+# param: spec_annual_heat_demand, spec_annual_elec_demand :=
+# EPFLlow 65.8 116.6                             # kWh/m^2/y, 2007, Vuille2008, p. 20
+# EPFLhigh 65.8 116.6   
+# ;
 
 param: temp_supply, temp_return :=  #Selon feuille excel DATA, Onglet 3
 EPFLlow	1	38.46	29.71
@@ -151,6 +152,8 @@ param: vol_cooling_water := #en m3/mois
 # Cost calculations
 /******************************************************/
 
+
+
 #INVESTMENT COST DATA - USD
 param ex_USD_CHF := 1; #Exchange rate 31 March
 param interest_rate := 0.235; #20 year Swiss bond 31 March
@@ -182,22 +185,73 @@ HEATPUMPHIGH 1500
 HEATPUMPLOW 1500
 ;
 param  C_max   := 
-BOILER 10000
-HEATPUMPHIGH 2500
-HEATPUMPLOW 2500
+BOILER 20000
+HEATPUMPHIGH 10000
+HEATPUMPLOW 10000
 ;
 param  alpha_2 := 0.35; #LectureNotes Advanced Energetics
 param  alpha_1 := 0.18; #LectureNotes Advanced Energetics
 param PC_min :=
 BOILER 31988.9510969140
-HEATPUMPHIGH 1617148.40502288
-HEATPUMPLOW 1617148.40502288
+HEATPUMPHIGH 178544.428736573
+HEATPUMPLOW 178544.428736573
 ;
 param PC_max := 
 BOILER 148415.893301207
-HEATPUMPHIGH 2197147.06164143
-HEATPUMPLOW 2197147.06164143
+HEATPUMPHIGH 984609.836013398
+HEATPUMPLOW 984609.836013398
 ;
+
+
+param Component_temp :=  #Selon feuille excel DATA, Onglet 3
+HEATPUMPLOW 1   44.74
+HEATPUMPLOW 2	44.00
+HEATPUMPLOW 3	40.68
+HEATPUMPLOW 4	37.54
+HEATPUMPLOW 5	33.48
+HEATPUMPLOW 6	30.34
+HEATPUMPLOW 7	28.03
+HEATPUMPLOW 8   28.58
+HEATPUMPLOW 9   32.18
+HEATPUMPLOW 10	36.06
+HEATPUMPLOW 11	41.14
+HEATPUMPLOW 12	43.82
+
+HEATPUMPHIGH 1	52.64
+HEATPUMPHIGH 2	51.50
+HEATPUMPHIGH 3	46.38
+HEATPUMPHIGH 4	41.54
+HEATPUMPHIGH 5	35.28
+HEATPUMPHIGH 6	30.44
+HEATPUMPHIGH 7	26.88
+HEATPUMPHIGH 8	27.73
+HEATPUMPHIGH 9	33.28
+HEATPUMPHIGH 10	39.26
+HEATPUMPHIGH 11	47.09
+HEATPUMPHIGH 12	51.22
+
+BOILER 1	100
+BOILER 2	100
+BOILER 3	100
+BOILER 4	100
+BOILER 5	100
+BOILER 6	100
+BOILER 7	100
+BOILER 8	100
+BOILER 9	100
+BOILER 10	100
+BOILER 11	100
+BOILER 12	100
+;
+
+set HP :=
+HEATPUMPLOW
+HEATPUMPHIGH
+;
+
+
 end;
+
+
 
 

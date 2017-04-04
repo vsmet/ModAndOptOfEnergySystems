@@ -40,7 +40,7 @@ param temp_return{b in BUILDINGS,t in TIME} >= 0; #deg C
 /*******************************************************/
 # Demand parameters
 /*******************************************************/
-param spec_annual_heat_demand{b in BUILDINGS} >= 0, default 0;    #kJ/m2(yr)
+#param spec_annual_heat_demand{b in BUILDINGS} >= 0, default 0;    #kJ/m2(yr)
 param spec_annual_elec_demand{b in BUILDINGS} >= 0, default 0;    #kWh/m2(yr)
 
 ############################################################################################
@@ -94,8 +94,9 @@ param C_min{c in COMPONENTS};
 param C_max{c in COMPONENTS};
 param PC_min {c in COMPONENTS};
 param PC_max {c in COMPONENTS};  
+param f_act := Year_ind/Ref_ind;
 
-param  f_act   := Year_ind/Ref_ind;
+
 
 var Capacity {c in COMPONENTS} >= 0;
 var PC{c in COMPONENTS} >= 0;
@@ -104,6 +105,20 @@ var GR_C{c in COMPONENTS} >= 0;
 var an_CAPEX {c in COMPONENTS} >=0;
 var an_CAPEX_Tot  >=0;
 
+
+
+param Component_temp {c in COMPONENTS, t in TIME};
+var Component_Use {c in COMPONENTS} binary;
+var ComponentSize_t {c in COMPONENTS, t in TIME} >= 0;
+
+subject to Size_Constr{c in COMPONENTS, t in TIME}:
+  ComponentSize_t[c,t] <= Capacity[c];             #kW
+
+subject to Component_cmin_cstr {c in COMPONENTS}:
+  Component_Use[c]*C_min[c] <= Capacity[c];
+
+subject to Component_cmax_cstr {c in COMPONENTS}:
+  Component_Use[c]*C_max[c] >= Capacity[c];
 
 ############################################################################################
 # CONSTRAINTS
@@ -114,37 +129,49 @@ param Efficiency_Boiler := 0.98;
 
 
 var NG_Demand_Boiler{t in TIME} >= 0;
-var Heat_Supple_Boiler{t in TIME} >= 0;
 
 #Energy model
-subject to Boiler_Energy_Balance_Constr{t in TIME}:
-  Heat_Supple_Boiler[t] = Efficiency_Boiler*NG_Demand_Boiler[t];  #kW  
-subject to Boiler_Size_Constr{t in TIME}:
-  Heat_Supple_Boiler[t] <= Capacity["BOILER"];             #kW
+
 
 #*********** HP MODEL *****************
 
-param COP{b in BUILDINGS, t in TIME} := (7.2-(7.2-4.7)/(20*(-30+temp_supply[b,t])));
+# param COP{b in BUILDINGS, t in TIME} := (7.2-(7.2-4.7)/(20*(-30+temp_supply[b,t])));
 
-var EL_Demand_HP{b in BUILDINGS,t in TIME} >=0;
-var Heat_Supple_HP{b in BUILDINGS,t in TIME} >= 0;
-var Capacity_HP{b in BUILDINGS} >= 0;
+set HP;
+param lake_temp := 7;
+param carnot_eff := 0.5;
+param COP_th{h in HP, t in TIME} := (Component_temp[h,t]+273)/(Component_temp[h,t]-lake_temp);
+param COP{h in HP, t in TIME} := carnot_eff * COP_th [h,t];
+
 
 #Energy model
-subject to HP_Energy_Balance_Constr{b in BUILDINGS,t in TIME}:
-  Heat_Supple_HP[b,t] = COP[b,t]*EL_Demand_HP[b,t];  #kW  
-subject to HP_Size_Constr{b in BUILDINGS,t in TIME}:
-  Heat_Supple_HP[b,t] <= Capacity_HP[b];             #kW
-subject to HP_Size_1:
-  Capacity["HEATPUMPHIGH"] = Capacity_HP["EPFLhigh"];
-subject to HP_Size_2:
-  Capacity["HEATPUMPLOW"] = Capacity_HP["EPFLlow"];  
+var Heating_LT {c in COMPONENTS, t in TIME} >= 0;
+var Heating_HT {c in COMPONENTS, t in TIME} >= 0;
 
+# Energy balance for LT buildings
+subject to Energy_Balance_LT_cstr {b in BUILDINGS,t in TIME}:
+  Heat_Demand['EPFLlow',t] = sum {c in COMPONENTS} (if Component_temp[c,t]>= (temp_supply[b,t]+3) then (Heating_LT [c,t]) else (0));
+
+# Energy balance for HT buildings
+subject to Energy_Balance_HT_cstr {b in BUILDINGS,t in TIME}:
+  Heat_Demand['EPFLhigh',t] = sum {c in COMPONENTS} (if Component_temp[c,t]>= (temp_supply[b,t] + 5) then (Heating_HT [c,t]) else (0));
+
+# Overall energy balance
+subject to Energy_Balance_overall_cstr {c in COMPONENTS,t in TIME}:
+  ComponentSize_t[c,t] = Heating_LT[c,t]+Heating_HT[c,t];
+
+# Energy balance for HP
+var EL_Demand_HP {h in HP, t in TIME};
+subject to HP_Energy_Balance_cstr{h in HP,t in TIME}:
+  ComponentSize_t[h,t] = COP[h,t]*EL_Demand_HP[h,t];  #kW 
+
+# Energy balance for Boiler
+subject to Boiler_Energy_Balance_Constr{t in TIME}:
+  ComponentSize_t['BOILER',t] = Efficiency_Boiler*NG_Demand_Boiler[t];  #kW  
 
 #SOLAR PANEL MODEL#########################################
 param Efficiency_SolarPanels := 0.11327;  #Voir feuille excel DATA, Sylvain
-param solarfarm_area := 15500;            #m^2, donnée du projet  
-
+param solarfarm_area := 15500;            #m^2, donnée du projet
 var solarfarm_area_increase >= 0, <= 3500; #m^2, Valeur max estimated quickly from Maps
 var El_Available_Solar{t in TIME} >=0;
 
@@ -166,28 +193,23 @@ var El_pump_cooling{t in TIME} >= 0;
 
 subject to El_pump_cooling_water{t in TIME}:
   El_pump_cooling[t]=vol_cooling_water[t]*pumping_cost;
-
+  
 # HEAT BALANCE 
-subject to MidHigh_Circuit_Constr{b in BUILDINGS,t in TIME}:
-  Heat_Supple_HP[b,t] <= Heat_Demand[b,t];
-subject to Heat_balance_Constr{t in TIME}:
-  Heat_Supple_Boiler[t]= sum{b in BUILDINGS}( Heat_Demand[b,t] - Heat_Supple_HP[b,t]);   #kW
 subject to EightyeightPerc_Constr:
-  sum{b in BUILDINGS, t in TIME}(Heat_Supple_HP[b,t]) >= 0.88*sum{b in BUILDINGS,t in TIME}(Heat_Demand[b,t]); #SYSTEM REQUIREMENTS
-subject to Peak:
-  25000 - Capacity["HEATPUMPLOW"] - Capacity["HEATPUMPHIGH"] <= Capacity["BOILER"]; 
-
+  sum{h in HP, t in TIME}(ComponentSize_t[h,t]) = 0.88*sum{b in BUILDINGS,t in TIME}(Heat_Demand[b,t]); #SYSTEM REQUIREMENTS
+# subject to Peak:
+#   25000 - Capacity["HEATPUMPLOW"] - Capacity["HEATPUMPHIGH"] <= Capacity["BOILER"]; 
 
 
 #ELECTRICITY BALANCE
 var El_Buy{t in TIME} >=0;
 var El_Sell{t in TIME}>=0;
 subject to Electricity_balance_Constr{t in TIME}:
-  El_Available_Solar[t] + El_Buy[t] + El_pump_cooling[t] - El_Sell[t] - sum{b in BUILDINGS} EL_Demand_HP[b,t]= sum{b in BUILDINGS} Elec_Demand[b,t]; #kW
+  El_Available_Solar[t] + El_Buy[t] - El_Sell[t] - sum{h in HP} EL_Demand_HP[h,t] - El_pump_cooling[t]= sum{b in BUILDINGS} Elec_Demand[b,t]; #kW
 
 #INVESTMENT
 subject to PC_Con{c in COMPONENTS}:
-  PC[c] = f_act*((PC_max[c] - PC_min[c])*((Capacity[c] - C_min[c])/(C_max[c] - C_min[c])) + PC_min[c]); #USD
+  PC[c] = f_act*((PC_max[c] - PC_min[c])*(Capacity[c]/(C_max[c] - C_min[c])) + Component_Use[c]*PC_min[c]); #USD
 subject to BM_C_Con{c in COMPONENTS}:
   BM_C[c] = F_P[c]*F_T[c]*F_BM[c]*PC[c];
 subject to GR_C_Con{c in COMPONENTS}:
@@ -221,7 +243,14 @@ solve;
 # To do!
 display opex;
 display Capacity;
+display Component_Use;
+display Heat_Demand;
 
+display ComponentSize_t;
 
+display Capacity;
+display an_CAPEX;
+
+display COP;
 
 end;
