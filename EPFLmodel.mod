@@ -34,8 +34,6 @@ param floor_area{b in BUILDINGS} >= 0;        #m2
 param temp_threshold{b in BUILDINGS};       #deg C
 param temp_supply{b in BUILDINGS,t in TIME} >= 0; #deg C
 param temp_return{b in BUILDINGS,t in TIME} >= 0; #deg C
-#param temp_supply_high{b in BUILDINGS,t in TIME} >= 0; #deg C
-#param temp_return_high{b in BUILDINGS,t in TIME} >= 0; #deg C
 
 /*******************************************************/
 # Demand parameters
@@ -126,17 +124,10 @@ subject to Component_cmax_cstr {c in COMPONENTS}:
 
 # BOILER MODEL
 param Efficiency_Boiler := 0.98;
-
-
 var NG_Demand_Boiler{t in TIME} >= 0;
 
 #Energy model
-
-
 #*********** HP MODEL *****************
-
-# param COP{b in BUILDINGS, t in TIME} := (7.2-(7.2-4.7)/(20*(-30+temp_supply[b,t])));
-
 set HP;
 param lake_temp := 7;
 param carnot_eff := 0.5;
@@ -168,6 +159,8 @@ subject to HP_Energy_Balance_cstr{h in HP,t in TIME}:
 # Energy balance for Boiler
 subject to Boiler_Energy_Balance_Constr{t in TIME}:
   ComponentSize_t['BOILER',t] = Efficiency_Boiler*NG_Demand_Boiler[t];  #kW  
+
+
 
 #SOLAR PANEL MODEL#########################################
 param Efficiency_SolarPanels := 0.11327;  #Voir feuille excel DATA, Sylvain

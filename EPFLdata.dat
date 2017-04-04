@@ -98,10 +98,6 @@ EPFLlow 184854
 EPFLhigh 200000
 ;
 
-# param: spec_annual_heat_demand, spec_annual_elec_demand :=
-# EPFLlow 65.8 116.6                             # kWh/m^2/y, 2007, Vuille2008, p. 20
-# EPFLhigh 65.8 116.6   
-# ;
 
 param: temp_supply, temp_return :=  #Selon feuille excel DATA, Onglet 3
 EPFLlow	1	38.46	29.71
