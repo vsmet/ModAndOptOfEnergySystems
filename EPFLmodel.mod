@@ -155,7 +155,10 @@ subject to HP_Energy_Balance_cstr{h in HP,t in TIME}:
 
 # SOFC MODEL ####################################
 set COGENERATION;
-param 
+param SOFC_EL_eff := 0.2;
+param SOFC_th_eff := 0.5; 
+#
+
 
 # BOILER MODEL  ################################
 param Efficiency_Boiler := 0.98;
