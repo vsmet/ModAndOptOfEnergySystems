@@ -245,7 +245,6 @@ BOILER 9	100
 BOILER 10	100
 BOILER 11	100
 BOILER 12	100
-;
 
 SOFC 1 40 #dimitri , inventé
 SOFC 2 40
@@ -259,6 +258,7 @@ SOFC 9 40
 SOFC 10 40
 SOFC 11 40
 SOFC 12 40
+;
 
 
 set HP :=
@@ -267,7 +267,8 @@ HEATPUMPHIGH
 ;
 
 set COGENERATION :=
-SOFC;
+SOFC
+;
 
 
 end;

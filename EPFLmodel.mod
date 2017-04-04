@@ -123,19 +123,7 @@ subject to Component_cmax_cstr {c in COMPONENTS}:
 # CONSTRAINTS
 ############################################################################################
 
-# BOILER MODEL
-param Efficiency_Boiler := 0.98;
-var NG_Demand_Boiler{t in TIME} >= 0;
-
-#Energy model
-#*********** HP MODEL *****************
-set HP;
-param lake_temp := 7;
-param carnot_eff := 0.5;
-param COP_th{h in HP, t in TIME} := (Component_temp[h,t]+273)/(Component_temp[h,t]-lake_temp);
-param COP{h in HP, t in TIME} := carnot_eff * COP_th [h,t];
-
-
+# ENERGY BALANCE ###############################
 #Energy model
 var Heating_LT {c in COMPONENTS, t in TIME} >= 0;
 var Heating_HT {c in COMPONENTS, t in TIME} >= 0;
@@ -152,10 +140,26 @@ subject to Energy_Balance_HT_cstr {b in BUILDINGS,t in TIME}:
 subject to Energy_Balance_overall_cstr {c in COMPONENTS,t in TIME}:
   ComponentSize_t[c,t] = Heating_LT[c,t]+Heating_HT[c,t];
 
+
+# HP MODEL ######################################
+set HP;
+param lake_temp := 7;
+param carnot_eff := 0.5;
+param COP_th{h in HP, t in TIME} := (Component_temp[h,t]+273)/(Component_temp[h,t]-lake_temp);
+param COP{h in HP, t in TIME} := carnot_eff * COP_th [h,t];
+
 # Energy balance for HP
 var EL_Demand_HP {h in HP, t in TIME};
 subject to HP_Energy_Balance_cstr{h in HP,t in TIME}:
   ComponentSize_t[h,t] = COP[h,t]*EL_Demand_HP[h,t];  #kW 
+
+# SOFC MODEL ####################################
+set COGENERATION;
+param 
+
+# BOILER MODEL  ################################
+param Efficiency_Boiler := 0.98;
+var NG_Demand_Boiler{t in TIME} >= 0;
 
 # Energy balance for Boiler
 subject to Boiler_Energy_Balance_Constr{t in TIME}:
@@ -163,7 +167,7 @@ subject to Boiler_Energy_Balance_Constr{t in TIME}:
 
 
 
-#SOLAR PANEL MODEL#########################################
+# SOLAR PANEL MODEL#########################################
 param Efficiency_SolarPanels := 0.11327;  #Voir feuille excel DATA, Sylvain
 param solarfarm_area := 15500;            #m^2, donnée du projet
 var solarfarm_area_increase >= 0, <= 3500; #m^2, Valeur max estimated quickly from Maps
@@ -172,13 +176,13 @@ var El_Available_Solar{t in TIME} >=0;
 subject to El_available_Constr{t in TIME}: #AJOUTER COUTS DES NOUVEAUX PANNEAUX!
   El_Available_Solar[t] = (solarfarm_area*Efficiency_SolarPanels+solarfarm_area_increase*Efficiency_SolarPanels)*solar_radiation[t]; #kW
 
-#MASS BALANCE NATURAL GAS
+# MASS BALANCE NATURAL GAS #################################
 var NG_Demand_grid{t in TIME} >= 0;
 
 subject to Natural_gas_Demand_Constr{t in TIME}:
   NG_Demand_grid[t] = NG_Demand_Boiler[t];    #kW
 
-#COOLING LOOP
+# COOLING LOOP MODEL ###########################################
 param vol_cooling_water{t in TIME}; # m3/mois
 param pumping_cost := 0.304 ; #kWh/m3,  calculé depuis http://exploitation-energies.epfl.ch/bilans_energetiques/details/cct, Sylvain
 #param cooling_water_Tin = 6 ; # °C, 1.7.1. page 5
@@ -188,6 +192,8 @@ var El_pump_cooling{t in TIME} >= 0;
 subject to El_pump_cooling_water{t in TIME}:
   El_pump_cooling[t]=vol_cooling_water[t]*pumping_cost;
   
+
+
 # HEAT BALANCE 
 subject to EightyeightPerc_Constr:
   sum{h in HP, t in TIME}(ComponentSize_t[h,t]) = 0.88*sum{b in BUILDINGS,t in TIME}(Heat_Demand[b,t]); #SYSTEM REQUIREMENTS
@@ -195,7 +201,7 @@ subject to EightyeightPerc_Constr:
 #   25000 - Capacity["HEATPUMPLOW"] - Capacity["HEATPUMPHIGH"] <= Capacity["BOILER"]; 
 
 
-#ELECTRICITY BALANCE
+# ELECTRICITY BALANCE
 var El_Buy{t in TIME} >=0;
 var El_Sell{t in TIME}>=0;
 subject to Electricity_balance_Constr{t in TIME}:
