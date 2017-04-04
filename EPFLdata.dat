@@ -15,7 +15,7 @@
 ############################################################################################
 set BUILDINGS := EPFLlow EPFLhigh;
 set TIME := 1 2 3 4 5 6 7 8 9 10 11 12;
-set COMPONENTS := BOILER HEATPUMPHIGH HEATPUMPLOW SOFC;
+set COMPONENTS := BOILER HEATPUMPHIGH HEATPUMPLOW SOFC TURBINE;
 
 ############################################################################################
 # PARAMETERS
@@ -126,7 +126,9 @@ EPFLhigh	11	41.09	32.08
 EPFLhigh	12	46.22	34.85
 ;
 
-#Cooling Loop 
+/*******************************************************/
+# Cooling loop parameters
+/*******************************************************/
 param: vol_cooling_water := #en m3/mois
 1	394.32
 2	356.16
@@ -142,7 +144,17 @@ param: vol_cooling_water := #en m3/mois
 12	394.32
 ;
 
-
+/*******************************************************/
+# Cogeneration unit parameters
+/*******************************************************/
+param: COG_el_eff :=
+SOFC 0.2 # inventé dimitri
+TURBINE 0.2 #inventé dimitri
+;
+param: COG_th_eff :=
+SOFC 0.5 # inventé dimitri
+TURBINE 0.5 #inventé dimitri
+;
 
 /******************************************************/
 # Cost calculations
@@ -165,30 +177,35 @@ BOILER 1.8
 HEATPUMPHIGH 1.6
 HEATPUMPLOW 1.6
 SOFC 1.6 #dimitri , inventé
+TURBINE 1.6 #dimitri , inventé
 ;
 param  F_T     := 
 BOILER 1.15
 HEATPUMPHIGH 1
 HEATPUMPLOW 1
 SOFC 1 #dimitri , inventé
+TURBINE 1 #dimitri , inventé
 ;
 param  F_P     := 
 BOILER 1.13
 HEATPUMPHIGH 1
 HEATPUMPLOW 1
 SOFC 1 #dimitri , inventé
+TURBINE 1 #dimitri , inventé
 ;
 param  C_min   := 
 BOILER 1000
 HEATPUMPHIGH 1500
 HEATPUMPLOW 1500
 SOFC 1500 #dimitri , inventé
+TURBINE 1500 #dimitri , inventé
 ;
 param  C_max   := 
 BOILER 20000
 HEATPUMPHIGH 10000
 HEATPUMPLOW 10000
 SOFC 10000 #dimitri , inventé
+TURBINE 10000 #dimitri , inventé
 ;
 param  alpha_2 := 0.35; #LectureNotes Advanced Energetics
 param  alpha_1 := 0.18; #LectureNotes Advanced Energetics
@@ -197,12 +214,14 @@ BOILER 31988.9510969140
 HEATPUMPHIGH 178544.428736573
 HEATPUMPLOW 178544.428736573
 SOFC 150000 #dimitri , inventé
+TURBINE 150000 #dimitri , inventé
 ;
 param PC_max := 
 BOILER 148415.893301207
 HEATPUMPHIGH 984609.836013398
 HEATPUMPLOW 984609.836013398
 SOFC 150000 #dimitri , inventé
+TURBINE 150000 #dimitri , inventé
 ;
 
 
@@ -258,7 +277,19 @@ SOFC 9 40
 SOFC 10 40
 SOFC 11 40
 SOFC 12 40
-;
+
+TURBINE 1 40 #dimitri , inventé
+TURBINE 2 40
+TURBINE 3 40
+TURBINE 4 40
+TURBINE 5 40
+TURBINE 6 40
+TURBINE 7 40
+TURBINE 8 40
+TURBINE 9 40
+TURBINE 10 40
+TURBINE 11 40
+TURBINE 12 40;
 
 
 set HP :=
@@ -268,6 +299,7 @@ HEATPUMPHIGH
 
 set COGENERATION :=
 SOFC
+TURBINE
 ;
 
 

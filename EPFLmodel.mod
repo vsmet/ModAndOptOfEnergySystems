@@ -105,7 +105,6 @@ var an_CAPEX {c in COMPONENTS} >=0;
 var an_CAPEX_Tot  >=0;
 
 
-
 param Component_temp {c in COMPONENTS, t in TIME};
 var Component_Use {c in COMPONENTS} binary;
 var ComponentSize_t {c in COMPONENTS, t in TIME} >= 0;
@@ -123,7 +122,7 @@ subject to Component_cmax_cstr {c in COMPONENTS}:
 # CONSTRAINTS
 ############################################################################################
 
-# ENERGY BALANCE ###############################
+# ENERGY BALANCE ########################################
 #Energy model
 var Heating_LT {c in COMPONENTS, t in TIME} >= 0;
 var Heating_HT {c in COMPONENTS, t in TIME} >= 0;
@@ -141,7 +140,7 @@ subject to Energy_Balance_overall_cstr {c in COMPONENTS,t in TIME}:
   ComponentSize_t[c,t] = Heating_LT[c,t]+Heating_HT[c,t];
 
 
-# HP MODEL ######################################
+# HP MODEL ################################################
 set HP;
 param lake_temp := 7;
 param carnot_eff := 0.5;
@@ -153,14 +152,36 @@ var EL_Demand_HP {h in HP, t in TIME};
 subject to HP_Energy_Balance_cstr{h in HP,t in TIME}:
   ComponentSize_t[h,t] = COP[h,t]*EL_Demand_HP[h,t];  #kW 
 
-# SOFC MODEL ####################################
+/*# SOFC MODEL ##############################################
 set COGENERATION;
-param SOFC_EL_eff := 0.2;
-param SOFC_th_eff := 0.5; 
-#
+param SOFC_el_eff := 0.2; #dimitri inventé
+param SOFC_th_eff := 0.5; #dimitri inventé
 
+# Energy balance for SOFC
+var NG_Demand_SOFC{t in TIME}>=0;
+var El_prod_SOFC{t in TIME} >=0;
 
-# BOILER MODEL  ################################
+subject to SOFC_heat_balance_constr{t in TIME}: 
+ ComponentSize_t['SOFC',t] = SOFC_th_eff*NG_Demand_SOFC[t]; #dim
+subject to SOFC_elec_balance_constr{t in TIME}: 
+ El_prod_SOFC[t] = SOFC_el_eff*NG_Demand_SOFC[t]; #dim*/
+
+ #§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§
+
+set COGENERATION;
+param COG_el_eff{u in COGENERATION}; 
+param COG_th_eff{u in COGENERATION}; 
+
+# Energy balance for SOFC
+var NG_Demand_COG{u in COGENERATION, t in TIME}>=0;
+var El_prod_COG{u in COGENERATION, t in TIME} >=0;
+
+subject to COG_heat_balance_constr{u in COGENERATION, t in TIME}: 
+ ComponentSize_t[u,t] = COG_th_eff[u]*NG_Demand_COG[u,t]; #dim
+subject to COG_elec_balance_constr{u in COGENERATION, t in TIME}: 
+ El_prod_COG[u,t] = COG_el_eff[u]*NG_Demand_COG[u,t]; #dim
+
+# BOILER MODEL  ###########################################
 param Efficiency_Boiler := 0.98;
 var NG_Demand_Boiler{t in TIME} >= 0;
 
@@ -183,9 +204,9 @@ subject to El_available_Constr{t in TIME}: #AJOUTER COUTS DES NOUVEAUX PANNEAUX!
 var NG_Demand_grid{t in TIME} >= 0;
 
 subject to Natural_gas_Demand_Constr{t in TIME}:
-  NG_Demand_grid[t] = NG_Demand_Boiler[t];    #kW
+  NG_Demand_grid[t] = NG_Demand_Boiler[t]+sum{u in COGENERATION} NG_Demand_COG[u,t];  #kW #dimitri
 
-# COOLING LOOP MODEL ###########################################
+# COOLING LOOP MODEL ########################################
 param vol_cooling_water{t in TIME}; # m3/mois
 param pumping_cost := 0.304 ; #kWh/m3,  calculé depuis http://exploitation-energies.epfl.ch/bilans_energetiques/details/cct, Sylvain
 #param cooling_water_Tin = 6 ; # °C, 1.7.1. page 5
@@ -194,23 +215,22 @@ var El_pump_cooling{t in TIME} >= 0;
 
 subject to El_pump_cooling_water{t in TIME}:
   El_pump_cooling[t]=vol_cooling_water[t]*pumping_cost;
-  
+ 
 
-
-# HEAT BALANCE 
+# HEAT BALANCE #################################################
 subject to EightyeightPerc_Constr:
   sum{h in HP, t in TIME}(ComponentSize_t[h,t]) = 0.88*sum{b in BUILDINGS,t in TIME}(Heat_Demand[b,t]); #SYSTEM REQUIREMENTS
 # subject to Peak:
 #   25000 - Capacity["HEATPUMPLOW"] - Capacity["HEATPUMPHIGH"] <= Capacity["BOILER"]; 
 
 
-# ELECTRICITY BALANCE
+# ELECTRICITY BALANCE ##########################################
 var El_Buy{t in TIME} >=0;
 var El_Sell{t in TIME}>=0;
 subject to Electricity_balance_Constr{t in TIME}:
-  El_Available_Solar[t] + El_Buy[t] - El_Sell[t] - sum{h in HP} EL_Demand_HP[h,t] - El_pump_cooling[t]= sum{b in BUILDINGS} Elec_Demand[b,t]; #kW
+  El_Available_Solar[t]+ sum{u in COGENERATION} El_prod_COG[u,t]+ El_Buy[t] - El_Sell[t] - sum{h in HP} EL_Demand_HP[h,t] - El_pump_cooling[t]= sum{b in BUILDINGS} Elec_Demand[b,t]; #kW
 
-#INVESTMENT
+# INVESTMENT ###################################################
 subject to PC_Con{c in COMPONENTS}:
   PC[c] = f_act*((PC_max[c] - PC_min[c])*(Capacity[c]/(C_max[c] - C_min[c])) + Component_Use[c]*PC_min[c]); #USD
 subject to BM_C_Con{c in COMPONENTS}:
