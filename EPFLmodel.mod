@@ -130,12 +130,12 @@ var Heating_LT {c in COMPONENTS, t in TIME} >= 0;
 var Heating_HT {c in COMPONENTS, t in TIME} >= 0;
 
 # Energy balance for LT buildings
-subject to Energy_Balance_LT_cstr {b in BUILDINGS,t in TIME, cp in COMPONENTS: Component_temp[cp,t]>=(temp_supply[b,t] + 1)}:
+subject to Energy_Balance_LT_cstr {b in BUILDINGS,t in TIME}:
   Heat_Demand['EPFLlow',t] = sum {c in COMPONENTS} Heating_LT [c,t];
 
 # Energy balance for HT buildings
-subject to Energy_Balance_HT_cstr {b in BUILDINGS,t in TIME, cp in COMPONENTS: Component_temp[cp,t]>=(temp_supply[b,t] + 10)}:
-  Heat_Demand['EPFLhigh',t] = sum {c in COMPONENTS} Heating_HT [c,t];
+subject to Energy_Balance_HT_cstr {b in BUILDINGS,t in TIME}:
+  Heat_Demand['EPFLhigh',t] = sum {c in COMPONENTS : c!="HEATPUMPLOW"} Heating_HT [c,t];
 
 # Overall energy balance
 subject to Energy_Balance_overall_cstr {c in COMPONENTS,t in TIME}:
@@ -221,7 +221,7 @@ subject to El_pump_cooling_water{t in TIME}:
 
 # HEAT BALANCE #################################################
 subject to EightyeightPerc_Constr:
-  sum{h in HP, t in TIME}(ComponentSize_t[h,t]) = 0.88*sum{b in BUILDINGS,t in TIME}(Heat_Demand[b,t]); #SYSTEM REQUIREMENTS
+  sum{h in HP, t in TIME}(ComponentSize_t[h,t]*TIMEsteps[t]) >= 0.88*sum{b in BUILDINGS,t in TIME}(Heat_Demand[b,t]*TIMEsteps[t]); #SYSTEM REQUIREMENTS
 # subject to Peak:
 #   25000 - Capacity["HEATPUMPLOW"] - Capacity["HEATPUMPHIGH"] <= Capacity["BOILER"]; 
 
