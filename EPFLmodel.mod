@@ -129,12 +129,16 @@ subject to Component_cmax_cstr {c in COMPONENTS}:
 var Heating_LT {c in COMPONENTS, t in TIME} >= 0;
 var Heating_HT {c in COMPONENTS, t in TIME} >= 0;
 
+
+subject to Energy_Balance_LT_cstr2 {t in TIME, bu in BUILDINGS: temp_supply[bu,t]<=50}:
+  sum{b in BUILDINGS} Heat_Demand[b,t] = sum {c in COMPONENTS} ComponentSize_t [c,t];
+
 # Energy balance for LT buildings
-subject to Energy_Balance_LT_cstr {b in BUILDINGS,t in TIME}:
-  Heat_Demand['EPFLlow',t] = sum {c in COMPONENTS} Heating_LT [c,t];
+subject to Energy_Balance_LT_cstr {b in BUILDINGS,t in TIME: temp_supply[b,t]>50}:
+  Heat_Demand['EPFLlow',t] = sum {c in COMPONENTS: c!="HEATPUMPLOW"} Heating_LT [c,t];
 
 # Energy balance for HT buildings
-subject to Energy_Balance_HT_cstr {b in BUILDINGS,t in TIME}:
+subject to Energy_Balance_HT_cstr {b in BUILDINGS,t in TIME: temp_supply[b,t]>50}:
   Heat_Demand['EPFLhigh',t] = sum {c in COMPONENTS : c!="HEATPUMPLOW"} Heating_HT [c,t];
 
 # Overall energy balance

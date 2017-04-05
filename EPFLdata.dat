@@ -158,11 +158,11 @@ param: vol_cooling_water := #en m3/mois
 /*******************************************************/
 param: COG_el_eff :=
 SOFC 0.2 # inventé dimitri
-TURBINE 0.2 #inventé dimitri
+TURBINE 0.36 #inventé dimitri /EEGJulyrevisedFINAL1
 ;
 param: COG_th_eff :=
 SOFC 0.5 # inventé dimitri
-TURBINE 0.5 #inventé dimitri
+TURBINE 0.48 # dimitri /EEGJulyrevisedFINAL1
 ;
 
 /******************************************************/
@@ -185,8 +185,8 @@ param  F_BM    :=
 BOILER 1.8
 HEATPUMPHIGH 1.6
 HEATPUMPLOW 1.6
-SOFC 4.01
-TURBINE 1.6 #dimitri , inventé
+SOFC 4.01 
+TURBINE 6 #dimitri , matlab doc , stainless steel
 ;
 param  F_T     := 
 BOILER 1.15
@@ -207,14 +207,14 @@ BOILER 1000
 HEATPUMPHIGH 1500
 HEATPUMPLOW 1500
 SOFC 1500 #dimitri , inventé
-TURBINE 1500 #dimitri , inventé
+TURBINE 100 #dimitri ,matlab doc
 ;
 param  C_max   := 
 BOILER 25000 
 HEATPUMPHIGH 12000 #initialement 10000, voir donnée lab01
 HEATPUMPLOW 13000	##initialement 10000, VOIR donnée lab01
 SOFC 10000 #dimitri , inventé
-TURBINE 10000 #dimitri , inventé
+TURBINE 15000 #dimitri , matlab
 ;
 param  alpha_2 := 0.35; #LectureNotes Advanced Energetics
 param  alpha_1 := 0.18; #LectureNotes Advanced Energetics
@@ -223,14 +223,14 @@ BOILER 31988.9510969140
 HEATPUMPHIGH 78544.428736573
 HEATPUMPLOW 78544.428736573
 SOFC 150000 #dimitri , inventé
-TURBINE 150000 #dimitri , inventé
+TURBINE 43601 #dimitri , matlab doc
 ;
 param PC_max := 
 BOILER 148415.893301207
 HEATPUMPHIGH 84609.836013398
 HEATPUMPLOW 84609.836013398
 SOFC 17875307.3437076
-TURBINE 150000 #dimitri , inventé
+TURBINE 932240 #dimitri , matlab doc
 ;
 
 
