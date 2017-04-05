@@ -14,7 +14,7 @@
 # SETS
 ############################################################################################
 set BUILDINGS := EPFLlow EPFLhigh;
-set TIME := 1 2 3 4 5 6 7 8 9 10 11 12;
+set TIME := 1 2 3 4 5 6 7 8 9 10 11 12 13;
 set COMPONENTS := BOILER HEATPUMPHIGH HEATPUMPLOW SOFC TURBINE;
 
 ############################################################################################
@@ -33,7 +33,8 @@ param: TIMEsteps :=
 9 720
 10 744
 11 720
-12 744
+12 743
+13 1
 ;
 
 /*******************************************************/
@@ -52,7 +53,7 @@ param: external_temp := 	#en °C
 10	12.2
 11	6.8
 12	3.2
-
+13	-10
 ;
 
 param: solar_radiation :=	 #kwh/m2	
@@ -68,7 +69,7 @@ param: solar_radiation :=	 #kwh/m2
 10	71
 11	38
 12	27
-
+13	0
 ;
 
 /*******************************************************/
@@ -89,7 +90,12 @@ EPFLhigh 16
 
 param: k1, k2 :=
 EPFLlow -0.2659 5.2087         #From 1.7.10 Signatures chauffage dans le cahier des charges          
-EPFLhigh -0.188 3.7292         #Par Sylvain
+EPFLhigh -0.188 3.7292         
+;
+
+param: max_demand :=		#Sylvain
+EPFLlow	12000			#kW
+EPFLhigh 13000
 ;
 
 param: floor_area :=
@@ -97,7 +103,6 @@ param: floor_area :=
 EPFLlow 184854
 EPFLhigh 200000
 ;
-
 
 param: temp_supply, temp_return :=  #Selon feuille excel DATA, Onglet 3
 EPFLlow	1	38.46	29.71
@@ -112,6 +117,7 @@ EPFLlow	9	26.00	24.00
 EPFLlow	10	29.51	25.61
 EPFLlow	11	34.49	27.89
 EPFLlow	12	37.82	29.42
+EPFLlow	13	50		35
 EPFLhigh	1	47.21	35.38
 EPFLhigh	2	45.50	34.46
 EPFLhigh	3	40.95	32.00
@@ -124,6 +130,7 @@ EPFLhigh	9	28.00	25.00
 EPFLhigh	10	33.41	27.92
 EPFLhigh	11	41.09	32.08
 EPFLhigh	12	46.22	34.85
+EPFLhigh	13	65		45
 ;
 
 /*******************************************************/
@@ -142,6 +149,7 @@ param: vol_cooling_water := #en m3/mois
 10	394.32
 11	381.6
 12	394.32
+13 	0.7
 ;
 
 /*******************************************************/
@@ -201,9 +209,9 @@ SOFC 1500 #dimitri , inventé
 TURBINE 1500 #dimitri , inventé
 ;
 param  C_max   := 
-BOILER 20000
-HEATPUMPHIGH 10000
-HEATPUMPLOW 10000
+BOILER 250000 
+HEATPUMPHIGH 12000 #initialement 10000, voir donnée lab01
+HEATPUMPLOW 13000	##initialement 10000, VOIR donnée lab01
 SOFC 10000 #dimitri , inventé
 TURBINE 10000 #dimitri , inventé
 ;
@@ -226,7 +234,7 @@ TURBINE 150000 #dimitri , inventé
 
 
 param Component_temp :=  #Selon feuille excel DATA, Onglet 3
-HEATPUMPLOW 1   54.74
+HEATPUMPLOW 1   44.74
 HEATPUMPLOW 2	44.00
 HEATPUMPLOW 3	40.68
 HEATPUMPLOW 4	37.54
@@ -238,6 +246,7 @@ HEATPUMPLOW 9   32.18
 HEATPUMPLOW 10	36.06
 HEATPUMPLOW 11	41.14
 HEATPUMPLOW 12	43.82
+HEATPUMPLOW 13	50  
 
 HEATPUMPHIGH 1	52.64
 HEATPUMPHIGH 2	51.50
@@ -251,6 +260,7 @@ HEATPUMPHIGH 9	33.28
 HEATPUMPHIGH 10	39.26
 HEATPUMPHIGH 11	47.09
 HEATPUMPHIGH 12	51.22
+HEATPUMPHIGH 13	65	
 
 BOILER 1	100
 BOILER 2	100
@@ -264,6 +274,7 @@ BOILER 9	100
 BOILER 10	100
 BOILER 11	100
 BOILER 12	100
+BOILER 13	100
 
 SOFC 1 40 #dimitri , inventé
 SOFC 2 40
@@ -277,6 +288,7 @@ SOFC 9 40
 SOFC 10 40
 SOFC 11 40
 SOFC 12 40
+SOFC 13 40
 
 TURBINE 1 40 #dimitri , inventé
 TURBINE 2 40
@@ -289,7 +301,9 @@ TURBINE 8 40
 TURBINE 9 40
 TURBINE 10 40
 TURBINE 11 40
-TURBINE 12 40;
+TURBINE 12 40
+TURBINE 13 40
+;
 
 
 set HP :=
@@ -304,7 +318,3 @@ TURBINE
 
 
 end;
-
-
-
-

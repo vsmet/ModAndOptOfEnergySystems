@@ -64,12 +64,17 @@ param k2{b in BUILDINGS};
 
 # TIME-DEPENDENT HEAT DEMAND
 var Heat_Demand{b in BUILDINGS, t in TIME} >= 0;
-subject to Heat_Demand_Constr{b in BUILDINGS, t in TIME}:
+subject to Heat_Demand_Constr{b in BUILDINGS, t in 1..12}:
     Heat_Demand[b,t] = 
     if (external_temp[t] < temp_threshold[b]) then
       (k1[b] * (external_temp[t]) + k2[b])*1000            #kW
     else 0;
-  
+
+param max_demand{b in BUILDINGS};
+subject to Heat_Demand_2050{b in BUILDINGS}:
+  Heat_Demand[b,13] = max_demand[b];
+
+
 
 # TIME-DEPENDENT ELEC DEMAND
 var Elec_Demand{b in BUILDINGS, t in TIME} >= 0;
@@ -95,15 +100,12 @@ param PC_min {c in COMPONENTS};
 param PC_max {c in COMPONENTS};  
 param f_act := Year_ind/Ref_ind;
 
-
-
 var Capacity {c in COMPONENTS} >= 0;
 var PC{c in COMPONENTS} >= 0;
 var BM_C{c in COMPONENTS} >= 0;
 var GR_C{c in COMPONENTS} >= 0;
 var an_CAPEX {c in COMPONENTS} >=0;
 var an_CAPEX_Tot  >=0;
-
 
 param Component_temp {c in COMPONENTS, t in TIME};
 var Component_Use {c in COMPONENTS} binary;
@@ -219,7 +221,7 @@ subject to El_pump_cooling_water{t in TIME}:
 
 # HEAT BALANCE #################################################
 subject to EightyeightPerc_Constr:
-  sum{h in HP, t in TIME}(ComponentSize_t[h,t]) >= 0.88*sum{b in BUILDINGS,t in TIME}(Heat_Demand[b,t]); #SYSTEM REQUIREMENTS
+  sum{h in HP, t in TIME}(ComponentSize_t[h,t]) = 0.88*sum{b in BUILDINGS,t in TIME}(Heat_Demand[b,t]); #SYSTEM REQUIREMENTS
 # subject to Peak:
 #   25000 - Capacity["HEATPUMPLOW"] - Capacity["HEATPUMPHIGH"] <= Capacity["BOILER"]; 
 
@@ -264,6 +266,7 @@ sum{t in TIME}((c_ng_in*NG_Demand_grid[t] + c_el_in*El_Buy[t] - c_el_out*El_Sell
 solve;
 
 # To do!
+display Heat_Demand;
 display opex;
 display Capacity;
 display Component_Use;
