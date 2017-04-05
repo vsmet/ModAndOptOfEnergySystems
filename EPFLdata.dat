@@ -218,7 +218,7 @@ HPLOW 13000	##initialement 10000, VOIR donnée lab01
 SOFC 10000 
 TURBINE 15000 #dimitri , matlab
 SOLAR 3500
-ICENGINE 10000
+ICENGINE 1000
 ;
 param  alpha_2 := 0.35; #LectureNotes Advanced Energetics
 param  alpha_1 := 0.18; #LectureNotes Advanced Energetics
@@ -229,7 +229,7 @@ HPLOW 78544.428736573
 SOFC 750000 #Vincent, Advanced Energetics Lecture notes
 TURBINE 43601 #dimitri , matlab doc
 SOLAR 0
-ICENGINE 100
+ICENGINE 1119040.21635461
 ;
 param PC_max := 
 BOILER 148415.893301207
@@ -238,7 +238,7 @@ HPLOW 84609.836013398
 SOFC 5000000 #Vincent, Advanced Energetics Lecture notes
 TURBINE 932240 #dimitri , matlab doc
 SOLAR 1540000
-ICENGINE 1000
+ICENGINE 8907292.10149030
 ;
 
 
