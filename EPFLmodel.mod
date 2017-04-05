@@ -11,6 +11,9 @@
 set HP;
 set TIME;
 set COMPONENTS;
+set HEAT_UTIL;
+set ELEC_UTIL;
+
 
 ############################################################################################
 # PARAMETER
@@ -31,14 +34,13 @@ param solar_radiation{t in TIME};     # kw/m2
 # Building parameters
 /*******************************************************/
 param floor_area;        #m2
-param temp_threshold{b in HP};       #deg C
+param temp_threshold;       #deg C
 param temp_supply{b in HP,t in TIME} >= 0; #deg C
 param temp_return{b in HP,t in TIME} >= 0; #deg C
 
 /*******************************************************/
 # Demand parameters
 /*******************************************************/
-#param spec_annual_heat_demand{b in HP} >= 0, default 0;    #kJ/m2(yr)
 param spec_annual_elec_demand;    #kWh/m2(yr)
 
 ############################################################################################
@@ -52,19 +54,17 @@ param spec_annual_elec_demand;    #kWh/m2(yr)
 # Energy variables
 /*******************************************************/ 
 # ELEC
-param Annual_Elec_Demand := spec_annual_elec_demand*floor_area;
+param Elec_Demand{t in TIME} := (spec_annual_elec_demand*floor_area)/12;
 
-  
 # Parameter heating signature
 param k1{b in HP};
 param k2{b in HP};
  
-
 # TIME-DEPENDENT HEAT DEMAND
 var Heat_Demand{b in HP, t in TIME} >= 0;
 subject to Heat_Demand_Constr{b in HP, t in 1..12}:
     Heat_Demand[b,t] = 
-    if (external_temp[t] < temp_threshold[b]) then
+    if (external_temp[t] < temp_threshold) then
       (k1[b] * (external_temp[t]) + k2[b])*1000            #kW
     else 0;
 
@@ -72,12 +72,6 @@ param max_demand{b in HP};
 subject to Heat_Demand_2050{b in HP}:
   Heat_Demand[b,13] = max_demand[b];
 
-
-
-# TIME-DEPENDENT ELEC DEMAND
-var Elec_Demand{t in TIME} >= 0;
-subject to Elec_Demand_Constr{t in TIME}:
-  Elec_Demand[t] = Annual_Elec_Demand / 12;    #kW
 
 /*******************************************************/
 # Investment variables
@@ -124,23 +118,23 @@ subject to Component_cmax_cstr {c in COMPONENTS}:
 
 # ENERGY BALANCE ########################################
 #Energy model
-var Heating_LT {c in COMPONENTS, t in TIME} >= 0;
-var Heating_HT {c in COMPONENTS, t in TIME} >= 0;
+var Heating_LT {c in HEAT_UTIL, t in TIME} >= 0;
+var Heating_HT {c in HEAT_UTIL, t in TIME} >= 0;
 
 
 subject to Energy_Balance_LT_cstr2 {t in TIME, bu in HP: temp_supply[bu,t]<=50}:
-  sum{b in HP} Heat_Demand[b,t] = sum {c in COMPONENTS} ComponentSize_t [c,t];
+  sum{b in HP} Heat_Demand[b,t] = sum {c in HEAT_UTIL} ComponentSize_t [c,t];
 
 # Energy balance for LT HP
 subject to Energy_Balance_LT_cstr {b in HP,t in TIME: temp_supply[b,t]>50}:
-  Heat_Demand['HPLOW',t] = sum {c in COMPONENTS: c!="HEATPUMPHPLOW"} Heating_LT [c,t];
+  Heat_Demand['HPLOW',t] = sum {c in HEAT_UTIL: c!="HPHIGH"} Heating_LT [c,t];
 
 # Energy balance for HT HP
 subject to Energy_Balance_HT_cstr {b in HP,t in TIME: temp_supply[b,t]>50}:
-  Heat_Demand['HPHIGH',t] = sum {c in COMPONENTS : c!="HEATPUMPHPLOW"} Heating_HT [c,t];
+  Heat_Demand['HPHIGH',t] = sum {c in HEAT_UTIL : c!="HPLOW"} Heating_HT [c,t];
 
 # Overall energy balance
-subject to Energy_Balance_overall_cstr {c in COMPONENTS,t in TIME}:
+subject to Energy_Balance_overall_cstr {c in HEAT_UTIL,t in TIME}:
   ComponentSize_t[c,t] = Heating_LT[c,t]+Heating_HT[c,t];
 
 
@@ -182,11 +176,10 @@ subject to Boiler_Energy_Balance_Constr{t in TIME}:
 # SOLAR PANEL MODEL#########################################
 param Efficiency_SolarPanels := 0.11327;  #Voir feuille excel DATA, Sylvain
 param solarfarm_area := 15500;            #m^2, donnée du projet
-var solarfarm_area_increase >= 0, <= 3500; #m^2, Valeur max estimated quickly from Maps #CHANGER m2 en WATT
 var El_Available_Solar{t in TIME} >=0;
 
 subject to El_available_Constr{t in TIME}: #AJOUTER COUTS DES NOUVEAUX PANNEAUX!
-  El_Available_Solar[t] = (solarfarm_area*Efficiency_SolarPanels+solarfarm_area_increase*Efficiency_SolarPanels)*solar_radiation[t]; #kW
+  El_Available_Solar[t] = ((solarfarm_area+Capacity["SOLAR"])*Efficiency_SolarPanels)*solar_radiation[t]; #kW
 
 # MASS BALANCE NATURAL GAS #################################
 var NG_Demand_grid{t in TIME} >= 0;
@@ -229,7 +222,6 @@ subject to an_CAPEXTot_Con:
   an_CAPEX_Tot = sum{c in COMPONENTS} an_CAPEX[c];
 
   
-  
 ############################################################################################
 # OBJECTIVE FUNCTION
 ############################################################################################
@@ -245,8 +237,6 @@ param c_ng_in;
 minimize opex:
 sum{t in TIME}((c_ng_in*NG_Demand_grid[t] + c_el_in*El_Buy[t] - c_el_out*El_Sell[t])*TIMEsteps[t]) + an_CAPEX_Tot;
 
-
-
 solve;
 
 # To do!
@@ -261,8 +251,9 @@ display ComponentSize_t;
 display Capacity;
 display an_CAPEX;
 
-display Annual_Elec_Demand;
+
+display El_Buy;
+
 #display COP;
-#display solarfarm_area_increase;
 
 end;
