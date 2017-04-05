@@ -94,8 +94,8 @@ EPFLhigh -0.188 3.7292
 ;
 
 param: max_demand :=		#Sylvain
-EPFLlow	12000			#kW
-EPFLhigh 13000
+EPFLlow	0 #12000			#kW
+EPFLhigh 0 #13000
 ;
 
 param: floor_area :=
@@ -209,7 +209,7 @@ SOFC 1500 #dimitri , inventé
 TURBINE 1500 #dimitri , inventé
 ;
 param  C_max   := 
-BOILER 250000 
+BOILER 25000 
 HEATPUMPHIGH 12000 #initialement 10000, voir donnée lab01
 HEATPUMPLOW 13000	##initialement 10000, VOIR donnée lab01
 SOFC 10000 #dimitri , inventé
