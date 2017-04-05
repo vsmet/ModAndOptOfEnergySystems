@@ -130,12 +130,12 @@ var Heating_LT {c in COMPONENTS, t in TIME} >= 0;
 var Heating_HT {c in COMPONENTS, t in TIME} >= 0;
 
 # Energy balance for LT buildings
-subject to Energy_Balance_LT_cstr {b in BUILDINGS,t in TIME}:
-  Heat_Demand['EPFLlow',t] = sum {c in COMPONENTS} (if Component_temp[c,t]>= (temp_supply[b,t]+3) then (Heating_LT [c,t]) else (0));
+subject to Energy_Balance_LT_cstr {b in BUILDINGS,t in TIME, cp in COMPONENTS: Component_temp[cp,t]>=(temp_supply[b,t] + 1)}:
+  Heat_Demand['EPFLlow',t] = sum {c in COMPONENTS} Heating_LT [c,t];
 
 # Energy balance for HT buildings
-subject to Energy_Balance_HT_cstr {b in BUILDINGS,t in TIME}:
-  Heat_Demand['EPFLhigh',t] = sum {c in COMPONENTS} (if Component_temp[c,t]>= (temp_supply[b,t] + 5) then (Heating_HT [c,t]) else (0));
+subject to Energy_Balance_HT_cstr {b in BUILDINGS,t in TIME, cp in COMPONENTS: Component_temp[cp,t]>=(temp_supply[b,t] + 10)}:
+  Heat_Demand['EPFLhigh',t] = sum {c in COMPONENTS} Heating_HT [c,t];
 
 # Overall energy balance
 subject to Energy_Balance_overall_cstr {c in COMPONENTS,t in TIME}:
