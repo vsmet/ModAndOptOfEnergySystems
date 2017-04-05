@@ -14,8 +14,13 @@
 # SETS
 ############################################################################################
 set BUILDINGS := EPFLlow EPFLhigh;
+<<<<<<< Updated upstream
 set TIME := 1 2 3 4 5 6 7 8 9 10 11 12 13;
 set COMPONENTS := BOILER HEATPUMPHIGH HEATPUMPLOW SOFC TURBINE;
+=======
+set TIME := 1 2 3 4 5 6 7 8 9 10 11 12;
+set COMPONENTS := BOILER HEATPUMPHIGH HEATPUMPLOW SOFC;
+>>>>>>> Stashed changes
 
 ############################################################################################
 # PARAMETERS
@@ -184,27 +189,40 @@ param  F_BM    :=
 BOILER 1.8
 HEATPUMPHIGH 1.6
 HEATPUMPLOW 1.6
+<<<<<<< Updated upstream
 SOFC 1.6 #dimitri , inventé
 TURBINE 1.6 #dimitri , inventé
+=======
+SOFC 4.01
+>>>>>>> Stashed changes
 ;
 param  F_T     := 
 BOILER 1.15
 HEATPUMPHIGH 1
 HEATPUMPLOW 1
+<<<<<<< Updated upstream
 SOFC 1 #dimitri , inventé
 TURBINE 1 #dimitri , inventé
+=======
+SOFC 1
+>>>>>>> Stashed changes
 ;
 param  F_P     := 
 BOILER 1.13
 HEATPUMPHIGH 1
 HEATPUMPLOW 1
+<<<<<<< Updated upstream
 SOFC 1 #dimitri , inventé
 TURBINE 1 #dimitri , inventé
+=======
+SOFC 1
+>>>>>>> Stashed changes
 ;
 param  C_min   := 
 BOILER 1000
 HEATPUMPHIGH 1500
 HEATPUMPLOW 1500
+<<<<<<< Updated upstream
 SOFC 1500 #dimitri , inventé
 TURBINE 1500 #dimitri , inventé
 ;
@@ -214,11 +232,21 @@ HEATPUMPHIGH 12000 #initialement 10000, voir donnée lab01
 HEATPUMPLOW 13000	##initialement 10000, VOIR donnée lab01
 SOFC 10000 #dimitri , inventé
 TURBINE 10000 #dimitri , inventé
+=======
+SOFC 1000
+;
+param  C_max   := 
+BOILER 20000
+HEATPUMPHIGH 10000
+HEATPUMPLOW 10000
+SOFC 10000
+>>>>>>> Stashed changes
 ;
 param  alpha_2 := 0.35; #LectureNotes Advanced Energetics
 param  alpha_1 := 0.18; #LectureNotes Advanced Energetics
 param PC_min :=
 BOILER 31988.9510969140
+<<<<<<< Updated upstream
 HEATPUMPHIGH 78544.428736573
 HEATPUMPLOW 78544.428736573
 SOFC 150000 #dimitri , inventé
@@ -230,6 +258,17 @@ HEATPUMPHIGH 84609.836013398
 HEATPUMPLOW 84609.836013398
 SOFC 150000 #dimitri , inventé
 TURBINE 150000 #dimitri , inventé
+=======
+HEATPUMPHIGH 178544.428736573
+HEATPUMPLOW 178544.428736573
+SOFC  1787530.73437076
+;
+param PC_max := 
+BOILER 148415.893301207
+HEATPUMPHIGH 984609.836013398
+HEATPUMPLOW 984609.836013398
+SOFC 17875307.3437076
+>>>>>>> Stashed changes
 ;
 
 
