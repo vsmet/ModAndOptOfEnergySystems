@@ -200,7 +200,7 @@ subject to Boiler_Energy_Balance_Constr{t in TIME}:
 # SOLAR PANEL MODEL#########################################
 param Efficiency_SolarPanels := 0.11327;  #Voir feuille excel DATA, Sylvain
 param solarfarm_area := 15500;            #m^2, donnée du projet
-var solarfarm_area_increase >= 0, <= 3500; #m^2, Valeur max estimated quickly from Maps
+var solarfarm_area_increase >= 0, <= 3500; #m^2, Valeur max estimated quickly from Maps #CHANGER m2 en WATT
 var El_Available_Solar{t in TIME} >=0;
 
 subject to El_available_Constr{t in TIME}: #AJOUTER COUTS DES NOUVEAUX PANNEAUX!
@@ -242,9 +242,9 @@ subject to PC_Con{c in COMPONENTS}:
 subject to BM_C_Con{c in COMPONENTS}:
   BM_C[c] = F_P[c]*F_T[c]*F_BM[c]*PC[c];
 subject to GR_C_Con{c in COMPONENTS}:
-  GR_C[c] = BM_C[c]*(alpha_1*alpha_2 + 1);
+  GR_C[c] = BM_C[c]*(alpha_1*alpha_2 + 1);    #Cout totaux
 subject to an_CAPEX_Con{c in COMPONENTS}:
-  an_CAPEX[c] = GR_C[c]*((interest_rate*(1+interest_rate)^lifetime)/((1+interest_rate)^lifetime - 1));
+  an_CAPEX[c] = GR_C[c]*((interest_rate*(1+interest_rate)^lifetime)/((1+interest_rate)^lifetime - 1));  #Cout annualisés
 subject to an_CAPEXTot_Con:
   an_CAPEX_Tot = sum{c in COMPONENTS} an_CAPEX[c];
 

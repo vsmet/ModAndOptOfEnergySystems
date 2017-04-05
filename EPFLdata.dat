@@ -95,8 +95,8 @@ EPFLhigh -0.188 3.7292
 ;
 
 param: max_demand :=		#Sylvain
-EPFLlow	0 #12000			#kW
-EPFLhigh 0 #13000
+EPFLlow	12000			#kW
+EPFLhigh 13000
 ;
 
 param: floor_area :=
@@ -137,20 +137,20 @@ EPFLhigh	13	65		45
 /*******************************************************/
 # Cooling loop parameters
 /*******************************************************/
-param: vol_cooling_water := #en m3/mois
-1	394.32
-2	356.16
-3	394.32
-4	381.6
-5	394.32
-6	381.6
-7	394.32
-8	394.32
-9	381.6
-10	394.32
-11	381.6
-12	394.32
-13 	0.7
+param: vol_cooling_water := #en m3/mois, Sylvain
+1	1419552
+2	1282176
+3	1419552
+4	1373760
+5	1419552
+6	1373760
+7	1419552
+8	1419552
+9	1373760
+10	1419552
+11	1373760
+12	1419552
+13	2520
 ;
 
 /*******************************************************/
@@ -207,14 +207,24 @@ BOILER 1000
 HEATPUMPHIGH 1500
 HEATPUMPLOW 1500
 SOFC 1500 #dimitri , inventé
+<<<<<<< HEAD
 TURBINE 100 #dimitri ,matlab doc
+=======
+TURBINE 1500 #dimitri , inventé
+#SOLAR 0
+>>>>>>> origin/master
 ;
 param  C_max   := 
 BOILER 25000 
 HEATPUMPHIGH 12000 #initialement 10000, voir donnée lab01
 HEATPUMPLOW 13000	##initialement 10000, VOIR donnée lab01
 SOFC 10000 #dimitri , inventé
+<<<<<<< HEAD
 TURBINE 15000 #dimitri , matlab
+=======
+TURBINE 10000 #dimitri , inventé
+#SOLAR 3500*y*x #kW
+>>>>>>> origin/master
 ;
 param  alpha_2 := 0.35; #LectureNotes Advanced Energetics
 param  alpha_1 := 0.18; #LectureNotes Advanced Energetics
