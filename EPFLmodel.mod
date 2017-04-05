@@ -12,7 +12,6 @@ set HP;
 set TIME;
 set COMPONENTS;
 
-
 ############################################################################################
 # PARAMETER
 ############################################################################################
@@ -31,7 +30,7 @@ param solar_radiation{t in TIME};     # kw/m2
 /*******************************************************/
 # Building parameters
 /*******************************************************/
-param floor_area{b in HP} >= 0;        #m2
+param floor_area;        #m2
 param temp_threshold{b in HP};       #deg C
 param temp_supply{b in HP,t in TIME} >= 0; #deg C
 param temp_return{b in HP,t in TIME} >= 0; #deg C
@@ -40,7 +39,7 @@ param temp_return{b in HP,t in TIME} >= 0; #deg C
 # Demand parameters
 /*******************************************************/
 #param spec_annual_heat_demand{b in HP} >= 0, default 0;    #kJ/m2(yr)
-param spec_annual_elec_demand{b in HP} >= 0, default 0;    #kWh/m2(yr)
+param spec_annual_elec_demand;    #kWh/m2(yr)
 
 ############################################################################################
 # VARIABLES (and defining equations)
@@ -53,9 +52,8 @@ param spec_annual_elec_demand{b in HP} >= 0, default 0;    #kWh/m2(yr)
 # Energy variables
 /*******************************************************/ 
 # ELEC
-var Annual_Elec_Demand{b in HP} >= 0;
-subject to Annual_Elec_Demand_Constr{b in HP}:
-  Annual_Elec_Demand[b] = floor_area[b] * spec_annual_elec_demand[b];   #kWh(/yr)
+param Annual_Elec_Demand := spec_annual_elec_demand*floor_area;
+
   
 # Parameter heating signature
 param k1{b in HP};
@@ -77,9 +75,9 @@ subject to Heat_Demand_2050{b in HP}:
 
 
 # TIME-DEPENDENT ELEC DEMAND
-var Elec_Demand{b in HP, t in TIME} >= 0;
-subject to Elec_Demand_Constr{b in HP, t in TIME}:
-  Elec_Demand[b,t] = Annual_Elec_Demand[b] / 12;    #kW
+var Elec_Demand{t in TIME} >= 0;
+subject to Elec_Demand_Constr{t in TIME}:
+  Elec_Demand[t] = Annual_Elec_Demand / 12;    #kW
 
 /*******************************************************/
 # Investment variables
@@ -181,8 +179,6 @@ var NG_Demand_Boiler{t in TIME} >= 0;
 subject to Boiler_Energy_Balance_Constr{t in TIME}:
   ComponentSize_t['BOILER',t] = Efficiency_Boiler*NG_Demand_Boiler[t];  #kW  
 
-
-
 # SOLAR PANEL MODEL#########################################
 param Efficiency_SolarPanels := 0.11327;  #Voir feuille excel DATA, Sylvain
 param solarfarm_area := 15500;            #m^2, donnée du projet
@@ -218,7 +214,7 @@ subject to EightyeightPerc_Constr:
 var El_Buy{t in TIME} >=0;
 var El_Sell{t in TIME}>=0;
 subject to Electricity_balance_Constr{t in TIME}:
-  El_Available_Solar[t]+ sum{u in COGENERATION} El_prod_COG[u,t]+ El_Buy[t] - El_Sell[t] - sum{h in HP} EL_Demand_HP[h,t] - El_pump_cooling[t]= sum{b in HP} Elec_Demand[b,t]; #kW
+  El_Available_Solar[t]+ sum{u in COGENERATION} El_prod_COG[u,t]+ El_Buy[t] - El_Sell[t] - sum{h in HP} EL_Demand_HP[h,t] - El_pump_cooling[t]= Elec_Demand[t]; #kW
 
 # INVESTMENT ###################################################
 subject to PC_Con{c in COMPONENTS}:
@@ -265,6 +261,7 @@ display ComponentSize_t;
 display Capacity;
 display an_CAPEX;
 
+display Annual_Elec_Demand;
 #display COP;
 #display solarfarm_area_increase;
 
