@@ -13,6 +13,9 @@ set TIME;
 set COMPONENTS;
 set HEAT_UTIL;
 set ELEC_UTIL;
+set FUEL_USERS;
+set NG_USERS;
+
 
 
 ############################################################################################
@@ -68,11 +71,6 @@ subject to Heat_Demand_Constr{b in HP, t in 1..12}:
       (k1[b] * (external_temp[t]) + k2[b])*1000            #kW
     else 0;
 
-param max_demand{b in HP};
-subject to Heat_Demand_2050{b in HP}:
-  Heat_Demand[b,13] = max_demand[b];
-
-
 /*******************************************************/
 # Investment variables
 /*******************************************************/ 
@@ -121,7 +119,8 @@ subject to Component_cmax_cstr {c in COMPONENTS}:
 var Heating_LT {c in HEAT_UTIL, t in TIME} >= 0;
 var Heating_HT {c in HEAT_UTIL, t in TIME} >= 0;
 
-
+subject to Heat_Demand_2050{b in HP}:
+  Heat_Demand[b,13] = C_max[b];
 subject to Energy_Balance_LT_cstr2 {t in TIME, bu in HP: temp_supply[bu,t]<=50}:
   sum{b in HP} Heat_Demand[b,t] = sum {c in HEAT_UTIL} ComponentSize_t [c,t];
 
@@ -151,27 +150,17 @@ subject to HP_Energy_Balance_cstr{h in HP,t in TIME}:
 
 
  #§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§
-
-set COGENERATION;
-param COG_el_eff{u in COGENERATION}; 
-param COG_th_eff{u in COGENERATION}; 
+param FUEL_el_eff{u in FUEL_USERS}; 
+param FUEL_th_eff{u in FUEL_USERS}; 
 
 # Energy balance for SOFC
-var NG_Demand_COG{u in COGENERATION, t in TIME}>=0;
-var El_prod_COG{u in COGENERATION, t in TIME} >=0;
+var FUEL_Demand{u in FUEL_USERS, t in TIME}>=0;
+subject to NG_heat_balance_constr{u in FUEL_USERS, t in TIME}: 
+ ComponentSize_t[u,t] = FUEL_th_eff[u]*FUEL_Demand[u,t]; #dim
 
-subject to COG_heat_balance_constr{u in COGENERATION, t in TIME}: 
- ComponentSize_t[u,t] = COG_th_eff[u]*NG_Demand_COG[u,t]; #dim
-subject to COG_elec_balance_constr{u in COGENERATION, t in TIME}: 
- El_prod_COG[u,t] = COG_el_eff[u]*NG_Demand_COG[u,t]; #dim
-
-# BOILER MODEL  ###########################################
-param Efficiency_Boiler := 0.98;
-var NG_Demand_Boiler{t in TIME} >= 0;
-
-# Energy balance for Boiler
-subject to Boiler_Energy_Balance_Constr{t in TIME}:
-  ComponentSize_t['BOILER',t] = Efficiency_Boiler*NG_Demand_Boiler[t];  #kW  
+var El_prod_FUEL{u in FUEL_USERS, t in TIME} >=0;
+subject to FUEL_elec_balance_constr{u in FUEL_USERS, t in TIME}: 
+ El_prod_FUEL[u,t] = FUEL_el_eff[u]*FUEL_Demand[u,t]; #dim
 
 # SOLAR PANEL MODEL#########################################
 param Efficiency_SolarPanels := 0.11327;  #Voir feuille excel DATA, Sylvain
@@ -181,11 +170,6 @@ var El_Available_Solar{t in TIME} >=0;
 subject to El_available_Constr{t in TIME}: #AJOUTER COUTS DES NOUVEAUX PANNEAUX!
   El_Available_Solar[t] = ((solarfarm_area+Capacity["SOLAR"])*Efficiency_SolarPanels)*solar_radiation[t]; #kW
 
-# MASS BALANCE NATURAL GAS #################################
-var NG_Demand_grid{t in TIME} >= 0;
-
-subject to Natural_gas_Demand_Constr{t in TIME}:
-  NG_Demand_grid[t] = NG_Demand_Boiler[t]+sum{u in COGENERATION} NG_Demand_COG[u,t];  #kW #dimitri
 
 # COOLING LOOP MODEL ########################################
 param vol_cooling_water{t in TIME}; # m3/mois
@@ -207,7 +191,7 @@ subject to EightyeightPerc_Constr:
 var El_Buy{t in TIME} >=0;
 var El_Sell{t in TIME}>=0;
 subject to Electricity_balance_Constr{t in TIME}:
-  El_Available_Solar[t]+ sum{u in COGENERATION} El_prod_COG[u,t]+ El_Buy[t] - El_Sell[t] - sum{h in HP} EL_Demand_HP[h,t] - El_pump_cooling[t]= Elec_Demand[t]; #kW
+  El_Available_Solar[t]+ sum{u in FUEL_USERS} El_prod_FUEL[u,t]+ El_Buy[t] - El_Sell[t] - sum{h in HP} EL_Demand_HP[h,t] - El_pump_cooling[t]= Elec_Demand[t]; #kW
 
 # INVESTMENT ###################################################
 subject to PC_Con{c in COMPONENTS}:
@@ -232,10 +216,11 @@ subject to an_CAPEXTot_Con:
 param c_el_in;
 param c_el_out;
 param c_ng_in;
+param c_ds_in;
 
 
 minimize opex:
-sum{t in TIME}((c_ng_in*NG_Demand_grid[t] + c_el_in*El_Buy[t] - c_el_out*El_Sell[t])*TIMEsteps[t]) + an_CAPEX_Tot;
+sum{u in NG_USERS,t in TIME} ((c_ng_in*FUEL_Demand[u,t] + c_ds_in*FUEL_Demand["ICENGINE",t] + c_el_in*El_Buy[t] - c_el_out*El_Sell[t])*TIMEsteps[t]) + an_CAPEX_Tot;
 
 solve;
 

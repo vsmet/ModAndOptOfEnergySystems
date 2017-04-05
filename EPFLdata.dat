@@ -14,11 +14,12 @@
 # SETS
 ############################################################################################
 set TIME := 1 2 3 4 5 6 7 8 9 10 11 12 13;
-set COMPONENTS := BOILER HPHIGH HPLOW SOFC TURBINE SOLAR;
-set HEAT_UTIL := BOILER HPHIGH HPLOW SOFC TURBINE;
+set COMPONENTS := BOILER HPHIGH HPLOW SOFC TURBINE SOLAR ICENGINE;
+set HEAT_UTIL := BOILER HPHIGH HPLOW SOFC TURBINE ICENGINE;
 set ELEC_UTIL := SOLAR;
 set HP := HPLOW HPHIGH; #Can be used as buildingslist also
-set COGENERATION := SOFC TURBINE;
+set FUEL_USERS := BOILER SOFC TURBINE ICENGINE;
+set NG_USERS := BOILER SOFC TURBINE;
 
 ############################################################################################
 # PARAMETERS
@@ -81,23 +82,18 @@ param: solar_radiation :=	 #kwh/m2
 param c_el_in := 0.15;         	    # http://exploitation-energies.epfl.ch/files/content/sites/exploitation-energies/files/Documents%20pdf/electricite_grilles_tarifs_2016.pdf  #dimitri vincent
 param c_el_out := 0.1275;         	# 0.85* c_el_in # vincent dimitri
 param c_ng_in := 0.0662;         	# http://www.sig-ge.ch/nous-connaitre/support-et-communications/Documents/Tarifs%20et%20r%C3%A9glements/Gaz%20et%20chaleur/tarifs_fourniture_gaz_naturel.pdf #dimitri vincent
-
+param c_ds_in := 0.1045;
 
 /*******************************************************/
 # Building parameters
 /*******************************************************/
 param temp_threshold := 16;
 
-
 param: k1, k2 :=
 HPLOW -0.2659 5.2087         #From 1.7.10 Signatures chauffage dans le cahier des charges          
 HPHIGH -0.188 3.7292         
 ;
 
-param: max_demand :=		#Sylvain
-HPLOW	12000			#kW
-HPHIGH 13000
-;
 param spec_annual_elec_demand := 116.6 ;
 param floor_area := 384854;    # m^2, SRE, 2007, Vuille2008, p. 20;
 
@@ -150,15 +146,19 @@ param: vol_cooling_water := #en m3/mois, Sylvain
 ;
 
 /*******************************************************/
-# Cogeneration unit parameters
+# FUEL USERS unit parameters
 /*******************************************************/
-param: COG_el_eff :=
+param: FUEL_el_eff :=
+BOILER 0
 SOFC 0.58 # Fuel cell class (Jan van Herle)
 TURBINE 0.36 #dimitri /EEGJulyrevisedFINAL1
+ICENGINE 0.38
 ;
-param: COG_th_eff :=
+param: FUEL_th_eff :=
+BOILER 0.98
 SOFC 0.4 # Fuel cell class (Jan van Herle)
 TURBINE 0.48 # dimitri /EEGJulyrevisedFINAL1
+ICENGINE 0.6
 ;
 
 /******************************************************/
@@ -182,6 +182,7 @@ HPLOW 1.6
 SOFC 1 
 TURBINE 6 #dimitri , matlab doc , stainless steel
 SOLAR 1
+ICENGINE 1
 ;
 param  F_T     := 
 BOILER 1.15
@@ -190,6 +191,7 @@ HPLOW 1
 SOFC 1 #okay, matlab file
 TURBINE 1 #dimitri , inventé
 SOLAR 1
+ICENGINE 1
 ;
 param  F_P     := 
 BOILER 1.13
@@ -198,6 +200,7 @@ HPLOW 1
 SOFC 1 #okay, matlab file
 TURBINE 1 #dimitri , inventé
 SOLAR 1
+ICENGINE 1
 ;
 param  C_min   := 
 BOILER 1000
@@ -206,7 +209,7 @@ HPLOW 1500
 SOFC 1500 
 TURBINE 100 #dimitri ,matlab doc
 SOLAR 0
-#SOLAR 0
+ICENGINE 100
 ;
 param  C_max   := 
 BOILER 25000 
@@ -215,8 +218,7 @@ HPLOW 13000	##initialement 10000, VOIR donnée lab01
 SOFC 10000 
 TURBINE 15000 #dimitri , matlab
 SOLAR 3500
-#SOLAR 3500*y*x #kW
-
+ICENGINE 10000
 ;
 param  alpha_2 := 0.35; #LectureNotes Advanced Energetics
 param  alpha_1 := 0.18; #LectureNotes Advanced Energetics
@@ -227,6 +229,7 @@ HPLOW 78544.428736573
 SOFC 750000 #Vincent, Advanced Energetics Lecture notes
 TURBINE 43601 #dimitri , matlab doc
 SOLAR 0
+ICENGINE 100
 ;
 param PC_max := 
 BOILER 148415.893301207
@@ -235,6 +238,7 @@ HPLOW 84609.836013398
 SOFC 5000000 #Vincent, Advanced Energetics Lecture notes
 TURBINE 932240 #dimitri , matlab doc
 SOLAR 1540000
+ICENGINE 1000
 ;
 
 
@@ -308,6 +312,21 @@ TURBINE 10 100
 TURBINE 11 100
 TURBINE 12 100
 TURBINE 13 100
+
+ICENGINE 1	90
+ICENGINE 2 	90
+ICENGINE 3  90
+ICENGINE 4  90
+ICENGINE 5  90
+ICENGINE 6  90
+ICENGINE 7  90
+ICENGINE 8  90
+ICENGINE 9	90
+ICENGINE 10 90
+ICENGINE 11 90
+ICENGINE 12 90
+ICENGINE 13 90
+
 ;
 
 
