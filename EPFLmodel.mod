@@ -104,7 +104,7 @@ var an_CAPEX_Tot  >=0;
 
 param Component_temp {c in COMPONENTS, t in TIME};
 var Component_Use {c in COMPONENTS} binary;
-var ComponentSize_t {c in COMPONENTS, t in TIME} >= 0;
+var ComponentSize_t {c in COMPONENTS, t in TIME} >= 0;s
 
 subject to Size_Constr{c in COMPONENTS, t in TIME}:
   ComponentSize_t[c,t] <= Capacity[c];             #kW
