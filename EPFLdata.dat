@@ -207,24 +207,17 @@ BOILER 1000
 HEATPUMPHIGH 1500
 HEATPUMPLOW 1500
 SOFC 1500 #dimitri , inventé
-<<<<<<< HEAD
 TURBINE 100 #dimitri ,matlab doc
-=======
-TURBINE 1500 #dimitri , inventé
 #SOLAR 0
->>>>>>> origin/master
 ;
 param  C_max   := 
 BOILER 25000 
 HEATPUMPHIGH 12000 #initialement 10000, voir donnée lab01
 HEATPUMPLOW 13000	##initialement 10000, VOIR donnée lab01
 SOFC 10000 #dimitri , inventé
-<<<<<<< HEAD
 TURBINE 15000 #dimitri , matlab
-=======
-TURBINE 10000 #dimitri , inventé
 #SOLAR 3500*y*x #kW
->>>>>>> origin/master
+
 ;
 param  alpha_2 := 0.35; #LectureNotes Advanced Energetics
 param  alpha_1 := 0.18; #LectureNotes Advanced Energetics
