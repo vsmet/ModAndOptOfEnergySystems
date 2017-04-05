@@ -8,7 +8,7 @@
 ############################################################################################
 # SETS
 ############################################################################################
-set BUILDINGS;
+set HP;
 set TIME;
 set COMPONENTS;
 
@@ -31,16 +31,16 @@ param solar_radiation{t in TIME};     # kw/m2
 /*******************************************************/
 # Building parameters
 /*******************************************************/
-param floor_area{b in BUILDINGS} >= 0;        #m2
-param temp_threshold{b in BUILDINGS};       #deg C
-param temp_supply{b in BUILDINGS,t in TIME} >= 0; #deg C
-param temp_return{b in BUILDINGS,t in TIME} >= 0; #deg C
+param floor_area{b in HP} >= 0;        #m2
+param temp_threshold{b in HP};       #deg C
+param temp_supply{b in HP,t in TIME} >= 0; #deg C
+param temp_return{b in HP,t in TIME} >= 0; #deg C
 
 /*******************************************************/
 # Demand parameters
 /*******************************************************/
-#param spec_annual_heat_demand{b in BUILDINGS} >= 0, default 0;    #kJ/m2(yr)
-param spec_annual_elec_demand{b in BUILDINGS} >= 0, default 0;    #kWh/m2(yr)
+#param spec_annual_heat_demand{b in HP} >= 0, default 0;    #kJ/m2(yr)
+param spec_annual_elec_demand{b in HP} >= 0, default 0;    #kWh/m2(yr)
 
 ############################################################################################
 # VARIABLES (and defining equations)
@@ -53,32 +53,32 @@ param spec_annual_elec_demand{b in BUILDINGS} >= 0, default 0;    #kWh/m2(yr)
 # Energy variables
 /*******************************************************/ 
 # ELEC
-var Annual_Elec_Demand{b in BUILDINGS} >= 0;
-subject to Annual_Elec_Demand_Constr{b in BUILDINGS}:
+var Annual_Elec_Demand{b in HP} >= 0;
+subject to Annual_Elec_Demand_Constr{b in HP}:
   Annual_Elec_Demand[b] = floor_area[b] * spec_annual_elec_demand[b];   #kWh(/yr)
   
 # Parameter heating signature
-param k1{b in BUILDINGS};
-param k2{b in BUILDINGS};
+param k1{b in HP};
+param k2{b in HP};
  
 
 # TIME-DEPENDENT HEAT DEMAND
-var Heat_Demand{b in BUILDINGS, t in TIME} >= 0;
-subject to Heat_Demand_Constr{b in BUILDINGS, t in 1..12}:
+var Heat_Demand{b in HP, t in TIME} >= 0;
+subject to Heat_Demand_Constr{b in HP, t in 1..12}:
     Heat_Demand[b,t] = 
     if (external_temp[t] < temp_threshold[b]) then
       (k1[b] * (external_temp[t]) + k2[b])*1000            #kW
     else 0;
 
-param max_demand{b in BUILDINGS};
-subject to Heat_Demand_2050{b in BUILDINGS}:
+param max_demand{b in HP};
+subject to Heat_Demand_2050{b in HP}:
   Heat_Demand[b,13] = max_demand[b];
 
 
 
 # TIME-DEPENDENT ELEC DEMAND
-var Elec_Demand{b in BUILDINGS, t in TIME} >= 0;
-subject to Elec_Demand_Constr{b in BUILDINGS, t in TIME}:
+var Elec_Demand{b in HP, t in TIME} >= 0;
+subject to Elec_Demand_Constr{b in HP, t in TIME}:
   Elec_Demand[b,t] = Annual_Elec_Demand[b] / 12;    #kW
 
 /*******************************************************/
@@ -130,16 +130,16 @@ var Heating_LT {c in COMPONENTS, t in TIME} >= 0;
 var Heating_HT {c in COMPONENTS, t in TIME} >= 0;
 
 
-subject to Energy_Balance_LT_cstr2 {t in TIME, bu in BUILDINGS: temp_supply[bu,t]<=50}:
-  sum{b in BUILDINGS} Heat_Demand[b,t] = sum {c in COMPONENTS} ComponentSize_t [c,t];
+subject to Energy_Balance_LT_cstr2 {t in TIME, bu in HP: temp_supply[bu,t]<=50}:
+  sum{b in HP} Heat_Demand[b,t] = sum {c in COMPONENTS} ComponentSize_t [c,t];
 
-# Energy balance for LT buildings
-subject to Energy_Balance_LT_cstr {b in BUILDINGS,t in TIME: temp_supply[b,t]>50}:
-  Heat_Demand['EPFLlow',t] = sum {c in COMPONENTS: c!="HEATPUMPLOW"} Heating_LT [c,t];
+# Energy balance for LT HP
+subject to Energy_Balance_LT_cstr {b in HP,t in TIME: temp_supply[b,t]>50}:
+  Heat_Demand['HPLOW',t] = sum {c in COMPONENTS: c!="HEATPUMPHPLOW"} Heating_LT [c,t];
 
-# Energy balance for HT buildings
-subject to Energy_Balance_HT_cstr {b in BUILDINGS,t in TIME: temp_supply[b,t]>50}:
-  Heat_Demand['EPFLhigh',t] = sum {c in COMPONENTS : c!="HEATPUMPLOW"} Heating_HT [c,t];
+# Energy balance for HT HP
+subject to Energy_Balance_HT_cstr {b in HP,t in TIME: temp_supply[b,t]>50}:
+  Heat_Demand['HPHIGH',t] = sum {c in COMPONENTS : c!="HEATPUMPHPLOW"} Heating_HT [c,t];
 
 # Overall energy balance
 subject to Energy_Balance_overall_cstr {c in COMPONENTS,t in TIME}:
@@ -147,7 +147,6 @@ subject to Energy_Balance_overall_cstr {c in COMPONENTS,t in TIME}:
 
 
 # HP MODEL ################################################
-set HP;
 param lake_temp := 7;
 param carnot_eff := 0.5;
 param COP_th{h in HP, t in TIME} := (Component_temp[h,t]+273)/(Component_temp[h,t]-lake_temp);
@@ -158,19 +157,6 @@ var EL_Demand_HP {h in HP, t in TIME};
 subject to HP_Energy_Balance_cstr{h in HP,t in TIME}:
   ComponentSize_t[h,t] = COP[h,t]*EL_Demand_HP[h,t];  #kW 
 
-/*# SOFC MODEL ##############################################
-set COGENERATION;
-param SOFC_el_eff := 0.2; #dimitri inventé
-param SOFC_th_eff := 0.5; #dimitri inventé
-
-# Energy balance for SOFC
-var NG_Demand_SOFC{t in TIME}>=0;
-var El_prod_SOFC{t in TIME} >=0;
-
-subject to SOFC_heat_balance_constr{t in TIME}: 
- ComponentSize_t['SOFC',t] = SOFC_th_eff*NG_Demand_SOFC[t]; #dim
-subject to SOFC_elec_balance_constr{t in TIME}: 
- El_prod_SOFC[t] = SOFC_el_eff*NG_Demand_SOFC[t]; #dim*/
 
  #§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§
 
@@ -225,16 +211,14 @@ subject to El_pump_cooling_water{t in TIME}:
 
 # HEAT BALANCE #################################################
 subject to EightyeightPerc_Constr:
-  sum{h in HP, t in TIME}(ComponentSize_t[h,t]*TIMEsteps[t]) >= 0.88*sum{b in BUILDINGS,t in TIME}(Heat_Demand[b,t]*TIMEsteps[t]); #SYSTEM REQUIREMENTS
-# subject to Peak:
-#   25000 - Capacity["HEATPUMPLOW"] - Capacity["HEATPUMPHIGH"] <= Capacity["BOILER"]; 
+  sum{h in HP, t in TIME}(ComponentSize_t[h,t]*TIMEsteps[t]) >= 0.88*sum{b in HP,t in TIME}(Heat_Demand[b,t]*TIMEsteps[t]); #SYSTEM REQUIREMENTS
 
 
 # ELECTRICITY BALANCE ##########################################
 var El_Buy{t in TIME} >=0;
 var El_Sell{t in TIME}>=0;
 subject to Electricity_balance_Constr{t in TIME}:
-  El_Available_Solar[t]+ sum{u in COGENERATION} El_prod_COG[u,t]+ El_Buy[t] - El_Sell[t] - sum{h in HP} EL_Demand_HP[h,t] - El_pump_cooling[t]= sum{b in BUILDINGS} Elec_Demand[b,t]; #kW
+  El_Available_Solar[t]+ sum{u in COGENERATION} El_prod_COG[u,t]+ El_Buy[t] - El_Sell[t] - sum{h in HP} EL_Demand_HP[h,t] - El_pump_cooling[t]= sum{b in HP} Elec_Demand[b,t]; #kW
 
 # INVESTMENT ###################################################
 subject to PC_Con{c in COMPONENTS}:
@@ -281,6 +265,7 @@ display ComponentSize_t;
 display Capacity;
 display an_CAPEX;
 
-display COP;
+#display COP;
+#display solarfarm_area_increase;
 
 end;

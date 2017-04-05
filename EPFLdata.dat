@@ -13,10 +13,11 @@
 ############################################################################################
 # SETS
 ############################################################################################
-set BUILDINGS := EPFLlow EPFLhigh;
+#set BUILDINGS := HPLOW HPHIGH;
 set TIME := 1 2 3 4 5 6 7 8 9 10 11 12 13;
-set COMPONENTS := BOILER HEATPUMPHIGH HEATPUMPLOW SOFC TURBINE;
-
+set COMPONENTS := BOILER HPHIGH HPLOW SOFC TURBINE;
+set HP := HPLOW HPHIGH;
+set COGENERATION := SOFC TURBINE;
 
 ############################################################################################
 # PARAMETERS
@@ -85,53 +86,53 @@ param c_ng_in := 0.0662;         	# http://www.sig-ge.ch/nous-connaitre/support-
 # Building parameters
 /*******************************************************/
 param temp_threshold :=
-EPFLlow 16                                     # Helms2009, p. 35
-EPFLhigh 16 
+HPLOW 16                                     # Helms2009, p. 35
+HPHIGH 16 
 ;
 
 param: k1, k2 :=
-EPFLlow -0.2659 5.2087         #From 1.7.10 Signatures chauffage dans le cahier des charges          
-EPFLhigh -0.188 3.7292         
+HPLOW -0.2659 5.2087         #From 1.7.10 Signatures chauffage dans le cahier des charges          
+HPHIGH -0.188 3.7292         
 ;
 
 param: max_demand :=		#Sylvain
-EPFLlow	12000			#kW
-EPFLhigh 13000
+HPLOW	12000			#kW
+HPHIGH 13000
 ;
 
 param: floor_area :=
 #EPFL 384854                                 # m^2, SRE, 2007, Vuille2008, p. 20
-EPFLlow 184854
-EPFLhigh 200000
+HPLOW 184854
+HPHIGH 200000
 ;
 
 param: temp_supply, temp_return :=  #Selon feuille excel DATA, Onglet 3
-EPFLlow	1	38.46	29.71
-EPFLlow	2	37.35	29.20
-EPFLlow	3	34.40	27.85
-EPFLlow	4	30.89	26.24
-EPFLlow	5	26.65	24.30
-EPFLlow	6	22.95	22.60
-EPFLlow	7	22.12	22.22
-EPFLlow	8	22.31	22.31
-EPFLlow	9	26.00	24.00
-EPFLlow	10	29.51	25.61
-EPFLlow	11	34.49	27.89
-EPFLlow	12	37.82	29.42
-EPFLlow	13	50		35
-EPFLhigh	1	47.21	35.38
-EPFLhigh	2	45.50	34.46
-EPFLhigh	3	40.95	32.00
-EPFLhigh	4	35.54	29.08
-EPFLhigh	5	29.00	25.54
-EPFLhigh	6	23.30	22.46
-EPFLhigh	7	22.02	21.77
-EPFLhigh	8	22.31	21.92
-EPFLhigh	9	28.00	25.00
-EPFLhigh	10	33.41	27.92
-EPFLhigh	11	41.09	32.08
-EPFLhigh	12	46.22	34.85
-EPFLhigh	13	65		45
+HPLOW	1	38.46	29.71
+HPLOW	2	37.35	29.20
+HPLOW	3	34.40	27.85
+HPLOW	4	30.89	26.24
+HPLOW	5	26.65	24.30
+HPLOW	6	22.95	22.60
+HPLOW	7	22.12	22.22
+HPLOW	8	22.31	22.31
+HPLOW	9	26.00	24.00
+HPLOW	10	29.51	25.61
+HPLOW	11	34.49	27.89
+HPLOW	12	37.82	29.42
+HPLOW	13	50		35
+HPHIGH	1	47.21	35.38
+HPHIGH	2	45.50	34.46
+HPHIGH	3	40.95	32.00
+HPHIGH	4	35.54	29.08
+HPHIGH	5	29.00	25.54
+HPHIGH	6	23.30	22.46
+HPHIGH	7	22.02	21.77
+HPHIGH	8	22.31	21.92
+HPHIGH	9	28.00	25.00
+HPHIGH	10	33.41	27.92
+HPHIGH	11	41.09	32.08
+HPHIGH	12	46.22	34.85
+HPHIGH	13	65		45
 ;
 
 /*******************************************************/
@@ -157,19 +158,17 @@ param: vol_cooling_water := #en m3/mois, Sylvain
 # Cogeneration unit parameters
 /*******************************************************/
 param: COG_el_eff :=
-SOFC 0.2 # inventé dimitri
-TURBINE 0.36 #inventé dimitri /EEGJulyrevisedFINAL1
+SOFC 0.58 # Fuel cell class (Jan van Herle)
+TURBINE 0.36 #dimitri /EEGJulyrevisedFINAL1
 ;
 param: COG_th_eff :=
-SOFC 0.5 # inventé dimitri
+SOFC 0.4 # Fuel cell class (Jan van Herle)
 TURBINE 0.48 # dimitri /EEGJulyrevisedFINAL1
 ;
 
 /******************************************************/
 # Cost calculations
 /******************************************************/
-
-
 
 #INVESTMENT COST DATA - USD
 param ex_USD_CHF := 1; #Exchange rate 31 March
@@ -178,43 +177,43 @@ param lifetime := 20;
 
 
 ###Assumption: Boiler: Field erected with FLUID FUEL (Nat GAS)
-###Assumption: Heatpump: industrial scale
+###Assumption: : industrial scale
 param  Ref_ind := 1179;  #Assumed this to be same for all components
 param  Year_ind:= 1462.9; #2009 Index
 param  F_BM    := 
 BOILER 1.8
-HEATPUMPHIGH 1.6
-HEATPUMPLOW 1.6
-SOFC 4.01 
+HPHIGH 1.6
+HPLOW 1.6
+SOFC 1 
 TURBINE 6 #dimitri , matlab doc , stainless steel
 ;
 param  F_T     := 
 BOILER 1.15
-HEATPUMPHIGH 1
-HEATPUMPLOW 1
+HPHIGH 1
+HPLOW 1
 SOFC 1 #okay, matlab file
 TURBINE 1 #dimitri , inventé
 ;
 param  F_P     := 
 BOILER 1.13
-HEATPUMPHIGH 1
-HEATPUMPLOW 1
+HPHIGH 1
+HPLOW 1
 SOFC 1 #okay, matlab file
 TURBINE 1 #dimitri , inventé
 ;
 param  C_min   := 
 BOILER 1000
-HEATPUMPHIGH 1500
-HEATPUMPLOW 1500
-SOFC 1500 #dimitri , inventé
+HPHIGH 1500
+HPLOW 1500
+SOFC 1500 
 TURBINE 100 #dimitri ,matlab doc
 #SOLAR 0
 ;
 param  C_max   := 
 BOILER 25000 
-HEATPUMPHIGH 12000 #initialement 10000, voir donnée lab01
-HEATPUMPLOW 13000	##initialement 10000, VOIR donnée lab01
-SOFC 10000 #dimitri , inventé
+HPHIGH 12000 #initialement 10000, voir donnée lab01
+HPLOW 13000	##initialement 10000, VOIR donnée lab01
+SOFC 10000 
 TURBINE 15000 #dimitri , matlab
 #SOLAR 3500*y*x #kW
 
@@ -223,49 +222,48 @@ param  alpha_2 := 0.35; #LectureNotes Advanced Energetics
 param  alpha_1 := 0.18; #LectureNotes Advanced Energetics
 param PC_min :=
 BOILER 31988.9510969140
-HEATPUMPHIGH 78544.428736573
-HEATPUMPLOW 78544.428736573
-SOFC 150000 #dimitri , inventé
+HPHIGH 78544.428736573
+HPLOW 78544.428736573
+SOFC 750000 #Vincent, Advanced Energetics Lecture notes
 TURBINE 43601 #dimitri , matlab doc
 ;
 param PC_max := 
 BOILER 148415.893301207
-HEATPUMPHIGH 84609.836013398
-HEATPUMPLOW 84609.836013398
-SOFC 17875307.3437076
+HPHIGH 84609.836013398
+HPLOW 84609.836013398
+SOFC 5000000 #Vincent, Advanced Energetics Lecture notes
 TURBINE 932240 #dimitri , matlab doc
 ;
 
 
-
 param Component_temp :=  #Selon feuille excel DATA, Onglet 3
-HEATPUMPLOW 1   44.74
-HEATPUMPLOW 2	44.00
-HEATPUMPLOW 3	40.68
-HEATPUMPLOW 4	37.54
-HEATPUMPLOW 5	33.48
-HEATPUMPLOW 6	30.34
-HEATPUMPLOW 7	28.03
-HEATPUMPLOW 8   28.58
-HEATPUMPLOW 9   32.18
-HEATPUMPLOW 10	36.06
-HEATPUMPLOW 11	41.14
-HEATPUMPLOW 12	43.82
-HEATPUMPLOW 13	50  
+HPLOW	1	43.74
+HPLOW	2	43.00
+HPLOW	3	39.68
+HPLOW	4	36.54
+HPLOW	5	32.48
+HPLOW	6	29.34
+HPLOW	7	27.03
+HPLOW	8	27.58
+HPLOW	9	31.18
+HPLOW	10	35.06
+HPLOW	11	40.14
+HPLOW	12	42.82
+HPLOW 13  55
 
-HEATPUMPHIGH 1	52.64
-HEATPUMPHIGH 2	51.50
-HEATPUMPHIGH 3	46.38
-HEATPUMPHIGH 4	41.54
-HEATPUMPHIGH 5	35.28
-HEATPUMPHIGH 6	30.44
-HEATPUMPHIGH 7	26.88
-HEATPUMPHIGH 8	27.73
-HEATPUMPHIGH 9	33.28
-HEATPUMPHIGH 10	39.26
-HEATPUMPHIGH 11	47.09
-HEATPUMPHIGH 12	51.22
-HEATPUMPHIGH 13	65	
+HPHIGH	1	52.64
+HPHIGH	2	51.50
+HPHIGH	3	46.38
+HPHIGH	4	41.54
+HPHIGH	5	35.28
+HPHIGH	6	30.44
+HPHIGH	7	26.88
+HPHIGH	8	27.73
+HPHIGH	9	33.28
+HPHIGH	10	39.26
+HPHIGH	11	47.09
+HPHIGH	12	51.22
+HPHIGH 	13	70
 
 BOILER 1	100
 BOILER 2	100
@@ -281,45 +279,39 @@ BOILER 11	100
 BOILER 12	100
 BOILER 13	100
 
-SOFC 1 40 #dimitri , inventé
-SOFC 2 40
-SOFC 3 40
-SOFC 4 40
-SOFC 5 40
-SOFC 6 40
-SOFC 7 40
-SOFC 8 40
-SOFC 9 40
-SOFC 10 40
-SOFC 11 40
-SOFC 12 40
-SOFC 13 40
+SOFC 1 100 #dimitri , inventé
+SOFC 2 100
+SOFC 3 100
+SOFC 4 100
+SOFC 5 100
+SOFC 6 100
+SOFC 7 100
+SOFC 8 100
+SOFC 9 100
+SOFC 10 100
+SOFC 11 100
+SOFC 12 100
+SOFC 13 100
 
-TURBINE 1 40 #dimitri , inventé
-TURBINE 2 40
-TURBINE 3 40
-TURBINE 4 40
-TURBINE 5 40
-TURBINE 6 40
-TURBINE 7 40
-TURBINE 8 40
-TURBINE 9 40
-TURBINE 10 40
-TURBINE 11 40
-TURBINE 12 40
-TURBINE 13 40
+TURBINE 1 100 #dimitri , inventé
+TURBINE 2 100
+TURBINE 3 100
+TURBINE 4 100
+TURBINE 5 100
+TURBINE 6 100
+TURBINE 7 100
+TURBINE 8 100
+TURBINE 9 100
+TURBINE 10 100
+TURBINE 11 100
+TURBINE 12 100
+TURBINE 13 100
 ;
 
 
-set HP :=
-HEATPUMPLOW
-HEATPUMPHIGH
-;
 
-set COGENERATION :=
-SOFC
-TURBINE
-;
+
+
 
 
 end;
