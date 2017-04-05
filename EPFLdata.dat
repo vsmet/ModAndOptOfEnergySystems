@@ -226,7 +226,7 @@ TURBINE 150000 #dimitri , inventé
 
 
 param Component_temp :=  #Selon feuille excel DATA, Onglet 3
-HEATPUMPLOW 1   44.74
+HEATPUMPLOW 1   54.74
 HEATPUMPLOW 2	44.00
 HEATPUMPLOW 3	40.68
 HEATPUMPLOW 4	37.54

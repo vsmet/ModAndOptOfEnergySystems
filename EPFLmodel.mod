@@ -219,7 +219,7 @@ subject to El_pump_cooling_water{t in TIME}:
 
 # HEAT BALANCE #################################################
 subject to EightyeightPerc_Constr:
-  sum{h in HP, t in TIME}(ComponentSize_t[h,t]) = 0.88*sum{b in BUILDINGS,t in TIME}(Heat_Demand[b,t]); #SYSTEM REQUIREMENTS
+  sum{h in HP, t in TIME}(ComponentSize_t[h,t]) >= 0.88*sum{b in BUILDINGS,t in TIME}(Heat_Demand[b,t]); #SYSTEM REQUIREMENTS
 # subject to Peak:
 #   25000 - Capacity["HEATPUMPLOW"] - Capacity["HEATPUMPHIGH"] <= Capacity["BOILER"]; 
 
