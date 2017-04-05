@@ -171,7 +171,7 @@ subject to SOFC_elec_balance_constr{t in TIME}:
  #§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§
 
 set COGENERATION;
-param COG_el_ eff{u in COGENERATION}; 
+param COG_el_eff{u in COGENERATION}; 
 param COG_th_eff{u in COGENERATION}; 
 
 # Energy balance for SOFC
