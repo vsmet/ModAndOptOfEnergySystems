@@ -46,6 +46,11 @@ param temp_return{b in HP,t in TIME} >= 0; #deg C
 /*******************************************************/
 param spec_annual_elec_demand;    #kWh/m2(yr)
 
+
+
+
+
+
 ############################################################################################
 # VARIABLES (and defining equations)
 ############################################################################################
@@ -56,14 +61,12 @@ param spec_annual_elec_demand;    #kWh/m2(yr)
 /*******************************************************/
 # Energy variables
 /*******************************************************/ 
-# ELEC
 # COOLING LOOP 
 param vol_cooling_water{t in TIME}; # m3/mois
 param pumping_cost := 0.304 ; #kWh/m3,  calculé depuis http://exploitation-energies.epfl.ch/bilans_energetiques/details/cct, Sylvain
 #param cooling_water_Tin = 6 ; # °C, 1.7.1. page 5
 #param cooling_water_Tout = 13; # °C, 1.7.1. page 5
-param Elec_Demand{t in TIME} := (spec_annual_elec_demand*floor_area)/12 + vol_cooling_water[t]*pumping_cost;
-
+param cp_water:=4.18; #kJ/kg K
 # Parameter heating signature
 param k1{b in HP};
 param k2{b in HP};
@@ -115,11 +118,14 @@ subject to Component_cmin_cstr {c in COMPONENTS}:
 subject to Component_cmax_cstr {c in COMPONENTS}:
   Component_Use[c]*C_max[c] >= Capacity[c];
 
+
+
+
 ############################################################################################
 # CONSTRAINTS
 ############################################################################################
 
-# ENERGY BALANCE ########################################
+# HEAT BALANCE ########################################
 #Energy model
 var Heating_LT {c in HEAT_UTIL, t in TIME} >= 0;
 var Heating_HT {c in HEAT_UTIL, t in TIME} >= 0;
@@ -145,8 +151,6 @@ subject to Energy_Balance_overall_cstr {c in HEAT_UTIL,t in TIME}:
 subject to EightyeightPerc_Constr:
   sum{h in HP, t in TIME}(ComponentSize_t[h,t]*TIMEsteps[t]) >= 0.88*sum{b in HP,t in TIME}(Heat_Demand[b,t]*TIMEsteps[t]); #SYSTEM REQUIREMENTS
 
-
-
 # COP and FUEL_using efficiencies
 param lake_temp := 7;
 param carnot_eff := 0.5;
@@ -157,16 +161,17 @@ param FUEL_el_eff{u in FUEL_USERS};
 param FUEL_th_eff{u in FUEL_USERS}; 
 
  
-# FUEL NEEDED
+# FUEL BALANCE  #################################################
 var FUEL_Demand{u in FUEL_USERS, t in TIME}>=0;
 
 subject to FUEL_heat_balance_constr{u in FUEL_USERS, t in TIME}: 
  ComponentSize_t[u,t] = FUEL_th_eff[u]*FUEL_Demand[u,t]; #dim
 
-# ELEC PRODUCED
+# ELEC BALANCE #################################################
 var El_prod{u in COMPONENTS, t in TIME};
 var El_Buy{t in TIME} >=0;
 var El_Sell{t in TIME}>=0;
+var Elec_Demand{t in TIME}>=0;
 
 param Efficiency_SolarPanels := 0.11327;  #Voir feuille excel DATA, Sylvain
 param solarfarm_area := 15500;            #m^2, donnée du projet
@@ -178,11 +183,14 @@ subject to FUEL_elec_balance_constr{u in FUEL_USERS, t in TIME}:
 subject to El_available_Constr{t in TIME}: #AJOUTER COUTS DES NOUVEAUX PANNEAUX!
   El_prod["SOLAR",t] = ((solarfarm_area+Capacity["SOLAR"])*Efficiency_SolarPanels)*solar_radiation[t]; #kW
 subject to HP_Energy_Balance_cstr{h in HP,t in TIME}:
-  ComponentSize_t[h,t] = COP[h,t]*(-El_prod[h,t]);  #kW 
+  ComponentSize_t[h,t] = COP[h,t]*(-El_prod[h,t]);  #kW
+subject to Elec_demand_system{t in TIME}:
+Elec_Demand[t] = (spec_annual_elec_demand*floor_area)/12 + (vol_cooling_water[t]+(Heat_Demand['HPLOW',t]+Heat_Demand['HPHIGH',t])/(4*cp_water))*pumping_cost; #dim
 
-# ELECTRICITY BALANCE ##########################################
 subject to Electricity_balance_Constr{t in TIME}:
   sum{u in COMPONENTS} El_prod[u,t]+ El_Buy[t] - El_Sell[t]= Elec_Demand[t]; #kW
+
+
 
 # INVESTMENT ###################################################
 subject to PC_Con{c in COMPONENTS}:
@@ -195,6 +203,8 @@ subject to an_CAPEX_Con{c in COMPONENTS}:
   an_CAPEX[c] = GR_C[c]*((interest_rate*(1+interest_rate)^lifetime)/((1+interest_rate)^lifetime - 1));  #Cout annualisés
 subject to an_CAPEXTot_Con:
   an_CAPEX_Tot = sum{c in COMPONENTS} an_CAPEX[c];
+
+
 
   
 ############################################################################################
