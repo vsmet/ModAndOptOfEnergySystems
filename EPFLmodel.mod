@@ -58,14 +58,10 @@ param spec_annual_elec_demand;    #kWh/m2(yr)
 # - area specific energy demand data to determine building demand
 # - Energy Signature (ES) to determine power demand
 
-/*******************************************************/
-# Energy variables
-/*******************************************************/ 
-# COOLING LOOP 
+
+# COOLING LOOP VARIABLES
 param vol_cooling_water{t in TIME}; # m3/mois
 param pumping_cost := 0.304 ; #kWh/m3,  calculé depuis http://exploitation-energies.epfl.ch/bilans_energetiques/details/cct, Sylvain
-#param cooling_water_Tin = 6 ; # °C, 1.7.1. page 5
-#param cooling_water_Tout = 13; # °C, 1.7.1. page 5
 param cp_water:=4.18; #kJ/kg K
 # Parameter heating signature
 param k1{b in HP};
@@ -79,9 +75,7 @@ subject to Heat_Demand_Constr{b in HP, t in 1..12}:
       (k1[b] * (external_temp[t]) + k2[b])*1000            #kW
     else 0;
 
-/*******************************************************/
-# Investment variables
-/*******************************************************/ 
+# INVESTMENT VARIABLES
 param ex_USD_CHF;
 param interest_rate;
 param lifetime;
@@ -105,6 +99,7 @@ var GR_C{c in COMPONENTS} >= 0;
 var an_CAPEX {c in COMPONENTS} >=0;
 var an_CAPEX_Tot  >=0;
 
+# COMPONENT VARIABLES
 param Component_temp {c in COMPONENTS, t in TIME};
 var Component_Use {c in COMPONENTS} binary;
 var ComponentSize_t {c in COMPONENTS, t in TIME} >= 0;
@@ -118,9 +113,6 @@ subject to Component_cmin_cstr {c in COMPONENTS}:
 subject to Component_cmax_cstr {c in COMPONENTS}:
   Component_Use[c]*C_max[c] >= Capacity[c];
 
-
-
-
 ############################################################################################
 # CONSTRAINTS
 ############################################################################################
@@ -132,16 +124,15 @@ var Heating_HT {c in HEAT_UTIL, t in TIME} >= 0;
 
 subject to Heat_Demand_2050{b in HP}:
   Heat_Demand[b,13] = C_max[b];
-subject to Energy_Balance_LT_cstr2 {t in TIME, bu in HP: temp_supply[bu,t]<=50}:
+subject to Energy_Balance_LT_cstr2 {t in TIME, bu in HP: temp_supply[bu,t]<=50}: 
   sum{b in HP} Heat_Demand[b,t] = sum {c in HEAT_UTIL} ComponentSize_t [c,t];
-
 # Energy balance for LT HP
 subject to Energy_Balance_LT_cstr {b in HP,t in TIME: temp_supply[b,t]>50}:
   Heat_Demand['HPLOW',t] = sum {c in HEAT_UTIL: c!="HPHIGH"} Heating_LT [c,t];
-
 # Energy balance for HT HP
 subject to Energy_Balance_HT_cstr {b in HP,t in TIME: temp_supply[b,t]>50}:
   Heat_Demand['HPHIGH',t] = sum {c in HEAT_UTIL : c!="HPLOW"} Heating_HT [c,t];
+
 
 # Overall energy balance
 subject to Energy_Balance_overall_cstr {c in HEAT_UTIL,t in TIME}:

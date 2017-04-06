@@ -152,13 +152,13 @@ param: FUEL_el_eff :=
 BOILER 0
 SOFC 0.58 # Fuel cell class (Jan van Herle)
 TURBINE 0.36 #dimitri /EEGJulyrevisedFINAL1
-ICENGINE 0.38
+ICENGINE 0.38 # dimitri GE jenbacher type 2, everage value
 ;
 param: FUEL_th_eff :=
 BOILER 0.98
 SOFC 0.4 # Fuel cell class (Jan van Herle)
 TURBINE 0.48 # dimitri /EEGJulyrevisedFINAL1
-ICENGINE 0.6
+ICENGINE 0.50 # dimitri GE jenbacher type 2, everage value
 ;
 
 /******************************************************/
@@ -179,10 +179,11 @@ param  F_BM    :=
 BOILER 1.8
 HPHIGH 1.6
 HPLOW 1.6
-SOFC 1 
+#SOFC 1 
+SOFC 4.01 #dimitri matlab
 TURBINE 6 #dimitri , matlab doc , stainless steel
 SOLAR 1
-ICENGINE 1
+ICENGINE 2 #dim matlab
 ;
 param  F_T     := 
 BOILER 1.15
@@ -209,7 +210,7 @@ HPLOW 1500
 SOFC 1500 
 TURBINE 100 #dimitri ,matlab doc
 SOLAR 0
-ICENGINE 100
+ICENGINE 100 #dimitri
 ;
 param  C_max   := 
 BOILER 25000 
@@ -218,7 +219,7 @@ HPLOW 13000	##initialement 10000, VOIR donnée lab01
 SOFC 10000 
 TURBINE 15000 #dimitri , matlab
 SOLAR 3500
-ICENGINE 1000
+ICENGINE 6000 #dimitri
 ;
 param  alpha_2 := 0.35; #LectureNotes Advanced Energetics
 param  alpha_1 := 0.18; #LectureNotes Advanced Energetics
@@ -226,19 +227,21 @@ param PC_min :=
 BOILER 31988.9510969140
 HPHIGH 78544.428736573
 HPLOW 78544.428736573
-SOFC 750000 #Vincent, Advanced Energetics Lecture notes
+#SOFC 750000 #Vincent, Advanced Energetics Lecture notes
+SOFC 5000000
 TURBINE 43601 #dimitri , matlab doc
 SOLAR 0
-ICENGINE 1119040.21635461
+ICENGINE 39811 #dimitri matlab
 ;
 param PC_max := 
 BOILER 148415.893301207
 HPHIGH 84609.836013398
 HPLOW 84609.836013398
-SOFC 5000000 #Vincent, Advanced Energetics Lecture notes
+#SOFC 5000000 #Vincent, Advanced Energetics Lecture notes
+SOFC 15000000 
 TURBINE 932240 #dimitri , matlab doc
 SOLAR 1540000
-ICENGINE 8907292.10149030
+ICENGINE 2129900 #dimitri matlab
 ;
 
 
