@@ -207,7 +207,7 @@ param  C_min   :=
 BOILER 1000
 HPHIGH 1500
 HPLOW 1500
-SOFC 1500 
+SOFC 100 #dim bloom energy 
 TURBINE 100 #dimitri ,matlab doc
 SOLAR 0
 ICENGINE 100 #dimitri
@@ -227,8 +227,7 @@ param PC_min :=
 BOILER 31988.9510969140
 HPHIGH 78544.428736573
 HPLOW 78544.428736573
-#SOFC 750000 #Vincent, Advanced Energetics Lecture notes
-SOFC 1500000
+SOFC 700000 #dim bloom energy
 TURBINE 43601 #dimitri , matlab doc
 SOLAR 0
 ICENGINE 39811 #dimitri matlab
@@ -237,8 +236,7 @@ param PC_max :=
 BOILER 148415.893301207
 HPHIGH 84609.836013398
 HPLOW 84609.836013398
-#SOFC 5000000 #Vincent, Advanced Energetics Lecture notes
-SOFC 5000000 
+SOFC 5560300 # dim bloom energy+ matlab 
 TURBINE 932240 #dimitri , matlab doc
 SOLAR 1540000
 ICENGINE 2129900 #dimitri matlab
