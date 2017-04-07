@@ -81,7 +81,7 @@ param: solar_radiation :=	 #kwh/m2
 /*******************************************************/
 param c_el_in := 0.15;         	    # http://exploitation-energies.epfl.ch/files/content/sites/exploitation-energies/files/Documents%20pdf/electricite_grilles_tarifs_2016.pdf  #dimitri vincent
 param c_el_out := 0.1275;         	# 0.85* c_el_in # vincent dimitri
-param c_ng_in := 0.0662;         	# http://www.sig-ge.ch/nous-connaitre/support-et-communications/Documents/Tarifs%20et%20r%C3%A9glements/Gaz%20et%20chaleur/tarifs_fourniture_gaz_naturel.pdf #dimitri vincent
+param c_ng_in := 0.0662;         	# ct/kwh http://www.sig-ge.ch/nous-connaitre/support-et-communications/Documents/Tarifs%20et%20r%C3%A9glements/Gaz%20et%20chaleur/tarifs_fourniture_gaz_naturel.pdf #dimitri vincent
 param c_ds_in := 0.1045;
 
 /*******************************************************/

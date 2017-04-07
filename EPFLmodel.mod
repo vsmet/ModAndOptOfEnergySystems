@@ -164,19 +164,19 @@ var El_Buy{t in TIME} >=0;
 var El_Sell{t in TIME}>=0;
 var Elec_Demand{t in TIME}>=0;
 
-param Efficiency_SolarPanels := 0.11327;  #Voir feuille excel DATA, Sylvain
-param solarfarm_area := 15500;            #m^2, donnée du projet
+param Efficiency_SolarPanels := 0.11327;  # Voir feuille excel DATA, Sylvain
+param solarfarm_area := 15500;            # m^2, donnée du projet
 
 subject to Non_elec_prod_constr{t in TIME}:
   El_prod["BOILER",t] = 0;
 subject to FUEL_elec_balance_constr{u in FUEL_USERS, t in TIME}: 
   El_prod[u,t] = FUEL_el_eff[u]*FUEL_Demand[u,t]; #dim
 subject to El_available_Constr{t in TIME}: #AJOUTER COUTS DES NOUVEAUX PANNEAUX!
-  El_prod["SOLAR",t] = ((solarfarm_area+Capacity["SOLAR"])*Efficiency_SolarPanels)*solar_radiation[t]; #kW
+  El_prod["SOLAR",t] = ((solarfarm_area+Capacity["SOLAR"])*Efficiency_SolarPanels)*solar_radiation[t]; #kWh
 subject to HP_Energy_Balance_cstr{h in HP,t in TIME}:
   ComponentSize_t[h,t] = COP[h,t]*(-El_prod[h,t]);  #kW
 subject to Elec_demand_system{t in TIME}:
-Elec_Demand[t] = (spec_annual_elec_demand*floor_area)/12 + (vol_cooling_water[t]+(Heat_Demand['HPLOW',t]+Heat_Demand['HPHIGH',t])/(4*cp_water))*pumping_cost; #dim
+Elec_Demand[t] = ((spec_annual_elec_demand*floor_area)/12  + (vol_cooling_water[t]+(Heat_Demand['HPLOW',t]+Heat_Demand['HPHIGH',t])/(4*cp_water))*pumping_cost); #dim #KWh
 
 subject to Electricity_balance_Constr{t in TIME}:
   sum{u in COMPONENTS} El_prod[u,t]+ El_Buy[t] - El_Sell[t]= Elec_Demand[t]; #kW
@@ -228,8 +228,11 @@ display ComponentSize_t;
 display Capacity;
 display an_CAPEX;
 
-
+display FUEL_Demand;
 display El_Buy;
+display El_prod;
+display El_Sell;
+display Elec_Demand;
 
 #display COP;
 
