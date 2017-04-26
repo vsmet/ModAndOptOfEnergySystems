@@ -58,9 +58,7 @@ param: external_temp := 	#en °C
 12	27.5
 ;
 
-param: solar_radiation :=	 #Assuming that fluctuations in irradiation play a minor role so yearly hourly mean was taken
-143.3288813
-;
+param solar_radiation :=	 143.3288813;#Assuming that fluctuations in irradiation play a minor role so yearly hourly mean was taken
 
 /*******************************************************/
 # Economic parameters
