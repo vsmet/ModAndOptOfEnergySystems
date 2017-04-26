@@ -42,9 +42,9 @@ param temp_threshold;       #deg C
 # Demand parameters
 /*******************************************************/
 param spec_annual_elec_demand;    #kWh/m2(yr)
-param temp_supply {h in HP, t in TIME} = 
-  if h = "HPLOW"
-    then (-1.431*external_temp[t] + 50.769) #else (-0.9231*external_temp[t] + 40.769)
+param temp_supply {h in HP, t in TIME} := 
+  if h = "HPHIGH"
+    then (-1.431*external_temp[t] + 50.769) else (-0.9231*external_temp[t] + 40.769)
 ; 
 
 param HPTemp {h in HP, t in TIME} :=temp_supply[h,t] + 5;
