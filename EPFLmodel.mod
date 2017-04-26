@@ -42,13 +42,13 @@ param temp_threshold;       #deg C
 # Demand parameters
 /*******************************************************/
 param spec_annual_elec_demand;    #kWh/m2(yr)
-var temp_supply {h in HP, t in TIME};
 var HPTemp {h in HP, t in TIME} >= 0;
-subject to tempsupconst {t in TIME}:
-  temp_supply["HPHIGH",t] = -1.431*external_temp[t] + 50.769;
-
-subject to tempsupconst2 {t in TIME}:
-  temp_supply["HPLOW",t] = -0.9231*external_temp[t] + 40.769;
+param temp_supply {h in HP, t in TIME} = 
+  if h == "HPHIGH"
+    then (-1.431*external_temp[t] + 50.769)
+    else (-0.9231*external_temp[t] + 40.769); #+ (-0.9231*external_temp[t] + 40.769)*(1-u) (if h == "HPHIGH" then u = 1);
+#param temp_supply {h in HP,t in TIME: h == "HPLOW"} := -0.9231*external_temp[t] + 40.769;
+#print temp_supply;
 
 subject to HPTEMPconst {h in HP, t in TIME}:
   HPTemp[h,t] = temp_supply[h,t] + 5;
@@ -139,7 +139,7 @@ var Heating_HT {c in HEAT_UTIL, t in TIME} >= 0;
 
 subject to Heat_Demand_2050{b in HP}:
   Heat_Demand[b,13] = C_max[b];
-subject to Energy_Balance_LT_cstr2 {t in TIME, h in HP: temp_supply[h,t]<=50}: 
+subject to Energy_Balance_LT_cstr2 {h in HP, t in TIME: temp_supply[h,t]<=50}: 
   sum{b in HP} Heat_Demand[b,t] = sum {c in HEAT_UTIL} ComponentSize_t [c,t];
 # Energy balance for LT HP
 subject to Energy_Balance_LT_cstr {b in HP,t in TIME: temp_supply[b,t]>50}:
