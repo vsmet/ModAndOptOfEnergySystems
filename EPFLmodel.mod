@@ -46,7 +46,6 @@ param temp_supply {h in HP, t in TIME} :=
   if h = "HPHIGH"
     then (-1.431*external_temp[t] + 50.769) else (-0.9231*external_temp[t] + 40.769)
 ; 
-
 param HPTemp {h in HP, t in TIME} :=temp_supply[h,t] + 5;
 
 
@@ -81,7 +80,7 @@ param k1{b in HP};
 param k2{b in HP};
  
 var Heat_Demand{b in HP, t in TIME} >= 0;
-subject to Heat_Demand_Constr{b in HP, t in 1..12}:
+subject to Heat_Demand_Constr{b in HP, t in TIME}:
     Heat_Demand[b,t] = 
     if (external_temp[t] < temp_threshold) then
       (k1[b] * (external_temp[t]) + k2[b])*1000            #kW
@@ -141,7 +140,7 @@ subject to Energy_Balance_LT_cstr2 {h in HP, t in TIME: temp_supply[h,t]<=50}:
 subject to Energy_Balance_LT_cstr {b in HP,t in TIME: temp_supply[b,t]>50}:
   Heat_Demand['HPLOW',t] = sum {c in HEAT_UTIL: c!="HPHIGH"} Heating_LT [c,t];
 # Energy balance for HT HP
-subject to Energy_Balance_HT_cstr {b in HP,t in TIME: temp_supply[b,t]>50}:
+subject to Energy_Balance_HT_cstr {b in HP,t in TIME: temp_supply[b,t]>50}: 
   Heat_Demand['HPHIGH',t] = sum {c in HEAT_UTIL : c!="HPLOW"} Heating_HT [c,t];
 
 
