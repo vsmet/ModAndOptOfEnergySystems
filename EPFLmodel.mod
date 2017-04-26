@@ -16,8 +16,6 @@ set ELEC_UTIL;
 set FUEL_USERS;
 set NG_USERS;
 
-
-
 ############################################################################################
 # PARAMETER
 ############################################################################################
@@ -31,7 +29,7 @@ param TIMEsteps{t in TIME};         #hr
 # Meteo parameters
 /*******************************************************/
 param external_temp{t in TIME};       #deg C
-param solar_radiation{t in TIME};     # kw/m2
+param solar_radiation;     # kw/m2
 
 /*******************************************************/
 # Building parameters
@@ -59,15 +57,24 @@ param spec_annual_elec_demand;    #kWh/m2(yr)
 # - Energy Signature (ES) to determine power demand
 
 
+
 # COOLING LOOP VARIABLES
 param vol_cooling_water{t in TIME}; # m3/mois
 param pumping_cost := 0.304 ; #kWh/m3,  calculé depuis http://exploitation-energies.epfl.ch/bilans_energetiques/details/cct, Sylvain
 param cp_water:=4.18; #kJ/kg K
+
+/*******************************************************/
+# Energy variables
+/*******************************************************/ 
+# ELEC DEMAND (COOLING LOOP INCLUDED)
+param Elec_Demand{t in TIME} := (spec_annual_elec_demand*floor_area)/12 + vol_cooling_water[t]*pumping_cost;
+
+# HEAT DEMAND
+
 # Parameter heating signature
 param k1{b in HP};
 param k2{b in HP};
  
-# TIME-DEPENDENT HEAT DEMAND
 var Heat_Demand{b in HP, t in TIME} >= 0;
 subject to Heat_Demand_Constr{b in HP, t in 1..12}:
     Heat_Demand[b,t] = 
@@ -142,6 +149,8 @@ subject to Energy_Balance_overall_cstr {c in HEAT_UTIL,t in TIME}:
 subject to EightyeightPerc_Constr:
   sum{h in HP, t in TIME}(ComponentSize_t[h,t]*TIMEsteps[t]) >= 0.88*sum{b in HP,t in TIME}(Heat_Demand[b,t]*TIMEsteps[t]); #SYSTEM REQUIREMENTS
 
+
+
 # COP and FUEL_using efficiencies
 param lake_temp := 7;
 param carnot_eff := 0.5;
@@ -151,8 +160,12 @@ param COP{h in HP, t in TIME} := carnot_eff * COP_th [h,t];
 param FUEL_el_eff{u in FUEL_USERS}; 
 param FUEL_th_eff{u in FUEL_USERS}; 
 
+
  
 # FUEL BALANCE  #################################################
+
+# FUEL NEEDED
+
 var FUEL_Demand{u in FUEL_USERS, t in TIME}>=0;
 
 subject to FUEL_heat_balance_constr{u in FUEL_USERS, t in TIME}: 
@@ -162,7 +175,7 @@ subject to FUEL_heat_balance_constr{u in FUEL_USERS, t in TIME}:
 var El_prod{u in COMPONENTS, t in TIME};
 var El_Buy{t in TIME} >=0;
 var El_Sell{t in TIME}>=0;
-var Elec_Demand{t in TIME}>=0;
+
 
 param Efficiency_SolarPanels := 0.11327;  # Voir feuille excel DATA, Sylvain
 param solarfarm_area := 15500;            # m^2, donnée du projet
@@ -172,7 +185,7 @@ subject to Non_elec_prod_constr{t in TIME}:
 subject to FUEL_elec_balance_constr{u in FUEL_USERS, t in TIME}: 
   El_prod[u,t] = FUEL_el_eff[u]*FUEL_Demand[u,t]; #dim kW
 subject to El_available_Constr{t in TIME}: #AJOUTER COUTS DES NOUVEAUX PANNEAUX!
-  El_prod["SOLAR",t] = ((solarfarm_area+Capacity["SOLAR"])*Efficiency_SolarPanels)*solar_radiation[t]/TIMEsteps[t]; #dim kW
+  El_prod["SOLAR",t] = ((solarfarm_area+Capacity["SOLAR"])*Efficiency_SolarPanels)*solar_radiation/TIMEsteps[t]; #dim kW
 subject to HP_Energy_Balance_cstr{h in HP,t in TIME}:
   ComponentSize_t[h,t] = COP[h,t]*(-El_prod[h,t]);  #kW
 subject to Elec_demand_system{t in TIME}:

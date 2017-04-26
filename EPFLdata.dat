@@ -13,7 +13,7 @@
 ############################################################################################
 # SETS
 ############################################################################################
-set TIME := 1 2 3 4 5 6 7 8 9 10 11 12 13;
+set TIME := 1 2 3 4 5 6 7 8 9 10 11 12 ;
 set COMPONENTS := BOILER HPHIGH HPLOW SOFC TURBINE SOLAR ICENGINE;
 set HEAT_UTIL := BOILER HPHIGH HPLOW SOFC TURBINE ICENGINE;
 set ELEC_UTIL := SOLAR;
@@ -26,54 +26,40 @@ set NG_USERS := BOILER SOFC TURBINE;
 ############################################################################################
 
 param: TIMEsteps := 	
-1 744					# hour per month in 2017, Sylvain
-2 672
-3 744
-4 720
-5 744
-6 720
-7 744
-8 744
-9 720
-10 744
-11 720
-12 743
-13 1
+1 55					# hours per year #Vincent
+2 206
+3 286
+4 520
+5 738
+6 1089
+7 970
+8 808
+9 996
+10 1808
+11 1037
+12 257
 ;
 
 /*******************************************************/
 # Meteo parameters 	 #Depuis METEONORM 2007, voir aussi excel sheet DATA, Sylvain
 /*******************************************************/
 param: external_temp := 	#en °C
-1	2.5
-2	3.7
-3	6.9
-4	10.7
-5	15.3
-6	19.3
-7	20.2
-8	20
-9	16
-10	12.2
-11	6.8
-12	3.2
-13	-10
+1	-12.5
+2	-7.5
+3	-2.5
+4	1.25
+5	3.75
+6	6.25
+7	8.75
+8	11.25
+9	13.75
+10	17.5
+11	22.5
+12	27.5
 ;
 
-param: solar_radiation :=	 #kwh/m2	
-1	35
-2	55
-3	101
-4	134
-5	164
-6	181
-7	183
-8	155
-9	111
-10	71
-11	38
-12	27
-13	0
+param: solar_radiation :=	 #Assuming that fluctuations in irradiation play a minor role so yearly hourly mean was taken
+143.3288813
 ;
 
 /*******************************************************/
