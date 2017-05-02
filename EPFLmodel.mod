@@ -58,15 +58,15 @@ param PC_max {c in COMPONENTS};
 param f_act := Year_ind/Ref_ind;
 param Component_temp {c in COMPONENTS, t in TIME};
 # COP and FUEL_using efficiencies
-param lake_temp := 7;
+param lake_temp;
 param carnot_eff := 0.5;
 param COP_th{h in HP, t in TIME} := (HPTemp[h,t]+273)/(HPTemp[h,t]-lake_temp);
 param COP{h in HP, t in TIME} := carnot_eff * COP_th [h,t];
 param FUEL_el_eff{u in FUEL_USERS}; 
 param FUEL_th_eff{u in FUEL_USERS}; 
 #Solar Farm
-param Efficiency_SolarPanels := 0.11327;  # Voir feuille excel DATA, Sylvain
-param solarfarm_area := 15500;            # m^2, donnée du projet
+param Efficiency_SolarPanels;
+param solarfarm_area;
 #Cost
 param c_el_in;
 param c_el_out;
@@ -130,7 +130,7 @@ subject to Non_elec_prod_constr{t in TIME}:
 subject to FUEL_elec_balance_constr{u in FUEL_USERS, t in TIME}: 
   El_prod[u,t] = FUEL_el_eff[u]*FUEL_Demand[u,t]; #dim kW
 subject to El_available_Constr{t in TIME}: #AJOUTER COUTS DES NOUVEAUX PANNEAUX!
-  El_prod["SOLAR",t] = ((solarfarm_area+Capacity["SOLAR"])*Efficiency_SolarPanels)*solar_radiation/TIMEsteps[t]; #dim kW
+  El_prod["SOLAR",t] = ((solarfarm_area+Capacity["SOLAR"])*Efficiency_SolarPanels)*solar_radiation*TIMEsteps[t]; #dim kW
 subject to HP_Energy_Balance_cstr{h in HP,t in TIME}:
   ComponentSize_t[h,t] = COP[h,t]*(-El_prod[h,t]);  #kW
 subject to Elec_demand_system{t in TIME}:

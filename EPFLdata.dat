@@ -43,6 +43,8 @@ param: TIMEsteps :=
 /*******************************************************/
 # Meteo parameters 	 #Depuis METEONORM 2007, voir aussi excel sheet DATA, Sylvain
 /*******************************************************/
+
+# Temprature
 param: external_temp := 	#en °C
 1	-12.5
 2	-7.5
@@ -57,8 +59,10 @@ param: external_temp := 	#en °C
 11	22.5
 12	27.5
 ;
-
-param solar_radiation :=	 143.3288813;#Assuming that fluctuations in irradiation play a minor role so yearly hourly mean was taken
+# Solar
+param solar_radiation :=	 143.3288813; #Assuming that fluctuations in irradiation play a minor role so yearly hourly mean was taken
+# Lake
+param lake_temp := 7;
 
 /*******************************************************/
 # Economic parameters
@@ -82,6 +86,13 @@ param spec_annual_elec_demand := 116.6 ; #kwh/m^2
 param floor_area := 384854;    # m^2, SRE, 2007, Vuille2008, p. 20;
 
 
+/*******************************************************/
+# Solar PV
+/*******************************************************/
+
+param Efficiency_SolarPanels := 0.11327;  # Voir feuille excel DATA, Sylvain
+param solarfarm_area := 15500;            # m^2, donnée du projet
+# Old Area: 15'500m^2;
 
 /*******************************************************/
 # Cooling loop parameters
@@ -136,7 +147,6 @@ param  F_BM    :=
 BOILER 1.8
 HPHIGH 1.6
 HPLOW 1.6
-#SOFC 1 
 SOFC 4.01 #dimitri matlab
 TURBINE 6 #dimitri , matlab doc , stainless steel
 SOLAR 1
@@ -182,7 +192,7 @@ ICENGINE 6000 #dimitri
 param  alpha_2 := 0.35; #LectureNotes Advanced Energetics
 param  alpha_1 := 0.18; #LectureNotes Advanced Energetics
 param PC_min :=
-BOILER 31988.9510969140
+BOILER 31988.9510969140 
 HPHIGH 78544.428736573
 HPLOW 78544.428736573
 SOFC 700000 #dim bloom energy
