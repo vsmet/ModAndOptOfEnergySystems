@@ -3,7 +3,7 @@ Rows:       397
 Columns:    439 (7 integer, 7 binary)
 Non-zeros:  1133
 Status:     INTEGER OPTIMAL
-Objective:  COST = 1.643182369e+10 (MINimum)
+Objective:  COST = 1694111047 (MINimum)
 
    No.   Row name        Activity     Lower bound   Upper bound
 ------ ------------    ------------- ------------- -------------
@@ -694,29 +694,29 @@ Objective:  COST = 1.643182369e+10 (MINimum)
    343 HP_Energy_Balance_cstr[HPHIGH,12]
                                    0            -0             = 
    344 Elec_demand_system[1]
-                         4.17131e+06   4.17131e+06             = 
+                              436932        436932             = 
    345 Elec_demand_system[2]
-                          4.1295e+06    4.1295e+06             = 
+                              395129        395129             = 
    346 Elec_demand_system[3]
-                         4.17122e+06   4.17122e+06             = 
+                              436850        436850             = 
    347 Elec_demand_system[4]
-                         4.15727e+06   4.15727e+06             = 
+                              422898        422898             = 
    348 Elec_demand_system[5]
-                         4.17117e+06   4.17117e+06             = 
+                              436798        436798             = 
    349 Elec_demand_system[6]
-                         4.15723e+06   4.15723e+06             = 
+                              422857        422857             = 
    350 Elec_demand_system[7]
-                         4.17113e+06   4.17113e+06             = 
+                              436757        436757             = 
    351 Elec_demand_system[8]
-                         4.17111e+06   4.17111e+06             = 
+                              436736        436736             = 
    352 Elec_demand_system[9]
-                         4.15717e+06   4.15717e+06             = 
+                              422795        422795             = 
    353 Elec_demand_system[10]
-                         4.17104e+06   4.17104e+06             = 
+                              436666        436666             = 
    354 Elec_demand_system[11]
-                         4.15712e+06   4.15712e+06             = 
+                              422746        422746             = 
    355 Elec_demand_system[12]
-                         4.17104e+06   4.17104e+06             = 
+                              436666        436666             = 
    356 Electricity_balance_Constr[1]
                                    0            -0             = 
    357 Electricity_balance_Constr[2]
@@ -798,7 +798,7 @@ Objective:  COST = 1.643182369e+10 (MINimum)
                                    0            -0             = 
    396 an_CAPEXTot_Con
                                    0            -0             = 
-   397 COST              1.64318e+10                             
+   397 COST              1.69411e+09                             
 
    No. Column name       Activity     Lower bound   Upper bound
 ------ ------------    ------------- ------------- -------------
@@ -1590,18 +1590,18 @@ Objective:  COST = 1.643182369e+10 (MINimum)
                                    0                             
    403 El_prod[HPHIGH,12]
                                    0                             
-   404 El_Buy[1]          4.1515e+06             0               
-   405 El_Buy[2]         4.10524e+06             0               
-   406 El_Buy[3]         4.14983e+06             0               
-   407 El_Buy[4]         4.15895e+06             0               
-   408 El_Buy[5]         4.17249e+06             0               
-   409 El_Buy[6]         4.15821e+06             0               
-   410 El_Buy[7]          4.1718e+06             0               
-   411 El_Buy[8]         4.17151e+06             0               
-   412 El_Buy[9]         4.15732e+06             0               
-   413 El_Buy[10]        4.17073e+06             0               
-   414 El_Buy[11]        4.15681e+06             0               
-   415 El_Buy[12]        4.17073e+06             0               
+   404 El_Buy[1]              417124             0               
+   405 El_Buy[2]              370862             0               
+   406 El_Buy[3]              415451             0               
+   407 El_Buy[4]              424572             0               
+   408 El_Buy[5]              438110             0               
+   409 El_Buy[6]              423835             0               
+   410 El_Buy[7]              437429             0               
+   411 El_Buy[8]              437133             0               
+   412 El_Buy[9]              422946             0               
+   413 El_Buy[10]             436358             0               
+   414 El_Buy[11]             422437             0               
+   415 El_Buy[12]             436358             0               
    416 El_Sell[1]                  0             0               
    417 El_Sell[2]                  0             0               
    418 El_Sell[3]                  0             0               
@@ -1615,38 +1615,38 @@ Objective:  COST = 1.643182369e+10 (MINimum)
    426 El_Sell[11]                 0             0               
    427 El_Sell[12]                 0             0               
    428 Elec_Demand[1]
-                         4.17131e+06             0               
+                              436932             0               
    429 Elec_Demand[2]
-                          4.1295e+06             0               
+                              395129             0               
    430 Elec_Demand[3]
-                         4.17122e+06             0               
+                              436850             0               
    431 Elec_Demand[4]
-                         4.15727e+06             0               
+                              422898             0               
    432 Elec_Demand[5]
-                         4.17117e+06             0               
+                              436798             0               
    433 Elec_Demand[6]
-                         4.15723e+06             0               
+                              422857             0               
    434 Elec_Demand[7]
-                         4.17113e+06             0               
+                              436757             0               
    435 Elec_Demand[8]
-                         4.17111e+06             0               
+                              436736             0               
    436 Elec_Demand[9]
-                         4.15717e+06             0               
+                              422795             0               
    437 Elec_Demand[10]
-                         4.17104e+06             0               
+                              436666             0               
    438 Elec_Demand[11]
-                         4.15712e+06             0               
+                              422746             0               
    439 Elec_Demand[12]
-                         4.17104e+06             0               
+                              436666             0               
 
 Integer feasibility conditions:
 
-KKT.PE: max.abs.err = 0.00e+00 on row 0
-        max.rel.err = 0.00e+00 on row 0
+KKT.PE: max.abs.err = 5.82e-11 on row 358
+        max.rel.err = 6.86e-17 on row 361
         High quality
 
-KKT.PB: max.abs.err = 4.66e-10 on row 356
-        max.rel.err = 4.66e-10 on row 356
+KKT.PB: max.abs.err = 2.33e-10 on row 371
+        max.rel.err = 2.33e-10 on row 371
         High quality
 
 End of output
