@@ -139,11 +139,12 @@ subject to Electricity_balance_Constr{t in TIME}:
   sum{u in COMPONENTS} El_prod[u,t]+ El_Buy[t] - El_Sell[t]= Elec_Demand[t]; #kW
 #Investment
 subject to PC_Con{c in COMPONENTS}:
-  PC[c] = f_act*((PC_max[c] - PC_min[c])*(Capacity[c]/(C_max[c] - C_min[c])) + Component_Use[c]*PC_min[c]); #USD
+  PC[c] = f_act*((PC_max[c] - PC_min[c])*(Capacity[c]/(C_max[c] - C_min[c])) + Component_Use[c]*PC_min[c]); #USD   # Purchase Cost
+# We use a linear interpolation for  the purchase cost between min and max capacity
 subject to BM_C_Con{c in COMPONENTS}:
-  BM_C[c] = F_P[c]*F_T[c]*F_BM[c]*PC[c];
+  BM_C[c] = F_P[c]*F_T[c]*F_BM[c]*PC[c];      #Baremoddule Cost  
 subject to GR_C_Con{c in COMPONENTS}:
-  GR_C[c] = BM_C[c]*(alpha_1*alpha_2 + 1);    #Cout totaux
+  GR_C[c] = BM_C[c]*(alpha_1*alpha_2 + 1);    #Total cost (Goss cost)
 subject to an_CAPEX_Con{c in COMPONENTS}:
   an_CAPEX[c] = GR_C[c]*((interest_rate*(1+interest_rate)^lifetime)/((1+interest_rate)^lifetime - 1));  #Cout annualisés
 subject to an_CAPEXTot_Con:

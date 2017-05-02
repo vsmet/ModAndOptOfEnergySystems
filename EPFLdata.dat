@@ -107,13 +107,13 @@ param: vol_cooling_water := #en m3/mois, Sylvain
 /*******************************************************/
 param: FUEL_el_eff :=
 BOILER 0
-SOFC 0.58 # Fuel cell class (Jan van Herle)
+SOFC 0.64 # Fuel cell class, Lecture 2, Slide 34 (Jannik)
 TURBINE 0.36 #dimitri /EEGJulyrevisedFINAL1
 ICENGINE 0.38 # dimitri GE jenbacher type 2, everage value
 ;
 param: FUEL_th_eff :=
 BOILER 0.98
-SOFC 0.4 # Fuel cell class (Jan van Herle)
+SOFC 0.16 # Fuel cell class, Lecture 2, Slide 34 (Jannik)
 TURBINE 0.48 # dimitri /EEGJulyrevisedFINAL1
 ICENGINE 0.50 # dimitri GE jenbacher type 2, everage value
 ;
@@ -142,16 +142,17 @@ TURBINE 6 #dimitri , matlab doc , stainless steel
 SOLAR 1
 ICENGINE 2 #dim matlab
 ;
-param  F_T     := 
+param  F_T     :=    		#Correction factor for Temprature
 BOILER 1.15
 HPHIGH 1
+
 HPLOW 1
 SOFC 1 #okay, matlab file
 TURBINE 1 #dimitri , inventé
 SOLAR 1
 ICENGINE 1
 ;
-param  F_P     := 
+param  F_P     := 			#Correction factor for Pressure
 BOILER 1.13
 HPHIGH 1
 HPLOW 1
@@ -189,7 +190,7 @@ TURBINE 43601 #dimitri , matlab doc
 SOLAR 0
 ICENGINE 39811 #dimitri matlab
 ;
-param PC_max := 
+param PC_max := 			
 BOILER 148415.893301207
 HPHIGH 84609.836013398
 HPLOW 84609.836013398
