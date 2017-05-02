@@ -1,9 +1,9 @@
 Problem:    EPFLmodel
 Rows:       397
 Columns:    439 (7 integer, 7 binary)
-Non-zeros:  1126
+Non-zeros:  1133
 Status:     INTEGER OPTIMAL
-Objective:  opex = -854807381.8 (MINimum)
+Objective:  COST = 1.643182369e+10 (MINimum)
 
    No.   Row name        Activity     Lower bound   Upper bound
 ------ ------------    ------------- ------------- -------------
@@ -32,11 +32,11 @@ Objective:  opex = -854807381.8 (MINimum)
     12 Size_Constr[BOILER,12]
                                    0                          -0 
     13 Size_Constr[HPHIGH,1]
-                             -5920.8                          -0 
+                                   0                          -0 
     14 Size_Constr[HPHIGH,2]
-                             -6860.8                          -0 
+                              -12000                          -0 
     15 Size_Constr[HPHIGH,3]
-                             -7800.8                          -0 
+                              -12000                          -0 
     16 Size_Constr[HPHIGH,4]
                               -12000                          -0 
     17 Size_Constr[HPHIGH,5]
@@ -56,21 +56,21 @@ Objective:  opex = -854807381.8 (MINimum)
     24 Size_Constr[HPHIGH,12]
                               -12000                          -0 
     25 Size_Constr[HPLOW,1]
-                            -4467.55                          -0 
+                                   0                          -0 
     26 Size_Constr[HPLOW,2]
-                            -5797.05                          -0 
+                            -10657.9                          -0 
     27 Size_Constr[HPLOW,3]
-                            -7126.55                          -0 
+                            -11636.7                          -0 
     28 Size_Constr[HPLOW,4]
                             -4629.47                          -0 
     29 Size_Constr[HPLOW,5]
-                            -5764.23                          -0 
+                            -5764.22                          -0 
     30 Size_Constr[HPLOW,6]
-                            -6898.98                          -0 
+                            -6898.97                          -0 
     31 Size_Constr[HPLOW,7]
-                            -8033.73                          -0 
+                            -8033.72                          -0 
     32 Size_Constr[HPLOW,8]
-                            -9168.48                          -0 
+                            -9168.47                          -0 
     33 Size_Constr[HPLOW,9]
                             -10303.2                          -0 
     34 Size_Constr[HPLOW,10]
@@ -84,73 +84,73 @@ Objective:  opex = -854807381.8 (MINimum)
     38 Size_Constr[SOFC,2]
                                    0                          -0 
     39 Size_Constr[SOFC,3]
-                                   0                          -0 
+                             -1290.6                          -0 
     40 Size_Constr[SOFC,4]
-                                   0                          -0 
+                              -10000                          -0 
     41 Size_Constr[SOFC,5]
-                                   0                          -0 
+                              -10000                          -0 
     42 Size_Constr[SOFC,6]
-                                   0                          -0 
+                              -10000                          -0 
     43 Size_Constr[SOFC,7]
-                                   0                          -0 
+                              -10000                          -0 
     44 Size_Constr[SOFC,8]
-                                   0                          -0 
+                              -10000                          -0 
     45 Size_Constr[SOFC,9]
-                                   0                          -0 
+                              -10000                          -0 
     46 Size_Constr[SOFC,10]
-                                   0                          -0 
+                              -10000                          -0 
     47 Size_Constr[SOFC,11]
-                                   0                          -0 
+                              -10000                          -0 
     48 Size_Constr[SOFC,12]
-                                   0                          -0 
+                              -10000                          -0 
     49 Size_Constr[TURBINE,1]
                                    0                          -0 
     50 Size_Constr[TURBINE,2]
-                                   0                          -0 
+                            -4611.65                          -0 
     51 Size_Constr[TURBINE,3]
-                                   0                          -0 
+                            -4611.65                          -0 
     52 Size_Constr[TURBINE,4]
-                                   0                          -0 
+                            -4611.65                          -0 
     53 Size_Constr[TURBINE,5]
-                                   0                          -0 
+                            -4611.65                          -0 
     54 Size_Constr[TURBINE,6]
-                                   0                          -0 
+                            -4611.65                          -0 
     55 Size_Constr[TURBINE,7]
-                                   0                          -0 
+                            -4611.65                          -0 
     56 Size_Constr[TURBINE,8]
-                                   0                          -0 
+                            -4611.65                          -0 
     57 Size_Constr[TURBINE,9]
-                                   0                          -0 
+                            -4611.65                          -0 
     58 Size_Constr[TURBINE,10]
-                                   0                          -0 
+                            -4611.65                          -0 
     59 Size_Constr[TURBINE,11]
-                                   0                          -0 
+                            -4611.65                          -0 
     60 Size_Constr[TURBINE,12]
-                                   0                          -0 
+                            -4611.65                          -0 
     61 Size_Constr[SOLAR,1]
-                                   0                          -0 
+                               -3500                          -0 
     62 Size_Constr[SOLAR,2]
-                                   0                          -0 
+                               -3500                          -0 
     63 Size_Constr[SOLAR,3]
-                                   0                          -0 
+                               -3500                          -0 
     64 Size_Constr[SOLAR,4]
-                                   0                          -0 
+                               -3500                          -0 
     65 Size_Constr[SOLAR,5]
-                                   0                          -0 
+                               -3500                          -0 
     66 Size_Constr[SOLAR,6]
-                                   0                          -0 
+                               -3500                          -0 
     67 Size_Constr[SOLAR,7]
-                                   0                          -0 
+                               -3500                          -0 
     68 Size_Constr[SOLAR,8]
-                                   0                          -0 
+                               -3500                          -0 
     69 Size_Constr[SOLAR,9]
-                                   0                          -0 
+                               -3500                          -0 
     70 Size_Constr[SOLAR,10]
-                                   0                          -0 
+                               -3500                          -0 
     71 Size_Constr[SOLAR,11]
-                                   0                          -0 
+                               -3500                          -0 
     72 Size_Constr[SOLAR,12]
-                                   0                          -0 
+                               -3500                          -0 
     73 Size_Constr[ICENGINE,1]
                                    0                          -0 
     74 Size_Constr[ICENGINE,2]
@@ -178,35 +178,35 @@ Objective:  opex = -854807381.8 (MINimum)
     85 Component_cmin_cstr[BOILER]
                                    0                          -0 
     86 Component_cmin_cstr[HPHIGH]
-                                   0                          -0 
+                              -10500                          -0 
     87 Component_cmin_cstr[HPLOW]
-                                   0                          -0 
+                              -11500                          -0 
     88 Component_cmin_cstr[SOFC]
-                                   0                          -0 
+                               -9900                          -0 
     89 Component_cmin_cstr[TURBINE]
-                                   0                          -0 
+                            -4511.65                          -0 
     90 Component_cmin_cstr[SOLAR]
-                                   0                          -0 
+                               -3500                          -0 
     91 Component_cmin_cstr[ICENGINE]
                                    0                          -0 
     92 Component_cmax_cstr[BOILER]
                                    0            -0               
     93 Component_cmax_cstr[HPHIGH]
-                               0.001            -0               
+                                   0            -0               
     94 Component_cmax_cstr[HPLOW]
-                              0.0011            -0               
+                                   0            -0               
     95 Component_cmax_cstr[SOFC]
                                    0            -0               
     96 Component_cmax_cstr[TURBINE]
-                                   0            -0               
+                             10388.3            -0               
     97 Component_cmax_cstr[SOLAR]
                                    0            -0               
     98 Component_cmax_cstr[ICENGINE]
                                    0            -0               
     99 Energy_Balance_LT_cstr2[HPLOW,2]
-                            -12342.2      -12342.2             = 
+                            -12342.1      -12342.2             = 
    100 Energy_Balance_LT_cstr2[HPLOW,3]
-                            -10072.6      -10072.6             = 
+                            -10072.7      -10072.6             = 
    101 Energy_Balance_LT_cstr2[HPLOW,4]
                             -8370.53      -8370.53             = 
    102 Energy_Balance_LT_cstr2[HPLOW,5]
@@ -404,7 +404,7 @@ Objective:  opex = -854807381.8 (MINimum)
    198 Energy_Balance_overall_cstr[ICENGINE,12]
                                    0            -0             = 
    199 EightyeightPerc_Constr
-                         3.31627e+07   2.91832e+07               
+                         2.91832e+07   2.91832e+07               
    200 FUEL_heat_balance_constr[BOILER,1]
                                    0            -0             = 
    201 FUEL_heat_balance_constr[BOILER,2]
@@ -622,29 +622,29 @@ Objective:  opex = -854807381.8 (MINimum)
    307 FUEL_elec_balance_constr[ICENGINE,12]
                                    0            -0             = 
    308 El_available_Constr[1]
-                             13840.2       13840.2             = 
+                              251.64        251.64             = 
    309 El_available_Constr[2]
-                             51837.9       51837.9             = 
+                              251.64        251.64             = 
    310 El_available_Constr[3]
-                             71969.1       71969.1             = 
+                              251.64        251.64             = 
    311 El_available_Constr[4]
-                              130853        130853             = 
+                              251.64        251.64             = 
    312 El_available_Constr[5]
-                              185711        185711             = 
+                              251.64        251.64             = 
    313 El_available_Constr[6]
-                              274036        274036             = 
+                              251.64        251.64             = 
    314 El_available_Constr[7]
-                              244091        244091             = 
+                              251.64        251.64             = 
    315 El_available_Constr[8]
-                              203325        203325             = 
+                              251.64        251.64             = 
    316 El_available_Constr[9]
-                              250634        250634             = 
+                              251.64        251.64             = 
    317 El_available_Constr[10]
-                              454966        454966             = 
+                              251.64        251.64             = 
    318 El_available_Constr[11]
-                              260951        260951             = 
+                              251.64        251.64             = 
    319 El_available_Constr[12]
-                             64671.6       64671.6             = 
+                              251.64        251.64             = 
    320 HP_Energy_Balance_cstr[HPLOW,1]
                                    0            -0             = 
    321 HP_Energy_Balance_cstr[HPLOW,2]
@@ -694,29 +694,29 @@ Objective:  opex = -854807381.8 (MINimum)
    343 HP_Energy_Balance_cstr[HPHIGH,12]
                                    0            -0             = 
    344 Elec_demand_system[1]
-                               75842         75842             = 
+                         4.17131e+06   4.17131e+06             = 
    345 Elec_demand_system[2]
-                             20046.1       20046.1             = 
+                          4.1295e+06    4.1295e+06             = 
    346 Elec_demand_system[3]
-                             14584.7       14584.7             = 
+                         4.17122e+06   4.17122e+06             = 
    347 Elec_demand_system[4]
-                             7994.76       7994.76             = 
+                         4.15727e+06   4.15727e+06             = 
    348 Elec_demand_system[5]
-                                5652          5652             = 
+                         4.17117e+06   4.17117e+06             = 
    349 Elec_demand_system[6]
-                             3817.48       3817.48             = 
+                         4.15723e+06   4.15723e+06             = 
    350 Elec_demand_system[7]
-                             4300.14       4300.14             = 
+                         4.17113e+06   4.17113e+06             = 
    351 Elec_demand_system[8]
-                             5162.27       5162.27             = 
+                         4.17111e+06   4.17111e+06             = 
    352 Elec_demand_system[9]
-                             4173.87       4173.87             = 
+                         4.15717e+06   4.15717e+06             = 
    353 Elec_demand_system[10]
-                             2306.99       2306.99             = 
+                         4.17104e+06   4.17104e+06             = 
    354 Elec_demand_system[11]
-                              4008.8        4008.8             = 
+                         4.15712e+06   4.15712e+06             = 
    355 Elec_demand_system[12]
-                             16229.7       16229.7             = 
+                         4.17104e+06   4.17104e+06             = 
    356 Electricity_balance_Constr[1]
                                    0            -0             = 
    357 Electricity_balance_Constr[2]
@@ -798,7 +798,7 @@ Objective:  opex = -854807381.8 (MINimum)
                                    0            -0             = 
    396 an_CAPEXTot_Con
                                    0            -0             = 
-   397 opex             -8.54807e+08                             
+   397 COST              1.64318e+10                             
 
    No. Column name       Activity     Lower bound   Upper bound
 ------ ------------    ------------- ------------- -------------
@@ -809,53 +809,53 @@ Objective:  opex = -854807381.8 (MINimum)
      3 Capacity[HPLOW]
                                13000             0               
      4 Capacity[SOFC]
-                                   0             0               
+                               10000             0               
      5 Capacity[TURBINE]
-                                   0             0               
+                             4611.65             0               
      6 Capacity[SOLAR]
-                                   0             0               
+                                3500             0               
      7 Capacity[ICENGINE]
                                    0             0               
      8 PC[BOILER]                  0             0               
-     9 PC[HPHIGH]        1.43955e+06             0               
-    10 PC[HPLOW]         1.54708e+06             0               
-    11 PC[SOFC]                    0             0               
-    12 PC[TURBINE]                 0             0               
-    13 PC[SOLAR]                   0             0               
+     9 PC[HPHIGH]        1.61356e+06             0               
+    10 PC[HPLOW]         1.71998e+06             0               
+    11 PC[SOFC]          6.96012e+06             0               
+    12 PC[TURBINE]            395368             0               
+    13 PC[SOLAR]         1.91083e+06             0               
     14 PC[ICENGINE]                0             0               
     15 BM_C[BOILER]                0             0               
-    16 BM_C[HPHIGH]      2.30329e+06             0               
-    17 BM_C[HPLOW]       2.47534e+06             0               
-    18 BM_C[SOFC]                  0             0               
+    16 BM_C[HPHIGH]      2.58169e+06             0               
+    17 BM_C[HPLOW]       2.75197e+06             0               
+    18 BM_C[SOFC]        2.79101e+07             0               
     19 BM_C[TURBINE]
-                                   0             0               
-    20 BM_C[SOLAR]                 0             0               
+                         2.37221e+06             0               
+    20 BM_C[SOLAR]       1.91083e+06             0               
     21 BM_C[ICENGINE]
                                    0             0               
     22 GR_C[BOILER]                0             0               
-    23 GR_C[HPHIGH]      2.44839e+06             0               
-    24 GR_C[HPLOW]       2.63128e+06             0               
-    25 GR_C[SOFC]                  0             0               
+    23 GR_C[HPHIGH]      2.74434e+06             0               
+    24 GR_C[HPLOW]       2.92535e+06             0               
+    25 GR_C[SOFC]        2.96684e+07             0               
     26 GR_C[TURBINE]
-                                   0             0               
-    27 GR_C[SOLAR]                 0             0               
+                         2.52166e+06             0               
+    27 GR_C[SOLAR]       2.03121e+06             0               
     28 GR_C[ICENGINE]
                                    0             0               
     29 an_CAPEX[BOILER]
                                    0             0               
     30 an_CAPEX[HPHIGH]
-                              583944             0               
+                              654526             0               
     31 an_CAPEX[HPLOW]
-                              627562             0               
+                              697697             0               
     32 an_CAPEX[SOFC]
-                                   0             0               
+                         7.07594e+06             0               
     33 an_CAPEX[TURBINE]
-                                   0             0               
+                              601417             0               
     34 an_CAPEX[SOLAR]
-                                   0             0               
+                              484445             0               
     35 an_CAPEX[ICENGINE]
                                    0             0               
-    36 an_CAPEX_Tot      1.21151e+06             0               
+    36 an_CAPEX_Tot      9.51402e+06             0               
     37 Component_Use[BOILER]
                     *              0             0             1 
     38 Component_Use[HPHIGH]
@@ -863,11 +863,11 @@ Objective:  opex = -854807381.8 (MINimum)
     39 Component_Use[HPLOW]
                     *              1             0             1 
     40 Component_Use[SOFC]
-                    *              0             0             1 
+                    *              1             0             1 
     41 Component_Use[TURBINE]
-                    *              0             0             1 
+                    *              1             0             1 
     42 Component_Use[SOLAR]
-                    *              0             0             1 
+                    *              1             0             1 
     43 Component_Use[ICENGINE]
                     *              0             0             1 
     44 ComponentSize_t[BOILER,1]
@@ -895,11 +895,11 @@ Objective:  opex = -854807381.8 (MINimum)
     55 ComponentSize_t[BOILER,12]
                                    0             0               
     56 ComponentSize_t[HPHIGH,1]
-                              6079.2             0               
+                               12000             0               
     57 ComponentSize_t[HPHIGH,2]
-                              5139.2             0               
+                                   0             0               
     58 ComponentSize_t[HPHIGH,3]
-                              4199.2             0               
+                                   0             0               
     59 ComponentSize_t[HPHIGH,4]
                                    0             0               
     60 ComponentSize_t[HPHIGH,5]
@@ -919,11 +919,11 @@ Objective:  opex = -854807381.8 (MINimum)
     67 ComponentSize_t[HPHIGH,12]
                                    0             0               
     68 ComponentSize_t[HPLOW,1]
-                             8532.45             0               
+                               13000             0               
     69 ComponentSize_t[HPLOW,2]
-                             7202.95             0               
+                             2342.15             0               
     70 ComponentSize_t[HPLOW,3]
-                             5873.45             0               
+                             1363.25             0               
     71 ComponentSize_t[HPLOW,4]
                              8370.53             0               
     72 ComponentSize_t[HPLOW,5]
@@ -943,11 +943,11 @@ Objective:  opex = -854807381.8 (MINimum)
     79 ComponentSize_t[HPLOW,12]
                                    0             0               
     80 ComponentSize_t[SOFC,1]
-                                   0             0               
+                               10000             0               
     81 ComponentSize_t[SOFC,2]
-                                   0             0               
+                               10000             0               
     82 ComponentSize_t[SOFC,3]
-                                   0             0               
+                              8709.4             0               
     83 ComponentSize_t[SOFC,4]
                                    0             0               
     84 ComponentSize_t[SOFC,5]
@@ -967,7 +967,7 @@ Objective:  opex = -854807381.8 (MINimum)
     91 ComponentSize_t[SOFC,12]
                                    0             0               
     92 ComponentSize_t[TURBINE,1]
-                                   0             0               
+                             4611.65             0               
     93 ComponentSize_t[TURBINE,2]
                                    0             0               
     94 ComponentSize_t[TURBINE,3]
@@ -1041,19 +1041,19 @@ Objective:  opex = -854807381.8 (MINimum)
    128 Heating_LT[BOILER,1]
                                    0             0               
    129 Heating_LT[HPLOW,1]
-                             8532.45             0               
+                                   0             0               
    130 Heating_LT[SOFC,1]
-                                   0             0               
+                              3920.8             0               
    131 Heating_LT[TURBINE,1]
-                                   0             0               
+                             4611.65             0               
    132 Heating_LT[ICENGINE,1]
                                    0             0               
    133 Heating_LT[BOILER,2]
                                    0             0               
    134 Heating_LT[HPLOW,2]
-                             7202.95             0               
+                             2342.15             0               
    135 Heating_LT[SOFC,2]
-                                   0             0               
+                              4860.8             0               
    136 Heating_LT[TURBINE,2]
                                    0             0               
    137 Heating_LT[ICENGINE,2]
@@ -1061,9 +1061,9 @@ Objective:  opex = -854807381.8 (MINimum)
    138 Heating_LT[BOILER,3]
                                    0             0               
    139 Heating_LT[HPLOW,3]
-                             5873.45             0               
+                             1363.25             0               
    140 Heating_LT[SOFC,3]
-                                   0             0               
+                              4510.2             0               
    141 Heating_LT[TURBINE,3]
                                    0             0               
    142 Heating_LT[ICENGINE,3]
@@ -1087,7 +1087,7 @@ Objective:  opex = -854807381.8 (MINimum)
    151 Heating_LT[BOILER,12]
                                    0             0               
    152 Heating_LT[HPHIGH,1]
-                                   0             0               
+                               12000             0               
    153 Heating_LT[HPHIGH,2]
                                    0             0               
    154 Heating_LT[HPHIGH,3]
@@ -1185,9 +1185,9 @@ Objective:  opex = -854807381.8 (MINimum)
    200 Heating_HT[BOILER,1]
                                    0             0               
    201 Heating_HT[HPHIGH,1]
-                              6079.2             0               
-   202 Heating_HT[SOFC,1]
                                    0             0               
+   202 Heating_HT[SOFC,1]
+                              6079.2             0               
    203 Heating_HT[TURBINE,1]
                                    0             0               
    204 Heating_HT[ICENGINE,1]
@@ -1195,9 +1195,9 @@ Objective:  opex = -854807381.8 (MINimum)
    205 Heating_HT[BOILER,2]
                                    0             0               
    206 Heating_HT[HPHIGH,2]
-                              5139.2             0               
-   207 Heating_HT[SOFC,2]
                                    0             0               
+   207 Heating_HT[SOFC,2]
+                              5139.2             0               
    208 Heating_HT[TURBINE,2]
                                    0             0               
    209 Heating_HT[ICENGINE,2]
@@ -1205,9 +1205,9 @@ Objective:  opex = -854807381.8 (MINimum)
    210 Heating_HT[BOILER,3]
                                    0             0               
    211 Heating_HT[HPHIGH,3]
-                              4199.2             0               
-   212 Heating_HT[SOFC,3]
                                    0             0               
+   212 Heating_HT[SOFC,3]
+                              4199.2             0               
    213 Heating_HT[TURBINE,3]
                                    0             0               
    214 Heating_HT[ICENGINE,3]
@@ -1249,7 +1249,7 @@ Objective:  opex = -854807381.8 (MINimum)
    232 Heating_HT[HPHIGH,12]
                                    0             0               
    233 Heating_HT[HPLOW,1]
-                                   0             0               
+                               13000             0               
    234 Heating_HT[HPLOW,2]
                                    0             0               
    235 Heating_HT[HPLOW,3]
@@ -1351,11 +1351,11 @@ Objective:  opex = -854807381.8 (MINimum)
    283 FUEL_Demand[BOILER,12]
                                    0             0               
    284 FUEL_Demand[SOFC,1]
-                                   0             0               
+                             38461.5             0               
    285 FUEL_Demand[SOFC,2]
-                                   0             0               
+                             38461.5             0               
    286 FUEL_Demand[SOFC,3]
-                                   0             0               
+                             33497.7             0               
    287 FUEL_Demand[SOFC,4]
                                    0             0               
    288 FUEL_Demand[SOFC,5]
@@ -1375,7 +1375,7 @@ Objective:  opex = -854807381.8 (MINimum)
    295 FUEL_Demand[SOFC,12]
                                    0             0               
    296 FUEL_Demand[TURBINE,1]
-                                   0             0               
+                              9607.6             0               
    297 FUEL_Demand[TURBINE,2]
                                    0             0               
    298 FUEL_Demand[TURBINE,3]
@@ -1447,11 +1447,11 @@ Objective:  opex = -854807381.8 (MINimum)
    331 El_prod[BOILER,12]
                                    0                             
    332 El_prod[SOFC,1]
-                                   0                             
+                             24615.4                             
    333 El_prod[SOFC,2]
-                                   0                             
+                             24615.4                             
    334 El_prod[SOFC,3]
-                                   0                             
+                             21438.5                             
    335 El_prod[SOFC,4]
                                    0                             
    336 El_prod[SOFC,5]
@@ -1471,7 +1471,7 @@ Objective:  opex = -854807381.8 (MINimum)
    343 El_prod[SOFC,12]
                                    0                             
    344 El_prod[TURBINE,1]
-                                   0                             
+                             3458.74                             
    345 El_prod[TURBINE,2]
                                    0                             
    346 El_prod[TURBINE,3]
@@ -1519,35 +1519,35 @@ Objective:  opex = -854807381.8 (MINimum)
    367 El_prod[ICENGINE,12]
                                    0                             
    368 El_prod[SOLAR,1]
-                             13840.2                             
+                             308.462                             
    369 El_prod[SOLAR,2]
-                             51837.9                             
+                             308.462                             
    370 El_prod[SOLAR,3]
-                             71969.1                             
+                             308.462                             
    371 El_prod[SOLAR,4]
-                              130853                             
+                             308.462                             
    372 El_prod[SOLAR,5]
-                              185711                             
+                             308.462                             
    373 El_prod[SOLAR,6]
-                              274036                             
+                             308.462                             
    374 El_prod[SOLAR,7]
-                              244091                             
+                             308.462                             
    375 El_prod[SOLAR,8]
-                              203325                             
+                             308.462                             
    376 El_prod[SOLAR,9]
-                              250634                             
+                             308.462                             
    377 El_prod[SOLAR,10]
-                              454966                             
+                             308.462                             
    378 El_prod[SOLAR,11]
-                              260951                             
+                             308.462                             
    379 El_prod[SOLAR,12]
-                             64671.6                             
+                             308.462                             
    380 El_prod[HPLOW,1]
-                            -2599.08                             
+                            -3959.95                             
    381 El_prod[HPLOW,2]
-                            -2021.04                             
+                            -657.173                             
    382 El_prod[HPLOW,3]
-                            -1502.83                             
+                            -348.813                             
    383 El_prod[HPLOW,4]
                             -1982.64                             
    384 El_prod[HPLOW,5]
@@ -1567,11 +1567,11 @@ Objective:  opex = -854807381.8 (MINimum)
    391 El_prod[HPLOW,12]
                                    0                             
    392 El_prod[HPHIGH,1]
-                            -2337.87                             
+                            -4614.82                             
    393 El_prod[HPHIGH,2]
-                            -1801.41                             
+                                   0                             
    394 El_prod[HPHIGH,3]
-                             -1322.8                             
+                                   0                             
    395 El_prod[HPHIGH,4]
                                    0                             
    396 El_prod[HPHIGH,5]
@@ -1590,63 +1590,63 @@ Objective:  opex = -854807381.8 (MINimum)
                                    0                             
    403 El_prod[HPHIGH,12]
                                    0                             
-   404 El_Buy[1]             66938.7             0               
-   405 El_Buy[2]                   0             0               
-   406 El_Buy[3]                   0             0               
-   407 El_Buy[4]                   0             0               
-   408 El_Buy[5]                   0             0               
-   409 El_Buy[6]                   0             0               
-   410 El_Buy[7]                   0             0               
-   411 El_Buy[8]                   0             0               
-   412 El_Buy[9]                   0             0               
-   413 El_Buy[10]                  0             0               
-   414 El_Buy[11]                  0             0               
-   415 El_Buy[12]                  0             0               
+   404 El_Buy[1]          4.1515e+06             0               
+   405 El_Buy[2]         4.10524e+06             0               
+   406 El_Buy[3]         4.14983e+06             0               
+   407 El_Buy[4]         4.15895e+06             0               
+   408 El_Buy[5]         4.17249e+06             0               
+   409 El_Buy[6]         4.15821e+06             0               
+   410 El_Buy[7]          4.1718e+06             0               
+   411 El_Buy[8]         4.17151e+06             0               
+   412 El_Buy[9]         4.15732e+06             0               
+   413 El_Buy[10]        4.17073e+06             0               
+   414 El_Buy[11]        4.15681e+06             0               
+   415 El_Buy[12]        4.17073e+06             0               
    416 El_Sell[1]                  0             0               
-   417 El_Sell[2]            27969.3             0               
-   418 El_Sell[3]            54558.8             0               
-   419 El_Sell[4]             120876             0               
-   420 El_Sell[5]             178438             0               
-   421 El_Sell[6]             268932             0               
-   422 El_Sell[7]             238810             0               
-   423 El_Sell[8]             197458             0               
-   424 El_Sell[9]             246000             0               
-   425 El_Sell[10]            452659             0               
-   426 El_Sell[11]            256942             0               
-   427 El_Sell[12]           48441.8             0               
+   417 El_Sell[2]                  0             0               
+   418 El_Sell[3]                  0             0               
+   419 El_Sell[4]                  0             0               
+   420 El_Sell[5]                  0             0               
+   421 El_Sell[6]                  0             0               
+   422 El_Sell[7]                  0             0               
+   423 El_Sell[8]                  0             0               
+   424 El_Sell[9]                  0             0               
+   425 El_Sell[10]                 0             0               
+   426 El_Sell[11]                 0             0               
+   427 El_Sell[12]                 0             0               
    428 Elec_Demand[1]
-                               75842             0               
+                         4.17131e+06             0               
    429 Elec_Demand[2]
-                             20046.1             0               
+                          4.1295e+06             0               
    430 Elec_Demand[3]
-                             14584.7             0               
+                         4.17122e+06             0               
    431 Elec_Demand[4]
-                             7994.76             0               
+                         4.15727e+06             0               
    432 Elec_Demand[5]
-                                5652             0               
+                         4.17117e+06             0               
    433 Elec_Demand[6]
-                             3817.48             0               
+                         4.15723e+06             0               
    434 Elec_Demand[7]
-                             4300.14             0               
+                         4.17113e+06             0               
    435 Elec_Demand[8]
-                             5162.27             0               
+                         4.17111e+06             0               
    436 Elec_Demand[9]
-                             4173.87             0               
+                         4.15717e+06             0               
    437 Elec_Demand[10]
-                             2306.99             0               
+                         4.17104e+06             0               
    438 Elec_Demand[11]
-                              4008.8             0               
+                         4.15712e+06             0               
    439 Elec_Demand[12]
-                             16229.7             0               
+                         4.17104e+06             0               
 
 Integer feasibility conditions:
 
-KKT.PE: max.abs.err = 1.19e-07 on row 397
-        max.rel.err = 1.06e-16 on row 361
+KKT.PE: max.abs.err = 0.00e+00 on row 0
+        max.rel.err = 0.00e+00 on row 0
         High quality
 
-KKT.PB: max.abs.err = 2.23e-11 on row 365
-        max.rel.err = 2.23e-11 on row 365
+KKT.PB: max.abs.err = 4.66e-10 on row 356
+        max.rel.err = 4.66e-10 on row 356
         High quality
 
 End of output

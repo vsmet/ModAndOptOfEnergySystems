@@ -130,11 +130,11 @@ subject to Non_elec_prod_constr{t in TIME}:
 subject to FUEL_elec_balance_constr{u in FUEL_USERS, t in TIME}: 
   El_prod[u,t] = FUEL_el_eff[u]*FUEL_Demand[u,t]; #dim kW
 subject to El_available_Constr{t in TIME}: #AJOUTER COUTS DES NOUVEAUX PANNEAUX!
-  El_prod["SOLAR",t] = ((solarfarm_area+Capacity["SOLAR"])*Efficiency_SolarPanels)*solar_radiation*TIMEsteps[t]/1000; #dim kW
+  El_prod["SOLAR",t] = ((solarfarm_area+Capacity["SOLAR"])*Efficiency_SolarPanels)*solar_radiation/1000; #dim kW
 subject to HP_Energy_Balance_cstr{h in HP,t in TIME}:
   ComponentSize_t[h,t] = COP[h,t]*(-El_prod[h,t]);  #kW
 subject to Elec_demand_system{t in TIME}:
-  Elec_Demand[t] = ((spec_annual_elec_demand*floor_area)/12+ (vol_cooling_water[t]+(Heat_Demand['HPLOW',t]+Heat_Demand['HPHIGH',t])/(4*cp_water))*pumping_cost)/TIMEsteps[t]; #dim #KW
+  Elec_Demand[t] = ((spec_annual_elec_demand*floor_area)/12+ (vol_cooling_water[t]+(Heat_Demand['HPLOW',t]+Heat_Demand['HPHIGH',t])/(4*cp_water))*pumping_cost); #dim #KW
 subject to Electricity_balance_Constr{t in TIME}:
   sum{u in COMPONENTS} El_prod[u,t]+ El_Buy[t] - El_Sell[t]= Elec_Demand[t]; #kW
 #Investment
@@ -154,8 +154,8 @@ subject to an_CAPEXTot_Con:
 # OBJECTIVE FUNCTION
 ############################################################################################
 
-minimize opex:
-sum{u in NG_USERS,t in TIME} ((c_ng_in*FUEL_Demand[u,t] + c_ds_in*FUEL_Demand["ICENGINE",t]+ c_el_in*El_Buy[t] - c_el_out*El_Sell[t])*TIMEsteps[t]) + an_CAPEX_Tot;
+minimize COST:
+sum{u in NG_USERS,t in TIME} ((c_ng_in*FUEL_Demand[u,t] + c_ds_in*FUEL_Demand["ICENGINE",t]+ c_el_in*El_Buy[t] - c_el_out*El_Sell[t])*TIMEsteps[t]); #+ an_CAPEX_Tot;
 solve;
 
 
@@ -163,10 +163,9 @@ solve;
 # DISPLAY
 ############################################################################################
 
-display opex;
-display Capacity;
-display El_Sell;
+display COST/(10^9);
 display El_Buy;
+
 
 
 
