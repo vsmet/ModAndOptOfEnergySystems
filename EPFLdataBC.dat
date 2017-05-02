@@ -175,22 +175,22 @@ SOLAR 1
 ICENGINE 1 #VINCENT See F_BM
 ;
 param  C_min   := 
-BOILER 1000 #VINCENT See F_BM
-HPHIGH 1500 #VINCENT See F_BM
-HPLOW 1500 #VINCENT See F_BM
-SOFC 100 #This is the heatCapacity -> Electrical capacity is calculated in the modFile
-TURBINE 100 #dimitri See F_BM
+BOILER 2000 #VINCENT See F_BM
+HPHIGH 12000 #VINCENT See F_BM
+HPLOW 13000 #VINCENT See F_BM
+SOFC 0 #This is the heatCapacity -> Electrical capacity is calculated in the modFile
+TURBINE 0 #dimitri See F_BM
 SOLAR 0
 ICENGINE 100 #VINCENT See F_BM
 ;
 param  C_max   := 
-BOILER 25000 
+BOILER 2000 
 HPHIGH 12000 
 HPLOW 13000	
-SOFC 10000 
-TURBINE 15000 #dimitri , matlab
-SOLAR 3500
-ICENGINE 15000 #VINCENT See F_BM
+SOFC 0
+TURBINE 0 #dimitri , matlab
+SOLAR 0
+ICENGINE 0 #VINCENT See F_BM
 ;
 param  alpha_2 := 0.35; #LectureNotes Advanced Energetics p5 CostOfEq
 param  alpha_1 := 0.18; #LectureNotes Advanced Energetics p5 CostOfEq

@@ -130,7 +130,7 @@ subject to Non_elec_prod_constr{t in TIME}:
 subject to FUEL_elec_balance_constr{u in FUEL_USERS, t in TIME}: 
   El_prod[u,t] = FUEL_el_eff[u]*FUEL_Demand[u,t]; #dim kW
 subject to El_available_Constr{t in TIME}: #AJOUTER COUTS DES NOUVEAUX PANNEAUX!
-  El_prod["SOLAR",t] = ((solarfarm_area+Capacity["SOLAR"])*Efficiency_SolarPanels)*solar_radiation*TIMEsteps[t]; #dim kW
+  El_prod["SOLAR",t] = ((solarfarm_area+Capacity["SOLAR"])*Efficiency_SolarPanels)*solar_radiation*TIMEsteps[t]/1000; #dim kW
 subject to HP_Energy_Balance_cstr{h in HP,t in TIME}:
   ComponentSize_t[h,t] = COP[h,t]*(-El_prod[h,t]);  #kW
 subject to Elec_demand_system{t in TIME}:
@@ -163,9 +163,10 @@ solve;
 # DISPLAY
 ############################################################################################
 
-
+display opex;
 display Capacity;
-
+display El_Sell;
+display El_Buy;
 
 
 
