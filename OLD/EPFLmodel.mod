@@ -61,7 +61,8 @@ param cp_water:=4.18; #kJ/kg K
 /*******************************************************/
 # Energy variables
 /*******************************************************/ 
-
+# ELEC DEMAND (COOLING LOOP INCLUDED)
+param Elec_Demand{t in TIME} := (spec_annual_elec_demand*floor_area)/12 + vol_cooling_water[t]*pumping_cost;
 
 # HEAT DEMAND
 
@@ -173,7 +174,6 @@ subject to FUEL_heat_balance_constr{u in FUEL_USERS, t in TIME}:
 var El_prod{u in COMPONENTS, t in TIME};
 var El_Buy{t in TIME} >=0;
 var El_Sell{t in TIME}>=0;
-var Elec_Demand{t in TIME} >=0;
 
 
 param Efficiency_SolarPanels := 0.11327;  # Voir feuille excel DATA, Sylvain
@@ -188,7 +188,7 @@ subject to El_available_Constr{t in TIME}: #AJOUTER COUTS DES NOUVEAUX PANNEAUX!
 subject to HP_Energy_Balance_cstr{h in HP,t in TIME}:
   ComponentSize_t[h,t] = COP[h,t]*(-El_prod[h,t]);  #kW
 subject to Elec_demand_system{t in TIME}:
-  Elec_Demand[t] = ((spec_annual_elec_demand*floor_area)/12+ (vol_cooling_water[t]+(Heat_Demand['HPLOW',t]+Heat_Demand['HPHIGH',t])/(4*cp_water))*pumping_cost)/TIMEsteps[t]; #dim #KW
+Elec_Demand[t] = ((spec_annual_elec_demand*floor_area)/12+ (vol_cooling_water[t]+(Heat_Demand['HPLOW',t]+Heat_Demand['HPHIGH',t])/(4*cp_water))*pumping_cost)/TIMEsteps[t]; #dim #KW
 
 subject to Electricity_balance_Constr{t in TIME}:
   sum{u in COMPONENTS} El_prod[u,t]+ El_Buy[t] - El_Sell[t]= Elec_Demand[t]; #kW
@@ -224,13 +224,13 @@ param c_ds_in;
 
 
 minimize opex:
-sum{u in NG_USERS,t in TIME} ((c_ng_in*FUEL_Demand[u,t] + c_ds_in*FUEL_Demand["ICENGINE",t]+ c_el_in*El_Buy[t] - c_el_out*El_Sell[t])*TIMEsteps[t]) + an_CAPEX_Tot;
+sum{u in NG_USERS,t in TIME} ((c_ng_in*FUEL_Demand[u,t] + c_ds_in*FUEL_Demand["ICENGINE",t] + c_el_in*El_Buy[t] - c_el_out*El_Sell[t])*TIMEsteps[t]) + an_CAPEX_Tot;
 
 solve;
 
 # To do!
 display Heat_Demand;
-# display opex;
+display opex;
 display Capacity;
 display Component_Use;
 display Heat_Demand;

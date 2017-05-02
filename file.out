@@ -1,0 +1,1652 @@
+Problem:    EPFLmodel
+Rows:       397
+Columns:    439 (7 integer, 7 binary)
+Non-zeros:  1134
+Status:     INTEGER OPTIMAL
+Objective:  opex = 23373731.77 (MINimum)
+
+   No.   Row name        Activity     Lower bound   Upper bound
+------ ------------    ------------- ------------- -------------
+     1 Size_Constr[BOILER,1]
+                                   0                          -0 
+     2 Size_Constr[BOILER,2]
+                                   0                          -0 
+     3 Size_Constr[BOILER,3]
+                                   0                          -0 
+     4 Size_Constr[BOILER,4]
+                                   0                          -0 
+     5 Size_Constr[BOILER,5]
+                                   0                          -0 
+     6 Size_Constr[BOILER,6]
+                                   0                          -0 
+     7 Size_Constr[BOILER,7]
+                                   0                          -0 
+     8 Size_Constr[BOILER,8]
+                                   0                          -0 
+     9 Size_Constr[BOILER,9]
+                                   0                          -0 
+    10 Size_Constr[BOILER,10]
+                                   0                          -0 
+    11 Size_Constr[BOILER,11]
+                                   0                          -0 
+    12 Size_Constr[BOILER,12]
+                                   0                          -0 
+    13 Size_Constr[HPHIGH,1]
+                                   0                          -0 
+    14 Size_Constr[HPHIGH,2]
+                            -7671.58                          -0 
+    15 Size_Constr[HPHIGH,3]
+                            -8611.58                          -0 
+    16 Size_Constr[HPHIGH,4]
+                              -12000                          -0 
+    17 Size_Constr[HPHIGH,5]
+                              -12000                          -0 
+    18 Size_Constr[HPHIGH,6]
+                              -12000                          -0 
+    19 Size_Constr[HPHIGH,7]
+                              -12000                          -0 
+    20 Size_Constr[HPHIGH,8]
+                              -12000                          -0 
+    21 Size_Constr[HPHIGH,9]
+                              -12000                          -0 
+    22 Size_Constr[HPHIGH,10]
+                              -12000                          -0 
+    23 Size_Constr[HPHIGH,11]
+                              -12000                          -0 
+    24 Size_Constr[HPHIGH,12]
+                              -12000                          -0 
+    25 Size_Constr[HPLOW,1]
+                                   0                          -0 
+    26 Size_Constr[HPLOW,2]
+                            -5797.05                          -0 
+    27 Size_Constr[HPLOW,3]
+                            -7126.55                          -0 
+    28 Size_Constr[HPLOW,4]
+                            -5440.25                          -0 
+    29 Size_Constr[HPLOW,5]
+                               -6575                          -0 
+    30 Size_Constr[HPLOW,6]
+                            -7709.75                          -0 
+    31 Size_Constr[HPLOW,7]
+                             -8844.5                          -0 
+    32 Size_Constr[HPLOW,8]
+                            -9979.25                          -0 
+    33 Size_Constr[HPLOW,9]
+                              -11114                          -0 
+    34 Size_Constr[HPLOW,10]
+                              -13000                          -0 
+    35 Size_Constr[HPLOW,11]
+                              -13000                          -0 
+    36 Size_Constr[HPLOW,12]
+                              -13000                          -0 
+    37 Size_Constr[SOFC,1]
+                                   0                          -0 
+    38 Size_Constr[SOFC,2]
+                                   0                          -0 
+    39 Size_Constr[SOFC,3]
+                                   0                          -0 
+    40 Size_Constr[SOFC,4]
+                                   0                          -0 
+    41 Size_Constr[SOFC,5]
+                                   0                          -0 
+    42 Size_Constr[SOFC,6]
+                                   0                          -0 
+    43 Size_Constr[SOFC,7]
+                                   0                          -0 
+    44 Size_Constr[SOFC,8]
+                                   0                          -0 
+    45 Size_Constr[SOFC,9]
+                                   0                          -0 
+    46 Size_Constr[SOFC,10]
+                            -810.776                          -0 
+    47 Size_Constr[SOFC,11]
+                            -810.776                          -0 
+    48 Size_Constr[SOFC,12]
+                            -810.776                          -0 
+    49 Size_Constr[TURBINE,1]
+                                   0                          -0 
+    50 Size_Constr[TURBINE,2]
+                                   0                          -0 
+    51 Size_Constr[TURBINE,3]
+                                   0                          -0 
+    52 Size_Constr[TURBINE,4]
+                                   0                          -0 
+    53 Size_Constr[TURBINE,5]
+                                   0                          -0 
+    54 Size_Constr[TURBINE,6]
+                                   0                          -0 
+    55 Size_Constr[TURBINE,7]
+                                   0                          -0 
+    56 Size_Constr[TURBINE,8]
+                                   0                          -0 
+    57 Size_Constr[TURBINE,9]
+                                   0                          -0 
+    58 Size_Constr[TURBINE,10]
+                                   0                          -0 
+    59 Size_Constr[TURBINE,11]
+                                   0                          -0 
+    60 Size_Constr[TURBINE,12]
+                                   0                          -0 
+    61 Size_Constr[SOLAR,1]
+                                   0                          -0 
+    62 Size_Constr[SOLAR,2]
+                                   0                          -0 
+    63 Size_Constr[SOLAR,3]
+                                   0                          -0 
+    64 Size_Constr[SOLAR,4]
+                                   0                          -0 
+    65 Size_Constr[SOLAR,5]
+                                   0                          -0 
+    66 Size_Constr[SOLAR,6]
+                                   0                          -0 
+    67 Size_Constr[SOLAR,7]
+                                   0                          -0 
+    68 Size_Constr[SOLAR,8]
+                                   0                          -0 
+    69 Size_Constr[SOLAR,9]
+                                   0                          -0 
+    70 Size_Constr[SOLAR,10]
+                                   0                          -0 
+    71 Size_Constr[SOLAR,11]
+                                   0                          -0 
+    72 Size_Constr[SOLAR,12]
+                                   0                          -0 
+    73 Size_Constr[ICENGINE,1]
+                                   0                          -0 
+    74 Size_Constr[ICENGINE,2]
+                                   0                          -0 
+    75 Size_Constr[ICENGINE,3]
+                                   0                          -0 
+    76 Size_Constr[ICENGINE,4]
+                                   0                          -0 
+    77 Size_Constr[ICENGINE,5]
+                                   0                          -0 
+    78 Size_Constr[ICENGINE,6]
+                                   0                          -0 
+    79 Size_Constr[ICENGINE,7]
+                                   0                          -0 
+    80 Size_Constr[ICENGINE,8]
+                                   0                          -0 
+    81 Size_Constr[ICENGINE,9]
+                                   0                          -0 
+    82 Size_Constr[ICENGINE,10]
+                                   0                          -0 
+    83 Size_Constr[ICENGINE,11]
+                                   0                          -0 
+    84 Size_Constr[ICENGINE,12]
+                                   0                          -0 
+    85 Component_cmin_cstr[BOILER]
+                                   0                          -0 
+    86 Component_cmin_cstr[HPHIGH]
+                              -10500                          -0 
+    87 Component_cmin_cstr[HPLOW]
+                              -11500                          -0 
+    88 Component_cmin_cstr[SOFC]
+                            -710.776                          -0 
+    89 Component_cmin_cstr[TURBINE]
+                                   0                          -0 
+    90 Component_cmin_cstr[SOLAR]
+                                   0                          -0 
+    91 Component_cmin_cstr[ICENGINE]
+                                   0                          -0 
+    92 Component_cmax_cstr[BOILER]
+                                   0            -0               
+    93 Component_cmax_cstr[HPHIGH]
+                                   0            -0               
+    94 Component_cmax_cstr[HPLOW]
+                                   0            -0               
+    95 Component_cmax_cstr[SOFC]
+                             9189.22            -0               
+    96 Component_cmax_cstr[TURBINE]
+                                   0            -0               
+    97 Component_cmax_cstr[SOLAR]
+                                   0            -0               
+    98 Component_cmax_cstr[ICENGINE]
+                                   0            -0               
+    99 Energy_Balance_LT_cstr2[HPLOW,2]
+                            -12342.2      -12342.2             = 
+   100 Energy_Balance_LT_cstr2[HPLOW,3]
+                            -10072.6      -10072.6             = 
+   101 Energy_Balance_LT_cstr2[HPLOW,4]
+                            -8370.53      -8370.53             = 
+   102 Energy_Balance_LT_cstr2[HPLOW,5]
+                            -7235.77      -7235.77             = 
+   103 Energy_Balance_LT_cstr2[HPLOW,6]
+                            -6101.02      -6101.02             = 
+   104 Energy_Balance_LT_cstr2[HPLOW,7]
+                            -4966.27      -4966.27             = 
+   105 Energy_Balance_LT_cstr2[HPLOW,8]
+                            -3831.53      -3831.53             = 
+   106 Energy_Balance_LT_cstr2[HPLOW,9]
+                            -2696.78      -2696.78             = 
+   107 Energy_Balance_LT_cstr2[HPLOW,10]
+                                   0            -0             = 
+   108 Energy_Balance_LT_cstr2[HPLOW,11]
+                                   0            -0             = 
+   109 Energy_Balance_LT_cstr2[HPLOW,12]
+                                   0            -0             = 
+   110 Energy_Balance_LT_cstr2[HPHIGH,4]
+                            -8370.53      -8370.53             = 
+   111 Energy_Balance_LT_cstr2[HPHIGH,5]
+                            -7235.77      -7235.77             = 
+   112 Energy_Balance_LT_cstr2[HPHIGH,6]
+                            -6101.02      -6101.02             = 
+   113 Energy_Balance_LT_cstr2[HPHIGH,7]
+                            -4966.27      -4966.27             = 
+   114 Energy_Balance_LT_cstr2[HPHIGH,8]
+                            -3831.53      -3831.53             = 
+   115 Energy_Balance_LT_cstr2[HPHIGH,9]
+                            -2696.78      -2696.78             = 
+   116 Energy_Balance_LT_cstr2[HPHIGH,10]
+                                   0            -0             = 
+   117 Energy_Balance_LT_cstr2[HPHIGH,11]
+                                   0            -0             = 
+   118 Energy_Balance_LT_cstr2[HPHIGH,12]
+                                   0            -0             = 
+   119 Energy_Balance_LT_cstr[HPLOW,1]
+                            -8532.45      -8532.45             = 
+   120 Energy_Balance_LT_cstr[HPHIGH,1]
+                            -8532.45      -8532.45             = 
+   121 Energy_Balance_LT_cstr[HPHIGH,2]
+                            -7202.95      -7202.95             = 
+   122 Energy_Balance_LT_cstr[HPHIGH,3]
+                            -5873.45      -5873.45             = 
+   123 Energy_Balance_HT_cstr[HPLOW,1]
+                             -6079.2       -6079.2             = 
+   124 Energy_Balance_HT_cstr[HPHIGH,1]
+                             -6079.2       -6079.2             = 
+   125 Energy_Balance_HT_cstr[HPHIGH,2]
+                             -5139.2       -5139.2             = 
+   126 Energy_Balance_HT_cstr[HPHIGH,3]
+                             -4199.2       -4199.2             = 
+   127 Energy_Balance_overall_cstr[BOILER,1]
+                                   0            -0             = 
+   128 Energy_Balance_overall_cstr[BOILER,2]
+                                   0            -0             = 
+   129 Energy_Balance_overall_cstr[BOILER,3]
+                                   0            -0             = 
+   130 Energy_Balance_overall_cstr[BOILER,4]
+                                   0            -0             = 
+   131 Energy_Balance_overall_cstr[BOILER,5]
+                                   0            -0             = 
+   132 Energy_Balance_overall_cstr[BOILER,6]
+                                   0            -0             = 
+   133 Energy_Balance_overall_cstr[BOILER,7]
+                                   0            -0             = 
+   134 Energy_Balance_overall_cstr[BOILER,8]
+                                   0            -0             = 
+   135 Energy_Balance_overall_cstr[BOILER,9]
+                                   0            -0             = 
+   136 Energy_Balance_overall_cstr[BOILER,10]
+                                   0            -0             = 
+   137 Energy_Balance_overall_cstr[BOILER,11]
+                                   0            -0             = 
+   138 Energy_Balance_overall_cstr[BOILER,12]
+                                   0            -0             = 
+   139 Energy_Balance_overall_cstr[HPHIGH,1]
+                                   0            -0             = 
+   140 Energy_Balance_overall_cstr[HPHIGH,2]
+                                   0            -0             = 
+   141 Energy_Balance_overall_cstr[HPHIGH,3]
+                                   0            -0             = 
+   142 Energy_Balance_overall_cstr[HPHIGH,4]
+                                   0            -0             = 
+   143 Energy_Balance_overall_cstr[HPHIGH,5]
+                                   0            -0             = 
+   144 Energy_Balance_overall_cstr[HPHIGH,6]
+                                   0            -0             = 
+   145 Energy_Balance_overall_cstr[HPHIGH,7]
+                                   0            -0             = 
+   146 Energy_Balance_overall_cstr[HPHIGH,8]
+                                   0            -0             = 
+   147 Energy_Balance_overall_cstr[HPHIGH,9]
+                                   0            -0             = 
+   148 Energy_Balance_overall_cstr[HPHIGH,10]
+                                   0            -0             = 
+   149 Energy_Balance_overall_cstr[HPHIGH,11]
+                                   0            -0             = 
+   150 Energy_Balance_overall_cstr[HPHIGH,12]
+                                   0            -0             = 
+   151 Energy_Balance_overall_cstr[HPLOW,1]
+                                   0            -0             = 
+   152 Energy_Balance_overall_cstr[HPLOW,2]
+                                   0            -0             = 
+   153 Energy_Balance_overall_cstr[HPLOW,3]
+                                   0            -0             = 
+   154 Energy_Balance_overall_cstr[HPLOW,4]
+                                   0            -0             = 
+   155 Energy_Balance_overall_cstr[HPLOW,5]
+                                   0            -0             = 
+   156 Energy_Balance_overall_cstr[HPLOW,6]
+                                   0            -0             = 
+   157 Energy_Balance_overall_cstr[HPLOW,7]
+                                   0            -0             = 
+   158 Energy_Balance_overall_cstr[HPLOW,8]
+                                   0            -0             = 
+   159 Energy_Balance_overall_cstr[HPLOW,9]
+                                   0            -0             = 
+   160 Energy_Balance_overall_cstr[HPLOW,10]
+                                   0            -0             = 
+   161 Energy_Balance_overall_cstr[HPLOW,11]
+                                   0            -0             = 
+   162 Energy_Balance_overall_cstr[HPLOW,12]
+                                   0            -0             = 
+   163 Energy_Balance_overall_cstr[SOFC,1]
+                                   0            -0             = 
+   164 Energy_Balance_overall_cstr[SOFC,2]
+                                   0            -0             = 
+   165 Energy_Balance_overall_cstr[SOFC,3]
+                                   0            -0             = 
+   166 Energy_Balance_overall_cstr[SOFC,4]
+                                   0            -0             = 
+   167 Energy_Balance_overall_cstr[SOFC,5]
+                                   0            -0             = 
+   168 Energy_Balance_overall_cstr[SOFC,6]
+                                   0            -0             = 
+   169 Energy_Balance_overall_cstr[SOFC,7]
+                                   0            -0             = 
+   170 Energy_Balance_overall_cstr[SOFC,8]
+                                   0            -0             = 
+   171 Energy_Balance_overall_cstr[SOFC,9]
+                                   0            -0             = 
+   172 Energy_Balance_overall_cstr[SOFC,10]
+                                   0            -0             = 
+   173 Energy_Balance_overall_cstr[SOFC,11]
+                                   0            -0             = 
+   174 Energy_Balance_overall_cstr[SOFC,12]
+                                   0            -0             = 
+   175 Energy_Balance_overall_cstr[TURBINE,1]
+                                   0            -0             = 
+   176 Energy_Balance_overall_cstr[TURBINE,2]
+                                   0            -0             = 
+   177 Energy_Balance_overall_cstr[TURBINE,3]
+                                   0            -0             = 
+   178 Energy_Balance_overall_cstr[TURBINE,4]
+                                   0            -0             = 
+   179 Energy_Balance_overall_cstr[TURBINE,5]
+                                   0            -0             = 
+   180 Energy_Balance_overall_cstr[TURBINE,6]
+                                   0            -0             = 
+   181 Energy_Balance_overall_cstr[TURBINE,7]
+                                   0            -0             = 
+   182 Energy_Balance_overall_cstr[TURBINE,8]
+                                   0            -0             = 
+   183 Energy_Balance_overall_cstr[TURBINE,9]
+                                   0            -0             = 
+   184 Energy_Balance_overall_cstr[TURBINE,10]
+                                   0            -0             = 
+   185 Energy_Balance_overall_cstr[TURBINE,11]
+                                   0            -0             = 
+   186 Energy_Balance_overall_cstr[TURBINE,12]
+                                   0            -0             = 
+   187 Energy_Balance_overall_cstr[ICENGINE,1]
+                                   0            -0             = 
+   188 Energy_Balance_overall_cstr[ICENGINE,2]
+                                   0            -0             = 
+   189 Energy_Balance_overall_cstr[ICENGINE,3]
+                                   0            -0             = 
+   190 Energy_Balance_overall_cstr[ICENGINE,4]
+                                   0            -0             = 
+   191 Energy_Balance_overall_cstr[ICENGINE,5]
+                                   0            -0             = 
+   192 Energy_Balance_overall_cstr[ICENGINE,6]
+                                   0            -0             = 
+   193 Energy_Balance_overall_cstr[ICENGINE,7]
+                                   0            -0             = 
+   194 Energy_Balance_overall_cstr[ICENGINE,8]
+                                   0            -0             = 
+   195 Energy_Balance_overall_cstr[ICENGINE,9]
+                                   0            -0             = 
+   196 Energy_Balance_overall_cstr[ICENGINE,10]
+                                   0            -0             = 
+   197 Energy_Balance_overall_cstr[ICENGINE,11]
+                                   0            -0             = 
+   198 Energy_Balance_overall_cstr[ICENGINE,12]
+                                   0            -0             = 
+   199 EightyeightPerc_Constr
+                         2.91832e+07   2.91832e+07               
+   200 FUEL_heat_balance_constr[BOILER,1]
+                                   0            -0             = 
+   201 FUEL_heat_balance_constr[BOILER,2]
+                                   0            -0             = 
+   202 FUEL_heat_balance_constr[BOILER,3]
+                                   0            -0             = 
+   203 FUEL_heat_balance_constr[BOILER,4]
+                                   0            -0             = 
+   204 FUEL_heat_balance_constr[BOILER,5]
+                                   0            -0             = 
+   205 FUEL_heat_balance_constr[BOILER,6]
+                                   0            -0             = 
+   206 FUEL_heat_balance_constr[BOILER,7]
+                                   0            -0             = 
+   207 FUEL_heat_balance_constr[BOILER,8]
+                                   0            -0             = 
+   208 FUEL_heat_balance_constr[BOILER,9]
+                                   0            -0             = 
+   209 FUEL_heat_balance_constr[BOILER,10]
+                                   0            -0             = 
+   210 FUEL_heat_balance_constr[BOILER,11]
+                                   0            -0             = 
+   211 FUEL_heat_balance_constr[BOILER,12]
+                                   0            -0             = 
+   212 FUEL_heat_balance_constr[SOFC,1]
+                                   0            -0             = 
+   213 FUEL_heat_balance_constr[SOFC,2]
+                                   0            -0             = 
+   214 FUEL_heat_balance_constr[SOFC,3]
+                                   0            -0             = 
+   215 FUEL_heat_balance_constr[SOFC,4]
+                                   0            -0             = 
+   216 FUEL_heat_balance_constr[SOFC,5]
+                                   0            -0             = 
+   217 FUEL_heat_balance_constr[SOFC,6]
+                                   0            -0             = 
+   218 FUEL_heat_balance_constr[SOFC,7]
+                                   0            -0             = 
+   219 FUEL_heat_balance_constr[SOFC,8]
+                                   0            -0             = 
+   220 FUEL_heat_balance_constr[SOFC,9]
+                                   0            -0             = 
+   221 FUEL_heat_balance_constr[SOFC,10]
+                                   0            -0             = 
+   222 FUEL_heat_balance_constr[SOFC,11]
+                                   0            -0             = 
+   223 FUEL_heat_balance_constr[SOFC,12]
+                                   0            -0             = 
+   224 FUEL_heat_balance_constr[TURBINE,1]
+                                   0            -0             = 
+   225 FUEL_heat_balance_constr[TURBINE,2]
+                                   0            -0             = 
+   226 FUEL_heat_balance_constr[TURBINE,3]
+                                   0            -0             = 
+   227 FUEL_heat_balance_constr[TURBINE,4]
+                                   0            -0             = 
+   228 FUEL_heat_balance_constr[TURBINE,5]
+                                   0            -0             = 
+   229 FUEL_heat_balance_constr[TURBINE,6]
+                                   0            -0             = 
+   230 FUEL_heat_balance_constr[TURBINE,7]
+                                   0            -0             = 
+   231 FUEL_heat_balance_constr[TURBINE,8]
+                                   0            -0             = 
+   232 FUEL_heat_balance_constr[TURBINE,9]
+                                   0            -0             = 
+   233 FUEL_heat_balance_constr[TURBINE,10]
+                                   0            -0             = 
+   234 FUEL_heat_balance_constr[TURBINE,11]
+                                   0            -0             = 
+   235 FUEL_heat_balance_constr[TURBINE,12]
+                                   0            -0             = 
+   236 FUEL_heat_balance_constr[ICENGINE,1]
+                                   0            -0             = 
+   237 FUEL_heat_balance_constr[ICENGINE,2]
+                                   0            -0             = 
+   238 FUEL_heat_balance_constr[ICENGINE,3]
+                                   0            -0             = 
+   239 FUEL_heat_balance_constr[ICENGINE,4]
+                                   0            -0             = 
+   240 FUEL_heat_balance_constr[ICENGINE,5]
+                                   0            -0             = 
+   241 FUEL_heat_balance_constr[ICENGINE,6]
+                                   0            -0             = 
+   242 FUEL_heat_balance_constr[ICENGINE,7]
+                                   0            -0             = 
+   243 FUEL_heat_balance_constr[ICENGINE,8]
+                                   0            -0             = 
+   244 FUEL_heat_balance_constr[ICENGINE,9]
+                                   0            -0             = 
+   245 FUEL_heat_balance_constr[ICENGINE,10]
+                                   0            -0             = 
+   246 FUEL_heat_balance_constr[ICENGINE,11]
+                                   0            -0             = 
+   247 FUEL_heat_balance_constr[ICENGINE,12]
+                                   0            -0             = 
+   248 Non_elec_prod_constr[1]
+                                   0            -0             = 
+   249 Non_elec_prod_constr[2]
+                                   0            -0             = 
+   250 Non_elec_prod_constr[3]
+                                   0            -0             = 
+   251 Non_elec_prod_constr[4]
+                                   0            -0             = 
+   252 Non_elec_prod_constr[5]
+                                   0            -0             = 
+   253 Non_elec_prod_constr[6]
+                                   0            -0             = 
+   254 Non_elec_prod_constr[7]
+                                   0            -0             = 
+   255 Non_elec_prod_constr[8]
+                                   0            -0             = 
+   256 Non_elec_prod_constr[9]
+                                   0            -0             = 
+   257 Non_elec_prod_constr[10]
+                                   0            -0             = 
+   258 Non_elec_prod_constr[11]
+                                   0            -0             = 
+   259 Non_elec_prod_constr[12]
+                                   0            -0             = 
+   260 FUEL_elec_balance_constr[BOILER,1]
+                                   0            -0             = 
+   261 FUEL_elec_balance_constr[BOILER,2]
+                                   0            -0             = 
+   262 FUEL_elec_balance_constr[BOILER,3]
+                                   0            -0             = 
+   263 FUEL_elec_balance_constr[BOILER,4]
+                                   0            -0             = 
+   264 FUEL_elec_balance_constr[BOILER,5]
+                                   0            -0             = 
+   265 FUEL_elec_balance_constr[BOILER,6]
+                                   0            -0             = 
+   266 FUEL_elec_balance_constr[BOILER,7]
+                                   0            -0             = 
+   267 FUEL_elec_balance_constr[BOILER,8]
+                                   0            -0             = 
+   268 FUEL_elec_balance_constr[BOILER,9]
+                                   0            -0             = 
+   269 FUEL_elec_balance_constr[BOILER,10]
+                                   0            -0             = 
+   270 FUEL_elec_balance_constr[BOILER,11]
+                                   0            -0             = 
+   271 FUEL_elec_balance_constr[BOILER,12]
+                                   0            -0             = 
+   272 FUEL_elec_balance_constr[SOFC,1]
+                                   0            -0             = 
+   273 FUEL_elec_balance_constr[SOFC,2]
+                                   0            -0             = 
+   274 FUEL_elec_balance_constr[SOFC,3]
+                                   0            -0             = 
+   275 FUEL_elec_balance_constr[SOFC,4]
+                                   0            -0             = 
+   276 FUEL_elec_balance_constr[SOFC,5]
+                                   0            -0             = 
+   277 FUEL_elec_balance_constr[SOFC,6]
+                                   0            -0             = 
+   278 FUEL_elec_balance_constr[SOFC,7]
+                                   0            -0             = 
+   279 FUEL_elec_balance_constr[SOFC,8]
+                                   0            -0             = 
+   280 FUEL_elec_balance_constr[SOFC,9]
+                                   0            -0             = 
+   281 FUEL_elec_balance_constr[SOFC,10]
+                                   0            -0             = 
+   282 FUEL_elec_balance_constr[SOFC,11]
+                                   0            -0             = 
+   283 FUEL_elec_balance_constr[SOFC,12]
+                                   0            -0             = 
+   284 FUEL_elec_balance_constr[TURBINE,1]
+                                   0            -0             = 
+   285 FUEL_elec_balance_constr[TURBINE,2]
+                                   0            -0             = 
+   286 FUEL_elec_balance_constr[TURBINE,3]
+                                   0            -0             = 
+   287 FUEL_elec_balance_constr[TURBINE,4]
+                                   0            -0             = 
+   288 FUEL_elec_balance_constr[TURBINE,5]
+                                   0            -0             = 
+   289 FUEL_elec_balance_constr[TURBINE,6]
+                                   0            -0             = 
+   290 FUEL_elec_balance_constr[TURBINE,7]
+                                   0            -0             = 
+   291 FUEL_elec_balance_constr[TURBINE,8]
+                                   0            -0             = 
+   292 FUEL_elec_balance_constr[TURBINE,9]
+                                   0            -0             = 
+   293 FUEL_elec_balance_constr[TURBINE,10]
+                                   0            -0             = 
+   294 FUEL_elec_balance_constr[TURBINE,11]
+                                   0            -0             = 
+   295 FUEL_elec_balance_constr[TURBINE,12]
+                                   0            -0             = 
+   296 FUEL_elec_balance_constr[ICENGINE,1]
+                                   0            -0             = 
+   297 FUEL_elec_balance_constr[ICENGINE,2]
+                                   0            -0             = 
+   298 FUEL_elec_balance_constr[ICENGINE,3]
+                                   0            -0             = 
+   299 FUEL_elec_balance_constr[ICENGINE,4]
+                                   0            -0             = 
+   300 FUEL_elec_balance_constr[ICENGINE,5]
+                                   0            -0             = 
+   301 FUEL_elec_balance_constr[ICENGINE,6]
+                                   0            -0             = 
+   302 FUEL_elec_balance_constr[ICENGINE,7]
+                                   0            -0             = 
+   303 FUEL_elec_balance_constr[ICENGINE,8]
+                                   0            -0             = 
+   304 FUEL_elec_balance_constr[ICENGINE,9]
+                                   0            -0             = 
+   305 FUEL_elec_balance_constr[ICENGINE,10]
+                                   0            -0             = 
+   306 FUEL_elec_balance_constr[ICENGINE,11]
+                                   0            -0             = 
+   307 FUEL_elec_balance_constr[ICENGINE,12]
+                                   0            -0             = 
+   308 El_available_Constr[1]
+                             4575.28       4575.28             = 
+   309 El_available_Constr[2]
+                             1221.56       1221.56             = 
+   310 El_available_Constr[3]
+                             879.861       879.861             = 
+   311 El_available_Constr[4]
+                             483.924       483.924             = 
+   312 El_available_Constr[5]
+                             340.976       340.976             = 
+   313 El_available_Constr[6]
+                             231.075       231.075             = 
+   314 El_available_Constr[7]
+                             259.423       259.423             = 
+   315 El_available_Constr[8]
+                             311.436       311.436             = 
+   316 El_available_Constr[9]
+                             252.651       252.651             = 
+   317 El_available_Constr[10]
+                             139.182       139.182             = 
+   318 El_available_Constr[11]
+                             242.662       242.662             = 
+   319 El_available_Constr[12]
+                             979.145       979.145             = 
+   320 HP_Energy_Balance_cstr[HPLOW,1]
+                                   0            -0             = 
+   321 HP_Energy_Balance_cstr[HPLOW,2]
+                                   0            -0             = 
+   322 HP_Energy_Balance_cstr[HPLOW,3]
+                                   0            -0             = 
+   323 HP_Energy_Balance_cstr[HPLOW,4]
+                                   0            -0             = 
+   324 HP_Energy_Balance_cstr[HPLOW,5]
+                                   0            -0             = 
+   325 HP_Energy_Balance_cstr[HPLOW,6]
+                                   0            -0             = 
+   326 HP_Energy_Balance_cstr[HPLOW,7]
+                                   0            -0             = 
+   327 HP_Energy_Balance_cstr[HPLOW,8]
+                                   0            -0             = 
+   328 HP_Energy_Balance_cstr[HPLOW,9]
+                                   0            -0             = 
+   329 HP_Energy_Balance_cstr[HPLOW,10]
+                                   0            -0             = 
+   330 HP_Energy_Balance_cstr[HPLOW,11]
+                                   0            -0             = 
+   331 HP_Energy_Balance_cstr[HPLOW,12]
+                                   0            -0             = 
+   332 HP_Energy_Balance_cstr[HPHIGH,1]
+                                   0            -0             = 
+   333 HP_Energy_Balance_cstr[HPHIGH,2]
+                                   0            -0             = 
+   334 HP_Energy_Balance_cstr[HPHIGH,3]
+                                   0            -0             = 
+   335 HP_Energy_Balance_cstr[HPHIGH,4]
+                                   0            -0             = 
+   336 HP_Energy_Balance_cstr[HPHIGH,5]
+                                   0            -0             = 
+   337 HP_Energy_Balance_cstr[HPHIGH,6]
+                                   0            -0             = 
+   338 HP_Energy_Balance_cstr[HPHIGH,7]
+                                   0            -0             = 
+   339 HP_Energy_Balance_cstr[HPHIGH,8]
+                                   0            -0             = 
+   340 HP_Energy_Balance_cstr[HPHIGH,9]
+                                   0            -0             = 
+   341 HP_Energy_Balance_cstr[HPHIGH,10]
+                                   0            -0             = 
+   342 HP_Energy_Balance_cstr[HPHIGH,11]
+                                   0            -0             = 
+   343 HP_Energy_Balance_cstr[HPHIGH,12]
+                                   0            -0             = 
+   344 Elec_demand_system[1]
+                               75842         75842             = 
+   345 Elec_demand_system[2]
+                             20046.1       20046.1             = 
+   346 Elec_demand_system[3]
+                             14584.7       14584.7             = 
+   347 Elec_demand_system[4]
+                             7994.76       7994.76             = 
+   348 Elec_demand_system[5]
+                                5652          5652             = 
+   349 Elec_demand_system[6]
+                             3817.48       3817.48             = 
+   350 Elec_demand_system[7]
+                             4300.14       4300.14             = 
+   351 Elec_demand_system[8]
+                             5162.27       5162.27             = 
+   352 Elec_demand_system[9]
+                             4173.87       4173.87             = 
+   353 Elec_demand_system[10]
+                             2306.99       2306.99             = 
+   354 Elec_demand_system[11]
+                              4008.8        4008.8             = 
+   355 Elec_demand_system[12]
+                             16229.7       16229.7             = 
+   356 Electricity_balance_Constr[1]
+                                   0            -0             = 
+   357 Electricity_balance_Constr[2]
+                                   0            -0             = 
+   358 Electricity_balance_Constr[3]
+                                   0            -0             = 
+   359 Electricity_balance_Constr[4]
+                                   0            -0             = 
+   360 Electricity_balance_Constr[5]
+                                   0            -0             = 
+   361 Electricity_balance_Constr[6]
+                                   0            -0             = 
+   362 Electricity_balance_Constr[7]
+                                   0            -0             = 
+   363 Electricity_balance_Constr[8]
+                                   0            -0             = 
+   364 Electricity_balance_Constr[9]
+                                   0            -0             = 
+   365 Electricity_balance_Constr[10]
+                                   0            -0             = 
+   366 Electricity_balance_Constr[11]
+                                   0            -0             = 
+   367 Electricity_balance_Constr[12]
+                                   0            -0             = 
+   368 PC_Con[BOILER]
+                                   0            -0             = 
+   369 PC_Con[HPHIGH]
+                                   0            -0             = 
+   370 PC_Con[HPLOW]
+                                   0            -0             = 
+   371 PC_Con[SOFC]                0            -0             = 
+   372 PC_Con[TURBINE]
+                                   0            -0             = 
+   373 PC_Con[SOLAR]
+                                   0            -0             = 
+   374 PC_Con[ICENGINE]
+                                   0            -0             = 
+   375 BM_C_Con[BOILER]
+                                   0            -0             = 
+   376 BM_C_Con[HPHIGH]
+                                   0            -0             = 
+   377 BM_C_Con[HPLOW]
+                                   0            -0             = 
+   378 BM_C_Con[SOFC]
+                                   0            -0             = 
+   379 BM_C_Con[TURBINE]
+                                   0            -0             = 
+   380 BM_C_Con[SOLAR]
+                                   0            -0             = 
+   381 BM_C_Con[ICENGINE]
+                                   0            -0             = 
+   382 GR_C_Con[BOILER]
+                                   0            -0             = 
+   383 GR_C_Con[HPHIGH]
+                                   0            -0             = 
+   384 GR_C_Con[HPLOW]
+                                   0            -0             = 
+   385 GR_C_Con[SOFC]
+                                   0            -0             = 
+   386 GR_C_Con[TURBINE]
+                                   0            -0             = 
+   387 GR_C_Con[SOLAR]
+                                   0            -0             = 
+   388 GR_C_Con[ICENGINE]
+                                   0            -0             = 
+   389 an_CAPEX_Con[BOILER]
+                                   0            -0             = 
+   390 an_CAPEX_Con[HPHIGH]
+                                   0            -0             = 
+   391 an_CAPEX_Con[HPLOW]
+                                   0            -0             = 
+   392 an_CAPEX_Con[SOFC]
+                                   0            -0             = 
+   393 an_CAPEX_Con[TURBINE]
+                                   0            -0             = 
+   394 an_CAPEX_Con[SOLAR]
+                                   0            -0             = 
+   395 an_CAPEX_Con[ICENGINE]
+                                   0            -0             = 
+   396 an_CAPEXTot_Con
+                                   0            -0             = 
+   397 opex              2.33737e+07                             
+
+   No. Column name       Activity     Lower bound   Upper bound
+------ ------------    ------------- ------------- -------------
+     1 Capacity[BOILER]
+                                   0             0               
+     2 Capacity[HPHIGH]
+                               12000             0               
+     3 Capacity[HPLOW]
+                               13000             0               
+     4 Capacity[SOFC]
+                             810.776             0               
+     5 Capacity[TURBINE]
+                                   0             0               
+     6 Capacity[SOLAR]
+                                   0             0               
+     7 Capacity[ICENGINE]
+                                   0             0               
+     8 PC[BOILER]                  0             0               
+     9 PC[HPHIGH]             106059             0               
+    10 PC[HPLOW]              105965             0               
+    11 PC[SOFC]          1.36245e+06             0               
+    12 PC[TURBINE]                 0             0               
+    13 PC[SOLAR]                   0             0               
+    14 PC[ICENGINE]                0             0               
+    15 BM_C[BOILER]                0             0               
+    16 BM_C[HPHIGH]           169694             0               
+    17 BM_C[HPLOW]            169544             0               
+    18 BM_C[SOFC]        5.46342e+06             0               
+    19 BM_C[TURBINE]
+                                   0             0               
+    20 BM_C[SOLAR]                 0             0               
+    21 BM_C[ICENGINE]
+                                   0             0               
+    22 GR_C[BOILER]                0             0               
+    23 GR_C[HPHIGH]           180385             0               
+    24 GR_C[HPLOW]            180226             0               
+    25 GR_C[SOFC]        5.80761e+06             0               
+    26 GR_C[TURBINE]
+                                   0             0               
+    27 GR_C[SOLAR]                 0             0               
+    28 GR_C[ICENGINE]
+                                   0             0               
+    29 an_CAPEX[BOILER]
+                                   0             0               
+    30 an_CAPEX[HPHIGH]
+                             43021.9             0               
+    31 an_CAPEX[HPLOW]
+                               42984             0               
+    32 an_CAPEX[SOFC]
+                         1.38512e+06             0               
+    33 an_CAPEX[TURBINE]
+                                   0             0               
+    34 an_CAPEX[SOLAR]
+                                   0             0               
+    35 an_CAPEX[ICENGINE]
+                                   0             0               
+    36 an_CAPEX_Tot      1.47112e+06             0               
+    37 Component_Use[BOILER]
+                    *              0             0             1 
+    38 Component_Use[HPHIGH]
+                    *              1             0             1 
+    39 Component_Use[HPLOW]
+                    *              1             0             1 
+    40 Component_Use[SOFC]
+                    *              1             0             1 
+    41 Component_Use[TURBINE]
+                    *              0             0             1 
+    42 Component_Use[SOLAR]
+                    *              0             0             1 
+    43 Component_Use[ICENGINE]
+                    *              0             0             1 
+    44 ComponentSize_t[BOILER,1]
+                                   0             0               
+    45 ComponentSize_t[BOILER,2]
+                                   0             0               
+    46 ComponentSize_t[BOILER,3]
+                                   0             0               
+    47 ComponentSize_t[BOILER,4]
+                                   0             0               
+    48 ComponentSize_t[BOILER,5]
+                                   0             0               
+    49 ComponentSize_t[BOILER,6]
+                                   0             0               
+    50 ComponentSize_t[BOILER,7]
+                                   0             0               
+    51 ComponentSize_t[BOILER,8]
+                                   0             0               
+    52 ComponentSize_t[BOILER,9]
+                                   0             0               
+    53 ComponentSize_t[BOILER,10]
+                                   0             0               
+    54 ComponentSize_t[BOILER,11]
+                                   0             0               
+    55 ComponentSize_t[BOILER,12]
+                                   0             0               
+    56 ComponentSize_t[HPHIGH,1]
+                               12000             0               
+    57 ComponentSize_t[HPHIGH,2]
+                             4328.42             0               
+    58 ComponentSize_t[HPHIGH,3]
+                             3388.42             0               
+    59 ComponentSize_t[HPHIGH,4]
+                                   0             0               
+    60 ComponentSize_t[HPHIGH,5]
+                                   0             0               
+    61 ComponentSize_t[HPHIGH,6]
+                                   0             0               
+    62 ComponentSize_t[HPHIGH,7]
+                                   0             0               
+    63 ComponentSize_t[HPHIGH,8]
+                                   0             0               
+    64 ComponentSize_t[HPHIGH,9]
+                                   0             0               
+    65 ComponentSize_t[HPHIGH,10]
+                                   0             0               
+    66 ComponentSize_t[HPHIGH,11]
+                                   0             0               
+    67 ComponentSize_t[HPHIGH,12]
+                                   0             0               
+    68 ComponentSize_t[HPLOW,1]
+                               13000             0               
+    69 ComponentSize_t[HPLOW,2]
+                             7202.95             0               
+    70 ComponentSize_t[HPLOW,3]
+                             5873.45             0               
+    71 ComponentSize_t[HPLOW,4]
+                             7559.75             0               
+    72 ComponentSize_t[HPLOW,5]
+                                6425             0               
+    73 ComponentSize_t[HPLOW,6]
+                             5290.25             0               
+    74 ComponentSize_t[HPLOW,7]
+                              4155.5             0               
+    75 ComponentSize_t[HPLOW,8]
+                             3020.75             0               
+    76 ComponentSize_t[HPLOW,9]
+                                1886             0               
+    77 ComponentSize_t[HPLOW,10]
+                                   0             0               
+    78 ComponentSize_t[HPLOW,11]
+                                   0             0               
+    79 ComponentSize_t[HPLOW,12]
+                                   0             0               
+    80 ComponentSize_t[SOFC,1]
+                             810.776             0               
+    81 ComponentSize_t[SOFC,2]
+                             810.776             0               
+    82 ComponentSize_t[SOFC,3]
+                             810.776             0               
+    83 ComponentSize_t[SOFC,4]
+                             810.776             0               
+    84 ComponentSize_t[SOFC,5]
+                             810.776             0               
+    85 ComponentSize_t[SOFC,6]
+                             810.776             0               
+    86 ComponentSize_t[SOFC,7]
+                             810.776             0               
+    87 ComponentSize_t[SOFC,8]
+                             810.776             0               
+    88 ComponentSize_t[SOFC,9]
+                             810.776             0               
+    89 ComponentSize_t[SOFC,10]
+                                   0             0               
+    90 ComponentSize_t[SOFC,11]
+                                   0             0               
+    91 ComponentSize_t[SOFC,12]
+                                   0             0               
+    92 ComponentSize_t[TURBINE,1]
+                                   0             0               
+    93 ComponentSize_t[TURBINE,2]
+                                   0             0               
+    94 ComponentSize_t[TURBINE,3]
+                                   0             0               
+    95 ComponentSize_t[TURBINE,4]
+                                   0             0               
+    96 ComponentSize_t[TURBINE,5]
+                                   0             0               
+    97 ComponentSize_t[TURBINE,6]
+                                   0             0               
+    98 ComponentSize_t[TURBINE,7]
+                                   0             0               
+    99 ComponentSize_t[TURBINE,8]
+                                   0             0               
+   100 ComponentSize_t[TURBINE,9]
+                                   0             0               
+   101 ComponentSize_t[TURBINE,10]
+                                   0             0               
+   102 ComponentSize_t[TURBINE,11]
+                                   0             0               
+   103 ComponentSize_t[TURBINE,12]
+                                   0             0               
+   104 ComponentSize_t[SOLAR,1]
+                                   0             0               
+   105 ComponentSize_t[SOLAR,2]
+                                   0             0               
+   106 ComponentSize_t[SOLAR,3]
+                                   0             0               
+   107 ComponentSize_t[SOLAR,4]
+                                   0             0               
+   108 ComponentSize_t[SOLAR,5]
+                                   0             0               
+   109 ComponentSize_t[SOLAR,6]
+                                   0             0               
+   110 ComponentSize_t[SOLAR,7]
+                                   0             0               
+   111 ComponentSize_t[SOLAR,8]
+                                   0             0               
+   112 ComponentSize_t[SOLAR,9]
+                                   0             0               
+   113 ComponentSize_t[SOLAR,10]
+                                   0             0               
+   114 ComponentSize_t[SOLAR,11]
+                                   0             0               
+   115 ComponentSize_t[SOLAR,12]
+                                   0             0               
+   116 ComponentSize_t[ICENGINE,1]
+                                   0             0               
+   117 ComponentSize_t[ICENGINE,2]
+                                   0             0               
+   118 ComponentSize_t[ICENGINE,3]
+                                   0             0               
+   119 ComponentSize_t[ICENGINE,4]
+                                   0             0               
+   120 ComponentSize_t[ICENGINE,5]
+                                   0             0               
+   121 ComponentSize_t[ICENGINE,6]
+                                   0             0               
+   122 ComponentSize_t[ICENGINE,7]
+                                   0             0               
+   123 ComponentSize_t[ICENGINE,8]
+                                   0             0               
+   124 ComponentSize_t[ICENGINE,9]
+                                   0             0               
+   125 ComponentSize_t[ICENGINE,10]
+                                   0             0               
+   126 ComponentSize_t[ICENGINE,11]
+                                   0             0               
+   127 ComponentSize_t[ICENGINE,12]
+                                   0             0               
+   128 Heating_LT[BOILER,1]
+                                   0             0               
+   129 Heating_LT[HPLOW,1]
+                             8532.45             0               
+   130 Heating_LT[SOFC,1]
+                                   0             0               
+   131 Heating_LT[TURBINE,1]
+                                   0             0               
+   132 Heating_LT[ICENGINE,1]
+                                   0             0               
+   133 Heating_LT[BOILER,2]
+                                   0             0               
+   134 Heating_LT[HPLOW,2]
+                             7202.95             0               
+   135 Heating_LT[SOFC,2]
+                                   0             0               
+   136 Heating_LT[TURBINE,2]
+                                   0             0               
+   137 Heating_LT[ICENGINE,2]
+                                   0             0               
+   138 Heating_LT[BOILER,3]
+                                   0             0               
+   139 Heating_LT[HPLOW,3]
+                             5873.45             0               
+   140 Heating_LT[SOFC,3]
+                                   0             0               
+   141 Heating_LT[TURBINE,3]
+                                   0             0               
+   142 Heating_LT[ICENGINE,3]
+                                   0             0               
+   143 Heating_LT[BOILER,4]
+                                   0             0               
+   144 Heating_LT[BOILER,5]
+                                   0             0               
+   145 Heating_LT[BOILER,6]
+                                   0             0               
+   146 Heating_LT[BOILER,7]
+                                   0             0               
+   147 Heating_LT[BOILER,8]
+                                   0             0               
+   148 Heating_LT[BOILER,9]
+                                   0             0               
+   149 Heating_LT[BOILER,10]
+                                   0             0               
+   150 Heating_LT[BOILER,11]
+                                   0             0               
+   151 Heating_LT[BOILER,12]
+                                   0             0               
+   152 Heating_LT[HPHIGH,1]
+                             6731.58             0               
+   153 Heating_LT[HPHIGH,2]
+                                   0             0               
+   154 Heating_LT[HPHIGH,3]
+                                   0             0               
+   155 Heating_LT[HPHIGH,4]
+                                   0             0               
+   156 Heating_LT[HPHIGH,5]
+                                   0             0               
+   157 Heating_LT[HPHIGH,6]
+                                   0             0               
+   158 Heating_LT[HPHIGH,7]
+                                   0             0               
+   159 Heating_LT[HPHIGH,8]
+                                   0             0               
+   160 Heating_LT[HPHIGH,9]
+                                   0             0               
+   161 Heating_LT[HPHIGH,10]
+                                   0             0               
+   162 Heating_LT[HPHIGH,11]
+                                   0             0               
+   163 Heating_LT[HPHIGH,12]
+                                   0             0               
+   164 Heating_LT[HPLOW,4]
+                             7559.75             0               
+   165 Heating_LT[HPLOW,5]
+                                6425             0               
+   166 Heating_LT[HPLOW,6]
+                             5290.25             0               
+   167 Heating_LT[HPLOW,7]
+                              4155.5             0               
+   168 Heating_LT[HPLOW,8]
+                             3020.75             0               
+   169 Heating_LT[HPLOW,9]
+                                1886             0               
+   170 Heating_LT[HPLOW,10]
+                                   0             0               
+   171 Heating_LT[HPLOW,11]
+                                   0             0               
+   172 Heating_LT[HPLOW,12]
+                                   0             0               
+   173 Heating_LT[SOFC,4]
+                             810.776             0               
+   174 Heating_LT[SOFC,5]
+                             810.776             0               
+   175 Heating_LT[SOFC,6]
+                             810.776             0               
+   176 Heating_LT[SOFC,7]
+                             810.776             0               
+   177 Heating_LT[SOFC,8]
+                             810.776             0               
+   178 Heating_LT[SOFC,9]
+                             810.776             0               
+   179 Heating_LT[SOFC,10]
+                                   0             0               
+   180 Heating_LT[SOFC,11]
+                                   0             0               
+   181 Heating_LT[SOFC,12]
+                                   0             0               
+   182 Heating_LT[TURBINE,4]
+                                   0             0               
+   183 Heating_LT[TURBINE,5]
+                                   0             0               
+   184 Heating_LT[TURBINE,6]
+                                   0             0               
+   185 Heating_LT[TURBINE,7]
+                                   0             0               
+   186 Heating_LT[TURBINE,8]
+                                   0             0               
+   187 Heating_LT[TURBINE,9]
+                                   0             0               
+   188 Heating_LT[TURBINE,10]
+                                   0             0               
+   189 Heating_LT[TURBINE,11]
+                                   0             0               
+   190 Heating_LT[TURBINE,12]
+                                   0             0               
+   191 Heating_LT[ICENGINE,4]
+                                   0             0               
+   192 Heating_LT[ICENGINE,5]
+                                   0             0               
+   193 Heating_LT[ICENGINE,6]
+                                   0             0               
+   194 Heating_LT[ICENGINE,7]
+                                   0             0               
+   195 Heating_LT[ICENGINE,8]
+                                   0             0               
+   196 Heating_LT[ICENGINE,9]
+                                   0             0               
+   197 Heating_LT[ICENGINE,10]
+                                   0             0               
+   198 Heating_LT[ICENGINE,11]
+                                   0             0               
+   199 Heating_LT[ICENGINE,12]
+                                   0             0               
+   200 Heating_HT[BOILER,1]
+                                   0             0               
+   201 Heating_HT[HPHIGH,1]
+                             5268.42             0               
+   202 Heating_HT[SOFC,1]
+                             810.776             0               
+   203 Heating_HT[TURBINE,1]
+                                   0             0               
+   204 Heating_HT[ICENGINE,1]
+                                   0             0               
+   205 Heating_HT[BOILER,2]
+                                   0             0               
+   206 Heating_HT[HPHIGH,2]
+                             4328.42             0               
+   207 Heating_HT[SOFC,2]
+                             810.776             0               
+   208 Heating_HT[TURBINE,2]
+                                   0             0               
+   209 Heating_HT[ICENGINE,2]
+                                   0             0               
+   210 Heating_HT[BOILER,3]
+                                   0             0               
+   211 Heating_HT[HPHIGH,3]
+                             3388.42             0               
+   212 Heating_HT[SOFC,3]
+                             810.776             0               
+   213 Heating_HT[TURBINE,3]
+                                   0             0               
+   214 Heating_HT[ICENGINE,3]
+                                   0             0               
+   215 Heating_HT[BOILER,4]
+                                   0             0               
+   216 Heating_HT[BOILER,5]
+                                   0             0               
+   217 Heating_HT[BOILER,6]
+                                   0             0               
+   218 Heating_HT[BOILER,7]
+                                   0             0               
+   219 Heating_HT[BOILER,8]
+                                   0             0               
+   220 Heating_HT[BOILER,9]
+                                   0             0               
+   221 Heating_HT[BOILER,10]
+                                   0             0               
+   222 Heating_HT[BOILER,11]
+                                   0             0               
+   223 Heating_HT[BOILER,12]
+                                   0             0               
+   224 Heating_HT[HPHIGH,4]
+                                   0             0               
+   225 Heating_HT[HPHIGH,5]
+                                   0             0               
+   226 Heating_HT[HPHIGH,6]
+                                   0             0               
+   227 Heating_HT[HPHIGH,7]
+                                   0             0               
+   228 Heating_HT[HPHIGH,8]
+                                   0             0               
+   229 Heating_HT[HPHIGH,9]
+                                   0             0               
+   230 Heating_HT[HPHIGH,10]
+                                   0             0               
+   231 Heating_HT[HPHIGH,11]
+                                   0             0               
+   232 Heating_HT[HPHIGH,12]
+                                   0             0               
+   233 Heating_HT[HPLOW,1]
+                             4467.55             0               
+   234 Heating_HT[HPLOW,2]
+                                   0             0               
+   235 Heating_HT[HPLOW,3]
+                                   0             0               
+   236 Heating_HT[HPLOW,4]
+                                   0             0               
+   237 Heating_HT[HPLOW,5]
+                                   0             0               
+   238 Heating_HT[HPLOW,6]
+                                   0             0               
+   239 Heating_HT[HPLOW,7]
+                                   0             0               
+   240 Heating_HT[HPLOW,8]
+                                   0             0               
+   241 Heating_HT[HPLOW,9]
+                                   0             0               
+   242 Heating_HT[HPLOW,10]
+                                   0             0               
+   243 Heating_HT[HPLOW,11]
+                                   0             0               
+   244 Heating_HT[HPLOW,12]
+                                   0             0               
+   245 Heating_HT[SOFC,4]
+                                   0             0               
+   246 Heating_HT[SOFC,5]
+                                   0             0               
+   247 Heating_HT[SOFC,6]
+                                   0             0               
+   248 Heating_HT[SOFC,7]
+                                   0             0               
+   249 Heating_HT[SOFC,8]
+                                   0             0               
+   250 Heating_HT[SOFC,9]
+                                   0             0               
+   251 Heating_HT[SOFC,10]
+                                   0             0               
+   252 Heating_HT[SOFC,11]
+                                   0             0               
+   253 Heating_HT[SOFC,12]
+                                   0             0               
+   254 Heating_HT[TURBINE,4]
+                                   0             0               
+   255 Heating_HT[TURBINE,5]
+                                   0             0               
+   256 Heating_HT[TURBINE,6]
+                                   0             0               
+   257 Heating_HT[TURBINE,7]
+                                   0             0               
+   258 Heating_HT[TURBINE,8]
+                                   0             0               
+   259 Heating_HT[TURBINE,9]
+                                   0             0               
+   260 Heating_HT[TURBINE,10]
+                                   0             0               
+   261 Heating_HT[TURBINE,11]
+                                   0             0               
+   262 Heating_HT[TURBINE,12]
+                                   0             0               
+   263 Heating_HT[ICENGINE,4]
+                                   0             0               
+   264 Heating_HT[ICENGINE,5]
+                                   0             0               
+   265 Heating_HT[ICENGINE,6]
+                                   0             0               
+   266 Heating_HT[ICENGINE,7]
+                                   0             0               
+   267 Heating_HT[ICENGINE,8]
+                                   0             0               
+   268 Heating_HT[ICENGINE,9]
+                                   0             0               
+   269 Heating_HT[ICENGINE,10]
+                                   0             0               
+   270 Heating_HT[ICENGINE,11]
+                                   0             0               
+   271 Heating_HT[ICENGINE,12]
+                                   0             0               
+   272 FUEL_Demand[BOILER,1]
+                                   0             0               
+   273 FUEL_Demand[BOILER,2]
+                                   0             0               
+   274 FUEL_Demand[BOILER,3]
+                                   0             0               
+   275 FUEL_Demand[BOILER,4]
+                                   0             0               
+   276 FUEL_Demand[BOILER,5]
+                                   0             0               
+   277 FUEL_Demand[BOILER,6]
+                                   0             0               
+   278 FUEL_Demand[BOILER,7]
+                                   0             0               
+   279 FUEL_Demand[BOILER,8]
+                                   0             0               
+   280 FUEL_Demand[BOILER,9]
+                                   0             0               
+   281 FUEL_Demand[BOILER,10]
+                                   0             0               
+   282 FUEL_Demand[BOILER,11]
+                                   0             0               
+   283 FUEL_Demand[BOILER,12]
+                                   0             0               
+   284 FUEL_Demand[SOFC,1]
+                             2026.94             0               
+   285 FUEL_Demand[SOFC,2]
+                             2026.94             0               
+   286 FUEL_Demand[SOFC,3]
+                             2026.94             0               
+   287 FUEL_Demand[SOFC,4]
+                             2026.94             0               
+   288 FUEL_Demand[SOFC,5]
+                             2026.94             0               
+   289 FUEL_Demand[SOFC,6]
+                             2026.94             0               
+   290 FUEL_Demand[SOFC,7]
+                             2026.94             0               
+   291 FUEL_Demand[SOFC,8]
+                             2026.94             0               
+   292 FUEL_Demand[SOFC,9]
+                             2026.94             0               
+   293 FUEL_Demand[SOFC,10]
+                                   0             0               
+   294 FUEL_Demand[SOFC,11]
+                                   0             0               
+   295 FUEL_Demand[SOFC,12]
+                                   0             0               
+   296 FUEL_Demand[TURBINE,1]
+                                   0             0               
+   297 FUEL_Demand[TURBINE,2]
+                                   0             0               
+   298 FUEL_Demand[TURBINE,3]
+                                   0             0               
+   299 FUEL_Demand[TURBINE,4]
+                                   0             0               
+   300 FUEL_Demand[TURBINE,5]
+                                   0             0               
+   301 FUEL_Demand[TURBINE,6]
+                                   0             0               
+   302 FUEL_Demand[TURBINE,7]
+                                   0             0               
+   303 FUEL_Demand[TURBINE,8]
+                                   0             0               
+   304 FUEL_Demand[TURBINE,9]
+                                   0             0               
+   305 FUEL_Demand[TURBINE,10]
+                                   0             0               
+   306 FUEL_Demand[TURBINE,11]
+                                   0             0               
+   307 FUEL_Demand[TURBINE,12]
+                                   0             0               
+   308 FUEL_Demand[ICENGINE,1]
+                                   0             0               
+   309 FUEL_Demand[ICENGINE,2]
+                                   0             0               
+   310 FUEL_Demand[ICENGINE,3]
+                                   0             0               
+   311 FUEL_Demand[ICENGINE,4]
+                                   0             0               
+   312 FUEL_Demand[ICENGINE,5]
+                                   0             0               
+   313 FUEL_Demand[ICENGINE,6]
+                                   0             0               
+   314 FUEL_Demand[ICENGINE,7]
+                                   0             0               
+   315 FUEL_Demand[ICENGINE,8]
+                                   0             0               
+   316 FUEL_Demand[ICENGINE,9]
+                                   0             0               
+   317 FUEL_Demand[ICENGINE,10]
+                                   0             0               
+   318 FUEL_Demand[ICENGINE,11]
+                                   0             0               
+   319 FUEL_Demand[ICENGINE,12]
+                                   0             0               
+   320 El_prod[BOILER,1]
+                                   0                             
+   321 El_prod[BOILER,2]
+                                   0                             
+   322 El_prod[BOILER,3]
+                                   0                             
+   323 El_prod[BOILER,4]
+                                   0                             
+   324 El_prod[BOILER,5]
+                                   0                             
+   325 El_prod[BOILER,6]
+                                   0                             
+   326 El_prod[BOILER,7]
+                                   0                             
+   327 El_prod[BOILER,8]
+                                   0                             
+   328 El_prod[BOILER,9]
+                                   0                             
+   329 El_prod[BOILER,10]
+                                   0                             
+   330 El_prod[BOILER,11]
+                                   0                             
+   331 El_prod[BOILER,12]
+                                   0                             
+   332 El_prod[SOFC,1]
+                             1175.63                             
+   333 El_prod[SOFC,2]
+                             1175.63                             
+   334 El_prod[SOFC,3]
+                             1175.63                             
+   335 El_prod[SOFC,4]
+                             1175.63                             
+   336 El_prod[SOFC,5]
+                             1175.63                             
+   337 El_prod[SOFC,6]
+                             1175.63                             
+   338 El_prod[SOFC,7]
+                             1175.63                             
+   339 El_prod[SOFC,8]
+                             1175.63                             
+   340 El_prod[SOFC,9]
+                             1175.63                             
+   341 El_prod[SOFC,10]
+                                   0                             
+   342 El_prod[SOFC,11]
+                                   0                             
+   343 El_prod[SOFC,12]
+                                   0                             
+   344 El_prod[TURBINE,1]
+                                   0                             
+   345 El_prod[TURBINE,2]
+                                   0                             
+   346 El_prod[TURBINE,3]
+                                   0                             
+   347 El_prod[TURBINE,4]
+                                   0                             
+   348 El_prod[TURBINE,5]
+                                   0                             
+   349 El_prod[TURBINE,6]
+                                   0                             
+   350 El_prod[TURBINE,7]
+                                   0                             
+   351 El_prod[TURBINE,8]
+                                   0                             
+   352 El_prod[TURBINE,9]
+                                   0                             
+   353 El_prod[TURBINE,10]
+                                   0                             
+   354 El_prod[TURBINE,11]
+                                   0                             
+   355 El_prod[TURBINE,12]
+                                   0                             
+   356 El_prod[ICENGINE,1]
+                                   0                             
+   357 El_prod[ICENGINE,2]
+                                   0                             
+   358 El_prod[ICENGINE,3]
+                                   0                             
+   359 El_prod[ICENGINE,4]
+                                   0                             
+   360 El_prod[ICENGINE,5]
+                                   0                             
+   361 El_prod[ICENGINE,6]
+                                   0                             
+   362 El_prod[ICENGINE,7]
+                                   0                             
+   363 El_prod[ICENGINE,8]
+                                   0                             
+   364 El_prod[ICENGINE,9]
+                                   0                             
+   365 El_prod[ICENGINE,10]
+                                   0                             
+   366 El_prod[ICENGINE,11]
+                                   0                             
+   367 El_prod[ICENGINE,12]
+                                   0                             
+   368 El_prod[SOLAR,1]
+                             4575.28                             
+   369 El_prod[SOLAR,2]
+                             1221.56                             
+   370 El_prod[SOLAR,3]
+                             879.861                             
+   371 El_prod[SOLAR,4]
+                             483.924                             
+   372 El_prod[SOLAR,5]
+                             340.976                             
+   373 El_prod[SOLAR,6]
+                             231.075                             
+   374 El_prod[SOLAR,7]
+                             259.423                             
+   375 El_prod[SOLAR,8]
+                             311.436                             
+   376 El_prod[SOLAR,9]
+                             252.651                             
+   377 El_prod[SOLAR,10]
+                             139.182                             
+   378 El_prod[SOLAR,11]
+                             242.662                             
+   379 El_prod[SOLAR,12]
+                             979.145                             
+   380 El_prod[HPLOW,1]
+                            -3959.95                             
+   381 El_prod[HPLOW,2]
+                            -2021.04                             
+   382 El_prod[HPLOW,3]
+                            -1502.83                             
+   383 El_prod[HPLOW,4]
+                             -1790.6                             
+   384 El_prod[HPLOW,5]
+                            -1438.91                             
+   385 El_prod[HPLOW,6]
+                             -1115.5                             
+   386 El_prod[HPLOW,7]
+                            -821.007                             
+   387 El_prod[HPLOW,8]
+                            -556.068                             
+   388 El_prod[HPLOW,9]
+                            -321.358                             
+   389 El_prod[HPLOW,10]
+                                   0                             
+   390 El_prod[HPLOW,11]
+                                   0                             
+   391 El_prod[HPLOW,12]
+                                   0                             
+   392 El_prod[HPHIGH,1]
+                            -4614.82                             
+   393 El_prod[HPHIGH,2]
+                            -1517.21                             
+   394 El_prod[HPHIGH,3]
+                            -1067.39                             
+   395 El_prod[HPHIGH,4]
+                                   0                             
+   396 El_prod[HPHIGH,5]
+                                   0                             
+   397 El_prod[HPHIGH,6]
+                                   0                             
+   398 El_prod[HPHIGH,7]
+                                   0                             
+   399 El_prod[HPHIGH,8]
+                                   0                             
+   400 El_prod[HPHIGH,9]
+                                   0                             
+   401 El_prod[HPHIGH,10]
+                                   0                             
+   402 El_prod[HPHIGH,11]
+                                   0                             
+   403 El_prod[HPHIGH,12]
+                                   0                             
+   404 El_Buy[1]             78665.8             0               
+   405 El_Buy[2]             21187.2             0               
+   406 El_Buy[3]             15099.4             0               
+   407 El_Buy[4]             8125.81             0               
+   408 El_Buy[5]             5574.31             0               
+   409 El_Buy[6]             3526.28             0               
+   410 El_Buy[7]             3686.09             0               
+   411 El_Buy[8]             4231.27             0               
+   412 El_Buy[9]             3066.95             0               
+   413 El_Buy[10]            2167.81             0               
+   414 El_Buy[11]            3766.13             0               
+   415 El_Buy[12]            15250.6             0               
+   416 El_Sell[1]                  0             0               
+   417 El_Sell[2]                  0             0               
+   418 El_Sell[3]                  0             0               
+   419 El_Sell[4]                  0             0               
+   420 El_Sell[5]                  0             0               
+   421 El_Sell[6]                  0             0               
+   422 El_Sell[7]                  0             0               
+   423 El_Sell[8]                  0             0               
+   424 El_Sell[9]                  0             0               
+   425 El_Sell[10]                 0             0               
+   426 El_Sell[11]                 0             0               
+   427 El_Sell[12]                 0             0               
+   428 Elec_Demand[1]
+                               75842             0               
+   429 Elec_Demand[2]
+                             20046.1             0               
+   430 Elec_Demand[3]
+                             14584.7             0               
+   431 Elec_Demand[4]
+                             7994.76             0               
+   432 Elec_Demand[5]
+                                5652             0               
+   433 Elec_Demand[6]
+                             3817.48             0               
+   434 Elec_Demand[7]
+                             4300.14             0               
+   435 Elec_Demand[8]
+                             5162.27             0               
+   436 Elec_Demand[9]
+                             4173.87             0               
+   437 Elec_Demand[10]
+                             2306.99             0               
+   438 Elec_Demand[11]
+                              4008.8             0               
+   439 Elec_Demand[12]
+                             16229.7             0               
+
+Integer feasibility conditions:
+
+KKT.PE: max.abs.err = 9.09e-13 on row 362
+        max.rel.err = 8.88e-17 on row 362
+        High quality
+
+KKT.PB: max.abs.err = 3.73e-09 on row 199
+        max.rel.err = 1.16e-10 on row 371
+        High quality
+
+End of output
