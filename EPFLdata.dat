@@ -59,10 +59,12 @@ param: external_temp := 	#en °C
 11	22.5
 12	27.5
 ;
+
 # Solar
 param solar_radiation :=	 143.3288813; #Assuming that fluctuations in irradiation play a minor role so yearly hourly mean was taken
 # Lake
 param lake_temp := 7;
+
 
 /*******************************************************/
 # Economic parameters
@@ -86,6 +88,7 @@ param spec_annual_elec_demand := 116.6 ; #kwh/m^2
 param floor_area := 384854;    # m^2, SRE, 2007, Vuille2008, p. 20;
 
 
+
 /*******************************************************/
 # Solar PV
 /*******************************************************/
@@ -93,6 +96,7 @@ param floor_area := 384854;    # m^2, SRE, 2007, Vuille2008, p. 20;
 param Efficiency_SolarPanels := 0.11327;  # Voir feuille excel DATA, Sylvain
 param solarfarm_area := 15500;            # m^2, donnée du projet
 # Old Area: 15'500m^2;
+
 
 /*******************************************************/
 # Cooling loop parameters
@@ -138,85 +142,76 @@ param ex_USD_CHF := 1; #Exchange rate 31 March
 param interest_rate := 0.235; #20 year Swiss bond 31 March
 param lifetime := 20;
 
-
-###Assumption: Boiler: Field erected with FLUID FUEL (Nat GAS)
-###Assumption: : industrial scale
 param  Ref_ind := 1179;  #Assumed this to be same for all components
 param  Year_ind:= 1462.9; #2009 Index
 param  F_BM    := 
-BOILER 1.8
-HPHIGH 1.6
-HPLOW 1.6
+BOILER 1.8 #VINCENT Packaged Boiler cost_SteamBoiler.m, Ref: G.D.Ulrich, A Guide to Chemical Engineering Process Design and Economics, Wiley, NJ, 1984
+HPHIGH 1.6 #VINCENT Medium Sized Heatpump cost_heat_pump_medium_size.m, Ref: Mod?lisation et optimisation environomiques de syst?mes de chauffage urbain aliment?s par pompe ? chaleur, V. Curti,EPFL phd thesis, 1998, chapter 4.
+HPLOW 1.6 # VINCENT See HPHIGH
 SOFC 4.01 #dimitri matlab
-TURBINE 6 #dimitri , matlab doc , stainless steel
+TURBINE 6 #Dimitri cost_GasTurbines.m, G.D.Ulrich, A Guide to Chemical Engineering Process Design and Economics, Wiley, NJ, 1984R. Turton, Analysis, Synthesis and Design of chemical processes, Prentice Hall, NJ, 1998 stainless steel
 SOLAR 1
-ICENGINE 2 #dim matlab
+ICENGINE 1 #VINCENT Cost_EngineIC.m, Ref: R. Turton, Analysis, Synthesis and Design of chemical  processes, Prentice Hall, NJ, 2012
 ;
-param  F_T     :=    		#Correction factor for Temprature
-BOILER 1.15
-HPHIGH 1
 
-HPLOW 1
+param  F_T     := 
+BOILER 1.15 #VINCENT See F_BM
+HPHIGH 1 #VINCENT See F_BM
+HPLOW 1 #VINCENT See F_BM
 SOFC 1 #okay, matlab file
-TURBINE 1 #dimitri , inventé
+TURBINE 1 #dimitri see F_BM
 SOLAR 1
-ICENGINE 1
+ICENGINE 1 #VINCENT See F_BM
 ;
-param  F_P     := 			#Correction factor for Pressure
-BOILER 1.13
-HPHIGH 1
-HPLOW 1
+
+
+param  F_P     := 
+BOILER 1.13 #VINCENT See F_BM
+HPHIGH 1 #VINCENT See F_BM
+HPLOW 1 #VINCENT See F_BM
 SOFC 1 #okay, matlab file
-TURBINE 1 #dimitri , inventé
+TURBINE 1 #dimitri see F_BM
 SOLAR 1
-ICENGINE 1
+ICENGINE 1 #VINCENT See F_BM
 ;
 param  C_min   := 
-BOILER 1000
-HPHIGH 1500
-HPLOW 1500
-SOFC 100 #dim bloom energy 
-TURBINE 100 #dimitri ,matlab doc
+BOILER 1000 #VINCENT See F_BM
+HPHIGH 1500 #VINCENT See F_BM
+HPLOW 1500 #VINCENT See F_BM
+SOFC 100 #This is the heatCapacity -> Electrical capacity is calculated in the modFile
+TURBINE 100 #dimitri See F_BM
 SOLAR 0
-ICENGINE 100 #dimitri
+ICENGINE 100 #VINCENT See F_BM
 ;
 param  C_max   := 
 BOILER 25000 
-HPHIGH 12000 #initialement 10000, voir donnée lab01
-HPLOW 13000	##initialement 10000, VOIR donnée lab01
+HPHIGH 12000 
+HPLOW 13000	
 SOFC 10000 
 TURBINE 15000 #dimitri , matlab
 SOLAR 3500
-ICENGINE 6000 #dimitri
+ICENGINE 15000 #VINCENT See F_BM
 ;
-param  alpha_2 := 0.35; #LectureNotes Advanced Energetics
-param  alpha_1 := 0.18; #LectureNotes Advanced Energetics
+param  alpha_2 := 0.35; #LectureNotes Advanced Energetics p5 CostOfEq
+param  alpha_1 := 0.18; #LectureNotes Advanced Energetics p5 CostOfEq
 param PC_min :=
-BOILER 31988.9510969140 
-HPHIGH 78544.428736573
-HPLOW 78544.428736573
+BOILER 31988.9510969140  #VINCENT See F_BM
+HPHIGH 178544.428736573 #VINCENT See F_BM
+HPLOW 178544.428736573 #VINCENT See F_BM
 SOFC 700000 #dim bloom energy
-TURBINE 43601 #dimitri , matlab doc
+TURBINE  43601.3564000399 
 SOLAR 0
-ICENGINE 39811 #dimitri matlab
+ICENGINE 27485.2695196467 #VINCENT See F_BM
 ;
-param PC_max := 			
-BOILER 148415.893301207
-HPHIGH 84609.836013398
-HPLOW 84609.836013398
+
+param PC_max := 
+BOILER  344096.081034843#VINCENT See F_BM
+HPHIGH 1160185.12077869#VINCENT See F_BM
+HPLOW 1246847.06417074 #VINCENT See F_BM
 SOFC 5560300 # dim bloom energy+ matlab 
-TURBINE 932240 #dimitri , matlab doc
+TURBINE 932238.377391416 
 SOLAR 1540000
-ICENGINE 2129900 #dimitri matlab
+ICENGINE 1489948.34154203 #VINCENT See F_BM
 ;
-
-
-
-
-
-
-
-
-
 
 end;

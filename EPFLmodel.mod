@@ -156,7 +156,6 @@ subject to an_CAPEXTot_Con:
 
 minimize opex:
 sum{u in NG_USERS,t in TIME} ((c_ng_in*FUEL_Demand[u,t] + c_ds_in*FUEL_Demand["ICENGINE",t]+ c_el_in*El_Buy[t] - c_el_out*El_Sell[t])*TIMEsteps[t]) + an_CAPEX_Tot;
-
 solve;
 
 
@@ -164,22 +163,9 @@ solve;
 # DISPLAY
 ############################################################################################
 
-display Heat_Demand;
-# display opex;
-display Capacity;
-display Component_Use;
-display Heat_Demand;
-
-display ComponentSize_t;
 
 display Capacity;
-display an_CAPEX;
 
-display FUEL_Demand;
-display El_Buy;
-display El_prod;
-display El_Sell;
-display Elec_Demand;
 
 
 
