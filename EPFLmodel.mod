@@ -110,10 +110,10 @@ subject to Component_cmax_cstr {c in COMPONENTS}:
 subject to Energy_Balance_LT_cstr2 {h in HP, t in TIME: temp_supply[h,t]<=50}: 
   sum{b in HP} Heat_Demand[b,t] = sum {c in HEAT_UTIL} ComponentSize_t [c,t];
 # Energy balance for LT HP
-subject to Energy_Balance_LT_cstr {b in HP,t in TIME: temp_supply[b,t]>50}:
-  Heat_Demand['HPLOW',t] = sum {c in HEAT_UTIL: c!="HPHIGH"} Heating_LT [c,t];
+subject to Energy_Balance_LT_cstr {t in TIME: temp_supply["HPHIGH",t]>50}:
+  Heat_Demand['HPLOW',t] = sum {c in HEAT_UTIL} Heating_LT [c,t];
 # Energy balance for HT HP
-subject to Energy_Balance_HT_cstr {b in HP,t in TIME: temp_supply[b,t]>50}: 
+subject to Energy_Balance_HT_cstr {t in TIME: temp_supply["HPHIGH",t]>50}: 
   Heat_Demand['HPHIGH',t] = sum {c in HEAT_UTIL : c!="HPLOW"} Heating_HT [c,t];
 # Overall energy balance
 subject to Energy_Balance_overall_cstr {c in HEAT_UTIL,t in TIME}:
@@ -171,6 +171,9 @@ display COST/(10^6);
 display TotElecCost/(10^6);
 display an_CAPEX_Tot/(10^6);
 display Heat_Demand;
+display ComponentSize_t;
+display Capacity;
+display temp_supply;
 
 
 

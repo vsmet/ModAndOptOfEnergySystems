@@ -1,7 +1,7 @@
 Problem:    EPFLmodel
 Rows:       398
 Columns:    440 (7 integer, 7 binary)
-Non-zeros:  1147
+Non-zeros:  1151
 Status:     INTEGER OPTIMAL
 Objective:  COST = 8116532.79 (MINimum)
 
@@ -1041,57 +1041,57 @@ Objective:  COST = 8116532.79 (MINimum)
                                    0             0               
    128 Heating_LT[BOILER,1]
                              1296.68             0               
-   129 Heating_LT[HPLOW,1]
+   129 Heating_LT[HPHIGH,1]
+                                   0             0               
+   130 Heating_LT[HPLOW,1]
                              7235.77             0               
-   130 Heating_LT[SOFC,1]
+   131 Heating_LT[SOFC,1]
                                    0             0               
-   131 Heating_LT[TURBINE,1]
+   132 Heating_LT[TURBINE,1]
                                    0             0               
-   132 Heating_LT[ICENGINE,1]
+   133 Heating_LT[ICENGINE,1]
                                    0             0               
-   133 Heating_LT[BOILER,2]
+   134 Heating_LT[BOILER,2]
                                    0             0               
-   134 Heating_LT[HPLOW,2]
+   135 Heating_LT[HPHIGH,2]
+                                   0             0               
+   136 Heating_LT[HPLOW,2]
                              7202.95             0               
-   135 Heating_LT[SOFC,2]
+   137 Heating_LT[SOFC,2]
                                    0             0               
-   136 Heating_LT[TURBINE,2]
+   138 Heating_LT[TURBINE,2]
                                    0             0               
-   137 Heating_LT[ICENGINE,2]
+   139 Heating_LT[ICENGINE,2]
                                    0             0               
-   138 Heating_LT[BOILER,3]
+   140 Heating_LT[BOILER,3]
                                    0             0               
-   139 Heating_LT[HPLOW,3]
+   141 Heating_LT[HPHIGH,3]
+                                   0             0               
+   142 Heating_LT[HPLOW,3]
                              5873.45             0               
-   140 Heating_LT[SOFC,3]
+   143 Heating_LT[SOFC,3]
                                    0             0               
-   141 Heating_LT[TURBINE,3]
+   144 Heating_LT[TURBINE,3]
                                    0             0               
-   142 Heating_LT[ICENGINE,3]
+   145 Heating_LT[ICENGINE,3]
                                    0             0               
-   143 Heating_LT[BOILER,4]
+   146 Heating_LT[BOILER,4]
                              1134.75             0               
-   144 Heating_LT[BOILER,5]
+   147 Heating_LT[BOILER,5]
                                    0             0               
-   145 Heating_LT[BOILER,6]
+   148 Heating_LT[BOILER,6]
                                    0             0               
-   146 Heating_LT[BOILER,7]
+   149 Heating_LT[BOILER,7]
                                    0             0               
-   147 Heating_LT[BOILER,8]
+   150 Heating_LT[BOILER,8]
                                    0             0               
-   148 Heating_LT[BOILER,9]
+   151 Heating_LT[BOILER,9]
                                    0             0               
-   149 Heating_LT[BOILER,10]
+   152 Heating_LT[BOILER,10]
                                    0             0               
-   150 Heating_LT[BOILER,11]
+   153 Heating_LT[BOILER,11]
                                    0             0               
-   151 Heating_LT[BOILER,12]
-                                   0             0               
-   152 Heating_LT[HPHIGH,1]
-                                   0             0               
-   153 Heating_LT[HPHIGH,2]
-                                   0             0               
-   154 Heating_LT[HPHIGH,3]
+   154 Heating_LT[BOILER,12]
                                    0             0               
    155 Heating_LT[HPHIGH,4]
                                    0             0               
