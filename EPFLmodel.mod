@@ -106,16 +106,26 @@ subject to Component_cmin_cstr {c in COMPONENTS}:
   Component_Use[c]*C_min[c] <= Capacity[c];
 subject to Component_cmax_cstr {c in COMPONENTS}:
   Component_Use[c]*C_max[c] >= Capacity[c];
-#Energy model
-subject to Energy_Balance_LT_cstr2 {h in HP, t in TIME: temp_supply[h,t]<=50}: 
+
+#Constraints For temperatures of HeatpumpCycles
+subject to Energy_Balance_LT_cstr1 {t in TIME: temp_supply['HPLOW',t]<=50}: 
   sum{b in HP} Heat_Demand[b,t] = sum {c in HEAT_UTIL} ComponentSize_t [c,t];
-# Energy balance for LT HP
-subject to Energy_Balance_LT_cstr {t in TIME: temp_supply["HPHIGH",t]>50}:
-  Heat_Demand['HPLOW',t] = sum {c in HEAT_UTIL} Heating_LT [c,t];
-# Energy balance for HT HP
-subject to Energy_Balance_HT_cstr {t in TIME: temp_supply["HPHIGH",t]>50}: 
-  Heat_Demand['HPHIGH',t] = sum {c in HEAT_UTIL : c!="HPLOW"} Heating_HT [c,t];
-# Overall energy balance
+subject to Energy_Balance_LT_cstr2 { t in TIME: temp_supply['HPLOW',t]>50}:
+  Heat_Demand['HPLOW',t] = sum {c in HEAT_UTIL: c!= 'HPLOW'} Heating_LT [c,t];
+subject to Energy_Balance_LT_cstr4 { t in TIME: temp_supply['HPHIGH',t] < 65 && temp_supply['HPHIGH',t]>50}:
+  Heat_Demand['HPHIGH',t] = sum {c in HEAT_UTIL: c!= 'HPLOW'} Heating_HT [c,t];
+subject to Energy_Balance_LT_cstr3 { t in TIME: temp_supply['HPHIGH',t] > 65}:
+  Heat_Demand['HPHIGH',t] = sum {c in HEAT_UTIL: c!= 'HPLOW' && c!='HPHIGH'} Heating_HT [c,t];
+
+#Constraints Design Size
+subject to SizeTot:
+  sum{c in HEAT_UTIL} (Capacity[c]) >= 25000;
+subject to SizeMT:
+  sum{c in HEAT_UTIL: c!= 'HPLOW'} (Capacity[c])>= 13000;
+subject to SizeLT:
+  sum{c in HEAT_UTIL: c!= 'HPHIGH'} (Capacity[c])>= 12000;
+
+# Overall Combined heat balance
 subject to Energy_Balance_overall_cstr {c in HEAT_UTIL,t in TIME}:
   ComponentSize_t[c,t] = Heating_LT[c,t]+Heating_HT[c,t];
 #88% constraint
@@ -124,19 +134,21 @@ subject to EightyeightPerc_Constr:
 #Fuel Constraint
 subject to FUEL_heat_balance_constr{u in FUEL_USERS, t in TIME}: 
  ComponentSize_t[u,t] = FUEL_th_eff[u]*FUEL_Demand[u,t]; #dim #kW
+
 #Elec Balance
-subject to Non_elec_prod_constr{t in TIME}:
-  El_prod["BOILER",t] = 0;
 subject to FUEL_elec_balance_constr{u in FUEL_USERS, t in TIME}: 
   El_prod[u,t] = FUEL_el_eff[u]*FUEL_Demand[u,t]; #dim kW
 subject to El_available_Constr{t in TIME}: #AJOUTER COUTS DES NOUVEAUX PANNEAUX!
   El_prod["SOLAR",t] = ((solarfarm_area+Capacity["SOLAR"])*Efficiency_SolarPanels)*solar_radiation/1000; #dim kW
 subject to HP_Energy_Balance_cstr{h in HP,t in TIME}:
   ComponentSize_t[h,t] = COP[h,t]*(-El_prod[h,t]);  #kW
+
+#Total Elec Balance
 subject to Elec_demand_system{t in TIME}:
   Elec_Demand[t] = ((spec_annual_elec_demand*floor_area)/(365*24)+ (vol_cooling_water/60 + (Heat_Demand['HPLOW',t]+Heat_Demand['HPHIGH',t])/(4*cp_water*1000))*pumping_cost); #dim #KW 
 subject to Electricity_balance_Constr{t in TIME}:
   sum{u in COMPONENTS} El_prod[u,t]+ El_Buy[t] - El_Sell[t]= Elec_Demand[t]; #kW
+
 #Investment
 subject to PC_Con{c in COMPONENTS}:
   PC[c] = f_act*((PC_max[c] - PC_min[c])*(Capacity[c]/(C_max[c] - C_min[c])) + Component_Use[c]*PC_min[c]); #USD   # Purchase Cost
@@ -150,9 +162,7 @@ subject to an_CAPEX_Con{c in COMPONENTS}:
 subject to an_CAPEXTot_Con:
   an_CAPEX_Tot = sum{c in COMPONENTS} an_CAPEX[c];
 
-var TotElecCost >= 0;
-subject to TotConstr:
-  TotElecCost = sum{t in TIME}((c_el_in*El_Buy[t])*TIMEsteps[t]);
+
 
 ############################################################################################
 # OBJECTIVE FUNCTION
@@ -168,12 +178,12 @@ solve;
 ############################################################################################
 
 display COST/(10^6);
-display TotElecCost/(10^6);
+
 display an_CAPEX_Tot/(10^6);
 display Heat_Demand;
 display ComponentSize_t;
 display Capacity;
-display temp_supply;
+display El_Sell;
 
 
 
