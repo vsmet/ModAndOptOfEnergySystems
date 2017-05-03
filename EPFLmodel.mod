@@ -26,7 +26,7 @@ param solar_radiation;     # kw/m2
 param floor_area;        #m2
 param temp_threshold;       #deg C
 param spec_annual_elec_demand;    #kWh/m2(yr)
-param vol_cooling_water{t in TIME}; # m3/mois
+param vol_cooling_water; # m3/mois
 param pumping_cost := 0.304 ; #kWh/m3,  calculé depuis http://exploitation-energies.epfl.ch/bilans_energetiques/details/cct, Sylvain
 param cp_water:=4.18; #kJ/kg K
 # Parameter heating signature
@@ -134,7 +134,7 @@ subject to El_available_Constr{t in TIME}: #AJOUTER COUTS DES NOUVEAUX PANNEAUX!
 subject to HP_Energy_Balance_cstr{h in HP,t in TIME}:
   ComponentSize_t[h,t] = COP[h,t]*(-El_prod[h,t]);  #kW
 subject to Elec_demand_system{t in TIME}:
-  Elec_Demand[t] = ((spec_annual_elec_demand*floor_area)/(365*24)+ (vol_cooling_water[t]+(Heat_Demand['HPLOW',t]+Heat_Demand['HPHIGH',t])/(4*cp_water))*pumping_cost); #dim #KW
+  Elec_Demand[t] = ((spec_annual_elec_demand*floor_area)/(365*24)+ (vol_cooling_water/60 + (Heat_Demand['HPLOW',t]+Heat_Demand['HPHIGH',t])/(4*cp_water*1000))*pumping_cost); #dim #KW 
 subject to Electricity_balance_Constr{t in TIME}:
   sum{u in COMPONENTS} El_prod[u,t]+ El_Buy[t] - El_Sell[t]= Elec_Demand[t]; #kW
 #Investment
@@ -150,12 +150,16 @@ subject to an_CAPEX_Con{c in COMPONENTS}:
 subject to an_CAPEXTot_Con:
   an_CAPEX_Tot = sum{c in COMPONENTS} an_CAPEX[c];
 
+var TotElecCost >= 0;
+subject to TotConstr:
+  TotElecCost = sum{t in TIME}((c_el_in*El_Buy[t])*TIMEsteps[t]);
+
 ############################################################################################
 # OBJECTIVE FUNCTION
 ############################################################################################
 
 minimize COST:
-sum{u in NG_USERS,t in TIME} ((c_ng_in*FUEL_Demand[u,t] + c_ds_in*FUEL_Demand["ICENGINE",t]+ c_el_in*El_Buy[t] - c_el_out*El_Sell[t])*TIMEsteps[t]); #+ an_CAPEX_Tot;
+sum{t in TIME} ((sum{u in NG_USERS}(c_ng_in*FUEL_Demand[u,t])+ c_ds_in*FUEL_Demand["ICENGINE",t] + c_el_in*El_Buy[t] - c_el_out*El_Sell[t])*TIMEsteps[t])+ an_CAPEX_Tot; #
 solve;
 
 
@@ -163,9 +167,10 @@ solve;
 # DISPLAY
 ############################################################################################
 
-display COST/(10^9);
-display El_Buy;
-
+display COST/(10^6);
+display TotElecCost/(10^6);
+display an_CAPEX_Tot/(10^6);
+display Heat_Demand;
 
 
 
