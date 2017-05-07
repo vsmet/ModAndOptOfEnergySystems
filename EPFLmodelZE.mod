@@ -104,18 +104,24 @@ subject to Size_Constr{c in COMPONENTS, t in TIME}:
   ComponentSize_t[c,t] <= Capacity[c];             #kW
 subject to Component_cmin_cstr {c in COMPONENTS}:
   Component_Use[c]*C_min[c] <= Capacity[c];
-subject to Component_cmax_cstr {c in COMPONENTS}:
-  Component_Use[c]*C_max[c] >= Capacity[c];
+subject to Component_cmax_cstr {c in 
+  COMPONENTS}:
+    Component_Use[c]*C_max[c] >= Capacity[c];
 
 #Constraints For temperatures of HeatpumpCycles
 subject to Energy_Balance_LT_cstr1 {t in TIME: temp_supply['HPLOW',t]<=50}: 
   sum{b in HP} Heat_Demand[b,t] = sum {c in HEAT_UTIL} ComponentSize_t [c,t];
+
 subject to Energy_Balance_LT_cstr2 { t in TIME: temp_supply['HPLOW',t]>50}:
   Heat_Demand['HPLOW',t] = sum {c in HEAT_UTIL: c!= 'HPLOW'} Heating_LT [c,t];
+
 subject to Energy_Balance_LT_cstr4 { t in TIME: temp_supply['HPHIGH',t] < 65 && temp_supply['HPHIGH',t]>50}:
   Heat_Demand['HPHIGH',t] = sum {c in HEAT_UTIL: c!= 'HPLOW'} Heating_HT [c,t];
+
+#/!\ This contraint is unfeasable if I limit the Boiler capacity to 2000
 subject to Energy_Balance_LT_cstr3 { t in TIME: temp_supply['HPHIGH',t] > 65}:
   Heat_Demand['HPHIGH',t] = sum {c in HEAT_UTIL: c!= 'HPLOW' && c!='HPHIGH'} Heating_HT [c,t];
+
 
 #Constraints Design Size
 subject to SizeTot:
@@ -125,13 +131,18 @@ subject to SizeMT:
 subject to SizeLT:
   sum{c in HEAT_UTIL: c!= 'HPHIGH'} (Capacity[c])>= 12000;
 
+
 # Overall Combined heat balance
 subject to Energy_Balance_overall_cstr {c in HEAT_UTIL,t in TIME}:
   ComponentSize_t[c,t] = Heating_LT[c,t]+Heating_HT[c,t];
-#88% constraint
+
+#/!\ DELETED CONSTRAINT
+
+#88% constraint 
 subject to EightyeightPerc_Constr:
   sum{h in HP, t in TIME}(ComponentSize_t[h,t]*TIMEsteps[t]) >= 0.88*sum{b in HP,t in TIME}(Heat_Demand[b,t]*TIMEsteps[t]); #SYSTEM REQUIREMENTS
 #Fuel Constraint
+
 subject to FUEL_heat_balance_constr{u in FUEL_USERS, t in TIME}: 
  ComponentSize_t[u,t] = FUEL_th_eff[u]*FUEL_Demand[u,t]; #dim #kW
 
@@ -184,6 +195,7 @@ display Heat_Demand;
 #display ComponentSize_t;
 display Capacity;
 #display El_Sell;
+#display temp_supply;
 
 
 
