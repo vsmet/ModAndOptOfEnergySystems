@@ -166,7 +166,7 @@ param  C_min   :=
 BOILER 0 #VINCENT See F_BM
 HPHIGH 1500 #VINCENT See F_BM
 HPLOW 1500 #VINCENT See F_BM
-SOFC 0 #This is the heatCapacity -> Electrical capacity is calculated in the modFile
+SOFC 100 #This is the heatCapacity -> Electrical capacity is calculated in the modFile
 TURBINE 0 #dimitri See F_BM
 SOLAR 0
 ICENGINE 0 #VINCENT See F_BM
