@@ -73,71 +73,36 @@ param Efficiency_SolarPanels;
 param solarfarm_area;
 
 #Cost Sensitivity
-
 param base_case{b in BaseC};
 param rate{r in Rate};
 
 param c_el_in{s in SCENARIO} :=
-  if s="LOW_E"
+  if s="LOW_E" || s="LOW_E_HIGH_ND" || s="LOW_E_LOW_ND"
     then base_case["c_el_in"]*rate["el_low"]
-  else if s="HIGH_E"
-    then base_case["c_el_in"]*rate["el_high"]
-  else if s="LOW_E_HIGH_ND"
-    then base_case["c_el_in"]*rate["el_low"]
-  else if s="LOW_E_LOW_ND"
-    then base_case["c_el_in"]*rate["el_low"]
-  else if s="HIGH_E_HIGH_ND"
-    then base_case["c_el_in"]*rate["el_high"]
-  else if s="LOW_E_LOW_ND"
+  else if s="HIGH_E"|| s="HIGH_E_HIGH_ND" || s="HIGH_E_LOW_ND"
     then base_case["c_el_in"]*rate["el_high"]
   else base_case["c_el_in"];
 
 param c_el_out{s in SCENARIO} :=
-  if s="LOW_E"
+  if s="LOW_E" || s="LOW_E_HIGH_ND" || s="LOW_E_LOW_ND"
     then base_case["c_el_out"]*rate["el_low"]
-  else if s="HIGH_E"
-    then base_case["c_el_out"]*rate["el_high"]
-  else if s="LOW_E_HIGH_ND"
-    then base_case["c_el_out"]*rate["el_low"]
-  else if s="LOW_E_LOW_ND"
-    then base_case["c_el_out"]*rate["el_low"]
-  else if s="HIGH_E_HIGH_ND"
-    then base_case["c_el_out"]*rate["el_high"]
-  else if s="LOW_E_LOW_ND"
+  else if s="HIGH_E" || s="HIGH_E_HIGH_ND" || s="HIGH_E_LOW_ND"
     then base_case["c_el_out"]*rate["el_high"]
   else base_case["c_el_out"];
 
 param c_ng_in{s in SCENARIO} :=
-  if s="LOW_N"
+  if s="LOW_N" || s="LOW_E_LOW_ND" || s="HIGH_E_LOW_ND"
     then base_case["c_ng_in"]*rate["ng_low"]
-  else if s="HIGH_N"
+  else if s="HIGH_N" || s="LOW_E_HIGH_ND" || s="HIGH_E_HIGH_ND"
     then base_case["c_ng_in"]*rate["ng_high"]
-  else if s="LOW_E_HIGH_ND"
-    then base_case["c_ng_in"]*rate["ng_high"]
-  else if s="LOW_E_LOW_ND"
-    then base_case["c_ng_in"]*rate["ng_high"]
-  else if s="HIGH_E_HIGH_ND"
-    then base_case["c_ng_in"]*rate["ng_low"]
-  else if s="LOW_E_LOW_ND"
-    then base_case["c_ng_in"]*rate["ng_low"]
   else base_case["c_ng_in"];
 
 
-
-
 param c_ds_in{s in SCENARIO} :=
-  if s="LOW_D"
+  if s="LOW_D" || s="LOW_E_LOW_ND" || s="HIGH_E_LOW_ND"
     then base_case["c_ds_in"]*rate["d_low"]
-  else if s="HIGH_D"
+  else if s="HIGH_D" || s="LOW_E_HIGH_ND" || s="HIGH_E_HIGH_ND"
     then base_case["c_ds_in"]*rate["d_high"]
-  else if s="LOW_E_HIGH_ND"
-    then base_case["c_ds_in"]*rate["d_high"]
-  else if s="LOW_E_LOW_ND"
-    then base_case["c_ds_in"]*rate["d_high"]
-  else if s="HIGH_E_HIGH_ND"
-    then base_case["c_ds_in"]*rate["d_low"]
-  else if s="LOW_E_LOW_ND"
-    then base_case["c_ds_in"]*rate["d_low"]
   else base_case["c_ds_in"];
 
 
