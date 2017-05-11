@@ -20,6 +20,9 @@ set ELEC_UTIL := SOLAR;
 set HP := HPLOW HPHIGH; #Can be used as buildingslist also
 set FUEL_USERS := BOILER SOFC TURBINE ICENGINE;
 set NG_USERS := BOILER SOFC TURBINE;
+set SCENARIO := BAU LOW_E HIGH_E LOW_N HIGH_N LOW_D HIGH_D LOW_I HIGH_I HIGH_E_HIGH_ND HIGH_E_LOW_ND LOW_E_HIGH_ND LOW_E_LOW_ND; #Electricity
+set BaseC := c_el_in c_el_out c_ng_in c_ds_in;
+set Rate := el_high el_low ng_high ng_low d_high d_low;
 
 ############################################################################################
 # PARAMETERS
@@ -69,10 +72,92 @@ param lake_temp := 7;
 /*******************************************************/
 # Economic parameters
 /*******************************************************/
-param c_el_in := 0.15;         	    # http://exploitation-energies.epfl.ch/files/content/sites/exploitation-energies/files/Documents%20pdf/electricite_grilles_tarifs_2016.pdf  #dimitri vincent
-param c_el_out := 0.1275;         	# 0.85* c_el_in # vincent dimitri
-param c_ng_in := 0.0662;         	# ct/kwh http://www.sig-ge.ch/nous-connaitre/support-et-communications/Documents/Tarifs%20et%20r%C3%A9glements/Gaz%20et%20chaleur/tarifs_fourniture_gaz_naturel.pdf #dimitri vincent
-param c_ds_in := 0.1045;
+
+param base_case :=
+c_el_in 0.15
+c_el_out 0.075
+c_ng_in 0.0662
+c_ds_in 0.1045
+;
+
+param rate :=
+el_high 1.3
+el_low 0.7
+ng_high 1.3
+ng_low 0.7
+d_high 1.3
+d_low 0.7
+;
+
+
+/*
+param change_szenario :=
+Bau 1 1 1 1;
+Low_E 1
+
+
+param: c_el_in := 
+BAU 0.15
+LOW_E 0.075
+HIGH_E 0.225
+LOW_N 0.15
+HIGH_N 0.15
+LOW_D 0.15
+HIGH_D 0.15
+LOW_I 0.15
+HIGH_I 0.15
+HIGH_E_HIGH_ND 0.225
+HIGH_E_LOW_ND 0.225
+LOW_E_HIGH_ND 0.075
+LOW_E_LOW_ND 0.075
+;         	    # http://exploitation-energies.epfl.ch/files/content/sites/exploitation-energies/files/Documents%20pdf/electricite_grilles_tarifs_2016.pdf  #dimitri vincent
+param: c_el_out := 
+BAU 0.1275
+LOW_E 0.064
+HIGH_E 0.191
+LOW_N 0.1275
+HIGH_N 0.1275
+LOW_D 0.1275
+HIGH_D 0.1275
+LOW_I 0.1275
+HIGH_I 0.1275
+HIGH_E_HIGH_ND 0.191
+HIGH_E_LOW_ND 0.191
+LOW_E_HIGH_ND 0.064
+LOW_E_LOW_ND 0.064
+;         	# 0.85* c_el_in # vincent dimitri
+param: c_ng_in := 
+BAU 0.0662
+LOW_E 0.0662
+HIGH_E 0.0662
+LOW_N 0.033
+HIGH_N 0.099
+LOW_D 0.0662
+HIGH_D 0.0662
+LOW_I 0.0662
+HIGH_I 0.0662
+HIGH_E_HIGH_ND 0.099
+HIGH_E_LOW_ND 0.033
+LOW_E_HIGH_ND 0.099
+LOW_E_LOW_ND 0.033
+;         	# ct/kwh http://www.sig-ge.ch/nous-connaitre/support-et-communications/Documents/Tarifs%20et%20r%C3%A9glements/Gaz%20et%20chaleur/tarifs_fourniture_gaz_naturel.pdf #dimitri vincent
+param: c_ds_in := 
+BAU 0.1045
+LOW_E 0.1045
+HIGH_E 0.1045
+LOW_N 0.1045
+HIGH_N 0.1045
+LOW_D 0.052
+HIGH_D 0.157
+LOW_I 0.1045
+HIGH_I 0.1045
+HIGH_E_HIGH_ND 0.157
+HIGH_E_LOW_ND 0.052
+LOW_E_HIGH_ND 0.157
+LOW_E_LOW_ND 0.052
+;
+*/
+
 
 /*******************************************************/
 # Building parameters
@@ -108,7 +193,7 @@ param vol_cooling_water := 190.800; #en m3/h, Sylvain
 /*******************************************************/
 param: FUEL_el_eff :=
 BOILER 0
-SOFC 0.64 # Fuel cell class, Lecture 2, Slide 34 (Jannik)
+SOFC 0.60 # Fuel cell class, Lecture 2, Slide 34 (Jannik)
 TURBINE 0.36 #dimitri /EEGJulyrevisedFINAL1
 ICENGINE 0.38 # dimitri GE jenbacher type 2, everage value
 ;
@@ -125,7 +210,21 @@ ICENGINE 0.50 # dimitri GE jenbacher type 2, everage value
 
 #INVESTMENT COST DATA - USD
 param ex_USD_CHF := 1; #Exchange rate 31 March
-param interest_rate := 0.235; #20 year Swiss bond 31 March
+param: interest_rate := 
+BAU 0.00235
+LOW_E 0.00235
+HIGH_E 0.00235
+LOW_N 0.00235
+HIGH_N 0.00235
+LOW_D 0.00235
+HIGH_D 0.00235
+LOW_I 0.00001
+HIGH_I 0.05
+HIGH_E_HIGH_ND 0.00235
+HIGH_E_LOW_ND 0.00235
+LOW_E_HIGH_ND 0.00235
+LOW_E_LOW_ND 0.00235
+; #20 year Swiss bond 31 March
 param lifetime := 20;
 
 param  Ref_ind := 1179;  #Assumed this to be same for all components
@@ -134,7 +233,7 @@ param  F_BM    :=
 BOILER 1.8 #VINCENT Packaged Boiler cost_SteamBoiler.m, Ref: G.D.Ulrich, A Guide to Chemical Engineering Process Design and Economics, Wiley, NJ, 1984
 HPHIGH 1.6 #VINCENT Medium Sized Heatpump cost_heat_pump_medium_size.m, Ref: Mod?lisation et optimisation environomiques de syst?mes de chauffage urbain aliment?s par pompe ? chaleur, V. Curti,EPFL phd thesis, 1998, chapter 4.
 HPLOW 1.6 # VINCENT See HPHIGH
-SOFC 4.01 #dimitri matlab
+SOFC 1 # VINCENT estimate bloom (conservative) https://www.greentechmedia.com/articles/read/Fuel-Cells-2016-Within-Striking-Distance-of-Profitability
 TURBINE 6 #Dimitri cost_GasTurbines.m, G.D.Ulrich, A Guide to Chemical Engineering Process Design and Economics, Wiley, NJ, 1984R. Turton, Analysis, Synthesis and Design of chemical processes, Prentice Hall, NJ, 1998 stainless steel
 SOLAR 1
 ICENGINE 1 #VINCENT Cost_EngineIC.m, Ref: R. Turton, Analysis, Synthesis and Design of chemical  processes, Prentice Hall, NJ, 2012
@@ -184,20 +283,20 @@ param PC_min :=
 BOILER 31988.9510969140  #VINCENT See F_BM
 HPHIGH 178544.428736573 #VINCENT See F_BM
 HPLOW 178544.428736573 #VINCENT See F_BM
-SOFC 700000 #dim bloom energy
-TURBINE  43601.3564000399 
+SOFC 1600000.00000000 #VINCENT See F_BM  
+TURBINE  36571.0512241442 
 SOLAR 0
-ICENGINE 27485.2695196467 #VINCENT See F_BM
+ICENGINE 21950.4014925240 #VINCENT See F_BM
 ;
 
 param PC_max := 
 BOILER  344096.081034843#VINCENT See F_BM
 HPHIGH 1160185.12077869#VINCENT See F_BM
 HPLOW 1246847.06417074 #VINCENT See F_BM
-SOFC 5560300 # dim bloom energy+ matlab 
-TURBINE 932238.377391416 
-SOLAR 1540000
-ICENGINE 1489948.34154203 #VINCENT See F_BM
+SOFC 160000000 #VINCENT See F_BM
+TURBINE 781923.780991901
+SOLAR 1540000 #Approx Cost using 4CHF/Watt and 110 Watt/m^2 as reference values
+ICENGINE 1203918.65833397 #VINCENT See F_BM
 ;
 
 end;
