@@ -172,7 +172,7 @@ subject to an_CAPEX_Con{c in COMPONENTS}:
 subject to an_CAPEXTot_Con:
   an_CAPEX_Tot = sum{c in COMPONENTS} an_CAPEX[c];
 
-param out, symbolic := "out.csv";
+
 
 ############################################################################################
 # OBJECTIVE FUNCTION
@@ -187,13 +187,15 @@ solve;
 # DISPLAY
 ############################################################################################
 
+#display COST/(10^6);
 
-printf "Utility_Capacity[kW], " >> out;
-for {c in COMPONENTS} {
-  printf "%s,",c >> out;
-}
-printf "\n" >> out;
-for {c in COMPONENTS} {
-  printf "%s, %f\n",c , Capacity[c]  >> out;
-}
-printf "end;\n" >> out;
+display an_CAPEX_Tot/(10^6);
+display Heat_Demand;
+#display ComponentSize_t;
+display Capacity;
+#display El_Sell;
+#display temp_supply;
+
+
+
+end;
