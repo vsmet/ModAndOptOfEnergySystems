@@ -44,7 +44,7 @@ param Heat_Demand { h in HP, t in TIME} :=
     else 0;
 # Parameter Investment
 param ex_USD_CHF;
-param interest_rate;
+param interest_rate{s in SCENARIO};
 param lifetime;
 param Year_ind;
 param Ref_ind;
@@ -160,10 +160,12 @@ subject to BM_C_Con{c in COMPONENTS,s in SCENARIO}:
 subject to GR_C_Con{c in COMPONENTS,s in SCENARIO}:
   GR_C[c,s] = BM_C[c,s]*(alpha_1*alpha_2 + 1);    #Total cost (Goss cost)
 subject to an_CAPEX_Con{c in COMPONENTS,s in SCENARIO}:
-  an_CAPEX[c,s] = GR_C[c,s]*((interest_rate*(1+interest_rate)^lifetime)/((1+interest_rate)^lifetime - 1));  #Cout annualisés
+  an_CAPEX[c,s] = GR_C[c,s]*((interest_rate[s]*(1+interest_rate[s])^lifetime)/((1+interest_rate[s])^lifetime - 1));  #Cout annualisés
 subject to an_CAPEXTot_Con{s in SCENARIO}:
   an_CAPEX_Tot[s] = sum{c in COMPONENTS} an_CAPEX[c,s];
 
+#Initialise File
+param CapOut, symbolic := "Capacity.csv";
 
 
 ############################################################################################
@@ -179,14 +181,17 @@ solve;
 # DISPLAY
 ############################################################################################
 
-#display COST/(10^6);
-
-#display an_CAPEX_Tot/(10^6);
-#display Heat_Demand;
-#display ComponentSize_t;
-display Capacity;
-#display El_Sell;
-
-
-
+printf "Utility_Capacity[kW], " >> CapOut;
+for {s in SCENARIO}{
+  printf "%s,",s >> CapOut;
+}
+printf "\n" >> CapOut;
+for {c in COMPONENTS} {
+  printf "%s,",c  >> CapOut;
+  for {s in SCENARIO}{
+    printf "%f,", Capacity[c,s] >> CapOut;
+  }
+  printf "\n" >> CapOut;
+}
+printf "end;\n" >> CapOut;
 end;
