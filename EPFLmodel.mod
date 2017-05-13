@@ -204,14 +204,15 @@ param CapOut, symbolic := "Capacity.csv";
 # OBJECTIVE FUNCTION
 ############################################################################################
 
-minimize COST:
-sum{s in SCENARIO}(sum{t in TIME} ((sum{u in NG_USERS}(c_ng_in[s]*FUEL_Demand[u,t,s])+ c_ds_in[s]*FUEL_Demand["ICENGINE",t,s] + c_el_in[s]*El_Buy[t,s] - c_el_out[s]*El_Sell[t,s])*TIMEsteps[t])+ an_CAPEX_Tot[s]); #
+minimize COST{s in SCENARIO}:
+sum{t in TIME} ((sum{u in NG_USERS}(c_ng_in[s]*FUEL_Demand[u,t,s])+ c_ds_in[s]*FUEL_Demand["ICENGINE",t,s] + c_el_in[s]*El_Buy[t,s] - c_el_out[s]*El_Sell[t,s])*TIMEsteps[t])+ an_CAPEX_Tot[s]; #
 solve;
 
 
 ############################################################################################
 # DISPLAY
 ############################################################################################
+
 
 printf "Utility_Capacity[kW], " >> CapOut;
 for {s in SCENARIO}{
@@ -226,4 +227,6 @@ for {c in COMPONENTS} {
   printf "\n" >> CapOut;
 }
 printf "end;\n" >> CapOut;
+
+
 end;
