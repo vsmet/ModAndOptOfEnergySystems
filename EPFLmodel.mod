@@ -120,8 +120,7 @@ var an_CAPEX {c in COMPONENTS,s in SCENARIO} >=0;
 var an_CAPEX_Tot{s in SCENARIO}  >=0;
 var Component_Use {c in COMPONENTS,s in SCENARIO} binary;
 var ComponentSize_t {c in COMPONENTS, t in TIME,s in SCENARIO} >= 0;
-var Heating_LT {c in HEAT_UTIL, t in TIME,s in SCENARIO} >= 0;
-var Heating_HT {c in HEAT_UTIL, t in TIME,s in SCENARIO} >= 0;
+var Heating {h in HP,c in HEAT_UTIL, t in TIME,s in SCENARIO} >= 0;
 var FUEL_Demand{u in FUEL_USERS, t in TIME,s in SCENARIO}>=0;
 #Variables Electricity
 var El_prod{u in COMPONENTS, t in TIME,s in SCENARIO};
@@ -141,15 +140,15 @@ subject to Component_cmin_cstr {c in COMPONENTS,s in SCENARIO}:
 subject to Component_cmax_cstr {c in COMPONENTS,s in SCENARIO}:
   Component_Use[c,s]*C_max[c] >= Capacity[c,s];
 
-#Constraints For temperatures of HeatpumpCycles
-subject to Energy_Balance_LT_cstr1 {t in TIME,s in SCENARIO: temp_supply['HPLOW',t]<=50}: 
-  sum{b in HP} Heat_Demand[b,t] = sum {c in HEAT_UTIL} ComponentSize_t [c,t,s];
-subject to Energy_Balance_LT_cstr2 { t in TIME,s in SCENARIO: temp_supply['HPLOW',t]>50}:
-  Heat_Demand['HPLOW',t] = sum {c in HEAT_UTIL: c!= 'HPLOW'} Heating_LT [c,t,s];
-subject to Energy_Balance_LT_cstr4 { t in TIME,s in SCENARIO: temp_supply['HPHIGH',t] < 65 && temp_supply['HPHIGH',t]>50}:
-  Heat_Demand['HPHIGH',t] = sum {c in HEAT_UTIL: c!= 'HPLOW'} Heating_HT [c,t,s];
-subject to Energy_Balance_LT_cstr3 { t in TIME,s in SCENARIO: temp_supply['HPHIGH',t] > 65}:
-  Heat_Demand['HPHIGH',t] = sum {c in HEAT_UTIL: c!= 'HPLOW' && c!='HPHIGH'} Heating_HT [c,t,s];
+#HeatBalance
+subject to Heat_dem_Bal{h in HP, t in TIME, s in SCENARIO}:
+  Heat_Demand[h,t]= sum{c in HEAT_UTIL}(Heating[h,c,t,s]);
+subject to Comp_size_con{c in HEAT_UTIL, t in TIME, s in SCENARIO}:
+  ComponentSize_t[c,t,s] =  sum{h in HP}(Heating[h,c,t,s]);
+subject to Temp_sup_L{h in HP, t in TIME, s in SCENARIO:temp_supply[h,t] > 50}:
+  Heating[h,"HPLOW",t,s] = 0;
+subject to Temp_sup_H{t in TIME, s in SCENARIO:temp_supply["HPHIGH",t] > 65}:
+  Heating["HPHIGH","HPHIGH",t,s] = 0;
 
 #Constraints Design Size
 subject to SizeTot{s in SCENARIO}:
@@ -159,9 +158,7 @@ subject to SizeMT{s in SCENARIO}:
 subject to SizeLT{s in SCENARIO}:
   sum{c in HEAT_UTIL: c!= 'HPHIGH'} (Capacity[c,s])>= 12000;
 
-# Overall Combined heat balance
-subject to Energy_Balance_overall_cstr {c in HEAT_UTIL,t in TIME,s in SCENARIO}:
-  ComponentSize_t[c,t,s] = Heating_LT[c,t,s]+Heating_HT[c,t,s];
+
 #88% constraint
 subject to EightyeightPerc_Constr{s in SCENARIO}:
   sum{h in HP, t in TIME}(ComponentSize_t[h,t,s]*TIMEsteps[t]) >= 0.88*sum{b in HP,t in TIME}(Heat_Demand[b,t]*TIMEsteps[t]); #SYSTEM REQUIREMENTS
@@ -215,8 +212,14 @@ solve;
 ############################################################################################
 # DISPLAY
 ############################################################################################
+for{c in COMPONENTS}{
 
-
+  display ComponentSize_t[c,1,"HIGH_E_LOW_ND"];
+}
+for{h in HP}{
+  display temp_supply[h,1];
+  display Heat_Demand[h,1];
+}
 printf "Utility_Capacity[kW], " >> CapOut;
 for {s in SCENARIO}{
   printf "%s,",s >> CapOut;
