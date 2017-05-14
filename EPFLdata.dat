@@ -83,10 +83,10 @@ c_ds_in 0.1045
 param rate :=
 el_high 1.1
 el_low 1
-ng_high 70
-ng_low 1
+ng_high 1
+ng_low 0.6
 d_high 70
-d_low 1
+d_low 0.5
 ;
 
 /*
