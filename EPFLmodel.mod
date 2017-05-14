@@ -204,9 +204,12 @@ param CapOut, symbolic := "Capacity.csv";
 # OBJECTIVE FUNCTION
 ############################################################################################
 
-minimize COST{s in SCENARIO}:
-sum{t in TIME} ((sum{u in NG_USERS}(c_ng_in[s]*FUEL_Demand[u,t,s])+ c_ds_in[s]*FUEL_Demand["ICENGINE",t,s] + c_el_in[s]*El_Buy[t,s] - c_el_out[s]*El_Sell[t,s])*TIMEsteps[t])+ an_CAPEX_Tot[s]; #
+minimize COST:
+sum{t in TIME} ((sum{u in NG_USERS}(c_ng_in['HIGH_E_HIGH_ND']*FUEL_Demand[u,t,'HIGH_E_HIGH_ND'])+ c_ds_in['HIGH_E_HIGH_ND']*FUEL_Demand["ICENGINE",t,'HIGH_E_HIGH_ND'] + c_el_in['HIGH_E_HIGH_ND']*El_Buy[t,'HIGH_E_HIGH_ND'] - c_el_out['HIGH_E_HIGH_ND']*El_Sell[t,'HIGH_E_HIGH_ND'])*TIMEsteps[t])+ an_CAPEX_Tot['HIGH_E_HIGH_ND']; #
 solve;
+
+
+
 
 
 ############################################################################################
