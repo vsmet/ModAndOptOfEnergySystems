@@ -113,6 +113,7 @@ param c_ds_in{s in SCENARIO} :=
 
 #Variables Investment
 var Capacity {c in COMPONENTS, s in SCENARIO} >= 0;
+var ElCapacity {c in COMPONENTS, s in SCENARIO} ;
 var PC{c in COMPONENTS,s in SCENARIO} >= 0;
 var BM_C{c in COMPONENTS,s in SCENARIO} >= 0;
 var GR_C{c in COMPONENTS,s in SCENARIO} >= 0;
@@ -120,13 +121,21 @@ var an_CAPEX {c in COMPONENTS,s in SCENARIO} >=0;
 var an_CAPEX_Tot{s in SCENARIO}  >=0;
 var Component_Use {c in COMPONENTS,s in SCENARIO} binary;
 var ComponentSize_t {c in COMPONENTS, t in TIME,s in SCENARIO} >= 0;
+var ComponentSize_e {c in COMPONENTS, t in TIME,s in SCENARIO} >= 0;
+var AnnualCompEnergy {c in COMPONENTS, s in SCENARIO} >= 0;
+var AnnualCompEnergyEL {c in COMPONENTS, s in SCENARIO};
 var Heating {h in HP,c in HEAT_UTIL, t in TIME,s in SCENARIO} >= 0;
 var FUEL_Demand{u in FUEL_USERS, t in TIME,s in SCENARIO}>=0;
 #Variables Electricity
 var El_prod{u in COMPONENTS, t in TIME,s in SCENARIO};
+var El_prod_e{u in COMPONENTS, t in TIME,s in SCENARIO};
 var El_Buy{t in TIME,s in SCENARIO} >=0;
 var El_Sell{t in TIME,s in SCENARIO}>=0;
 var Elec_Demand{t in TIME,s in SCENARIO} >=0;
+var Elec_cost{s in SCENARIO};
+var Fuel_cost{s in SCENARIO} >= 0;
+
+
 
 ############################################################################################
 # CONSTRAINTS
@@ -164,15 +173,21 @@ subject to EightyeightPerc_Constr{s in SCENARIO}:
   sum{h in HP, t in TIME}(ComponentSize_t[h,t,s]*TIMEsteps[t]) >= 0.88*sum{b in HP,t in TIME}(Heat_Demand[b,t]*TIMEsteps[t]); #SYSTEM REQUIREMENTS
 #Fuel Constraint
 subject to FUEL_heat_balance_constr{u in FUEL_USERS, t in TIME,s in SCENARIO}: 
- ComponentSize_t[u,t,s] = FUEL_th_eff[u]*FUEL_Demand[u,t,s]; #dim #kW
+ ComponentSize_t[u,t,s] = FUEL_th_eff[u]*FUEL_Demand[u,t,s]; 
+subject to FUEL_heat_balance_constrCap{u in FUEL_USERS, s in SCENARIO}: 
+ (Capacity[u,s]/FUEL_th_eff[u])*FUEL_el_eff[u] = ElCapacity[u,s]; 
 
 #Elec Balance
 subject to FUEL_elec_balance_constr{u in FUEL_USERS, t in TIME,s in SCENARIO}: 
   El_prod[u,t,s] = FUEL_el_eff[u]*FUEL_Demand[u,t,s]; #dim kW
 subject to El_available_Constr{t in TIME,s in SCENARIO}: #AJOUTER COUTS DES NOUVEAUX PANNEAUX!
   El_prod["SOLAR",t,s] = ((solarfarm_area+Capacity["SOLAR",s])*Efficiency_SolarPanels)*solar_radiation/1000; #dim kW
+subject to El_available_Constr2{t in TIME,s in SCENARIO}: #AJOUTER COUTS DES NOUVEAUX PANNEAUX!
+  El_prod["SOLAR",t,s] = ElCapacity["SOLAR",s]; #dim kW
 subject to HP_Energy_Balance_cstr{h in HP,t in TIME,s in SCENARIO}:
   ComponentSize_t[h,t,s] = COP[h,t]*(-El_prod[h,t,s]);  #kW
+subject to HP_Energy_Balance_cstr2{h in HP,s in SCENARIO}:
+  Capacity[h,s] = COP[h,5]*(-ElCapacity[h,s]);  #kW
 
 #Total Elec Balance
 subject to Elec_demand_system{t in TIME,s in SCENARIO}:
@@ -191,10 +206,28 @@ subject to GR_C_Con{c in COMPONENTS,s in SCENARIO}:
 subject to an_CAPEX_Con{c in COMPONENTS,s in SCENARIO}:
   an_CAPEX[c,s] = GR_C[c,s]*((interest_rate[s]*(1+interest_rate[s])^lifetime)/((1+interest_rate[s])^lifetime - 1));  #Cout annualisés
 subject to an_CAPEXTot_Con{s in SCENARIO}:
-  an_CAPEX_Tot[s] = sum{c in COMPONENTS} an_CAPEX[c,s];
+  an_CAPEX_Tot[s] = (sum{c in COMPONENTS} an_CAPEX[c,s])/1000;
 
+subject to Power_Energy{c in COMPONENTS, s in SCENARIO, t in TIME}:
+  ComponentSize_t[c,t,s]*TIMEsteps[t] = ComponentSize_e[c,t,s];
+subject to Energy_Comp{c in COMPONENTS, s in SCENARIO}: #GWh
+  (sum{t in TIME}(ComponentSize_e[c,t,s]))/(10^6) = AnnualCompEnergy[c,s];
+subject to Fuel_cost_sc{s in SCENARIO}:
+  Fuel_cost[s] = (sum{t in TIME} ((sum{u in NG_USERS}(c_ng_in[s]*FUEL_Demand[u,t,s])+ c_ds_in[s]*FUEL_Demand["ICENGINE",t,s] )*TIMEsteps[t]))/1000;
+subject to El_cost{s in SCENARIO}:
+  Elec_cost[s] = (sum{t in TIME} ((c_el_in[s]*El_Buy[t,s] - c_el_out[s]*El_Sell[t,s])*TIMEsteps[t]))/1000;
+subject to Power_EnergyELEC{c in COMPONENTS, s in SCENARIO, t in TIME}:
+  El_prod[c,t,s]*TIMEsteps[t] = El_prod_e[c,t,s];
+subject to Energy_CompELEC{c in COMPONENTS, s in SCENARIO}: #GWh
+  (sum{t in TIME}(El_prod_e[c,t,s]))/(10^6) = AnnualCompEnergyEL[c,s];
 #Initialise File
 param CapOut, symbolic := "Capacity.csv";
+param OpOut, symbolic := "Operation.csv";
+param ElOut, symbolic := "Electricty.csv";
+param EnOut, symbolic := "AnnualEnergy.csv";
+param CoOut, symbolic := "Costs.csv";
+param ElbOut, symbolic := "ElectricityCapacity.csv";
+param ElEnOut, symbolic := "ElectricityConsProd.csv";
 
 
 ############################################################################################
@@ -202,7 +235,7 @@ param CapOut, symbolic := "Capacity.csv";
 ############################################################################################
 
 minimize COST:
-sum{t in TIME} ((sum{u in NG_USERS}(c_ng_in['HIGH_E_LOW_ND']*FUEL_Demand[u,t,'HIGH_E_LOW_ND'])+ c_ds_in['HIGH_E_LOW_ND']*FUEL_Demand["ICENGINE",t,'HIGH_E_LOW_ND'] + c_el_in['HIGH_E_LOW_ND']*El_Buy[t,'HIGH_E_LOW_ND'] - c_el_out['HIGH_E_LOW_ND']*El_Sell[t,'HIGH_E_LOW_ND'])*TIMEsteps[t])+ an_CAPEX_Tot['HIGH_E_LOW_ND']; #
+sum{s in SCENARIO}( sum{t in TIME} ((sum{u in NG_USERS}(c_ng_in[s]*FUEL_Demand[u,t,s])+ c_ds_in[s]*FUEL_Demand["ICENGINE",t,s] + c_el_in[s]*El_Buy[t,s] - c_el_out[s]*El_Sell[t,s])*TIMEsteps[t])+ 1000*an_CAPEX_Tot[s]); #
 solve;
 
 
@@ -212,20 +245,14 @@ solve;
 ############################################################################################
 # DISPLAY
 ############################################################################################
-for{c in COMPONENTS}{
+display COST;
 
-  display ComponentSize_t[c,1,"HIGH_E_LOW_ND"];
-}
-for{h in HP}{
-  display temp_supply[h,1];
-  display Heat_Demand[h,1];
-}
 printf "Utility_Capacity[kW], " >> CapOut;
 for {s in SCENARIO}{
   printf "%s,",s >> CapOut;
 }
 printf "\n" >> CapOut;
-for {c in COMPONENTS} {
+for {c in COMPONENTS: c != "SOLAR"} {
   printf "%s,",c  >> CapOut;
   for {s in SCENARIO}{
     printf "%f,", Capacity[c,s] >> CapOut;
@@ -234,5 +261,114 @@ for {c in COMPONENTS} {
 }
 printf "end;\n" >> CapOut;
 
+printf "Utility_Capacity[kW], " >> ElbOut;
+for {s in SCENARIO}{
+  printf "%s,",s >> ElbOut;
+}
+printf "\n" >> ElbOut;
+for {c in COMPONENTS: c != "SOLAR"} {
+  printf "%s,",c  >> ElbOut;
+  for {s in SCENARIO}{
+    printf "%f,", Capacity[c,s] >> ElbOut;
+  }
+  printf "\n" >> ElbOut;
+}
+printf "end;\n" >> ElbOut;
+
+for {s in SCENARIO}{
+  printf "%s \n",s >> OpOut;
+  # printf "HEATDEMAND," >> OpOut;
+  # for {t in TIME}{
+  #     printf "%f,",Heat_Demand[t,s]>> OpOut;
+  #   }
+  # printf "\n" >> OpOut;
+  # printf "TIMESTEPS," >> OpOut;
+  # for {t in TIME}{
+  #     printf "%f,",TIMEsteps[t]>> OpOut;
+  #   }
+  # printf "\n" >> OpOut;
+  printf "\n" >> OpOut;
+  for {c in COMPONENTS: c != "SOLAR"}{
+    printf "%s,",c >> OpOut;
+    for {t in TIME}{
+      printf "%f,",ComponentSize_e[c,t,s] >> OpOut;
+    }
+    printf "\n" >> OpOut;
+  }
+  printf "\n" >> OpOut;
+  printf "\n" >> OpOut;
+}
+
+
+
+
+printf "EnergyProduced[GWh], " >> EnOut;
+for {s in SCENARIO}{
+  printf "%s,",s >> EnOut;
+}
+printf "\n" >> EnOut;
+for {c in COMPONENTS: c!= "SOLAR"} {
+  printf "%s,",c  >> EnOut;
+  for {s in SCENARIO}{
+    printf "%f,", AnnualCompEnergy[c,s] >> EnOut;
+  }
+  printf "\n" >> EnOut;
+}
+printf "end;\n" >> EnOut;
+
+printf "EnergyProduced[GWh], " >> ElEnOut;
+for {s in SCENARIO}{
+  printf "%s,",s >> ElEnOut;
+}
+printf "\n" >> ElEnOut;
+for {c in COMPONENTS} {
+  printf "%s,",c  >> ElEnOut;
+  for {s in SCENARIO}{
+    printf "%f,", AnnualCompEnergyEL[c,s] >> ElEnOut;
+  }
+  printf "\n" >> ElEnOut;
+}
+printf "end;\n" >> ElEnOut;
+
+
+
+
+printf "ElectricityBalance [kW] \n" >> ElOut;
+for {s in SCENARIO}{
+  printf "%s \n",s >> ElOut;
+  printf "El_Buy," >> ElOut;
+  for {t in TIME}{
+    printf "%f,",El_Buy[t,s] >> ElOut;
+  }
+  printf "\n" >> ElOut;
+  printf "El_Sell," >> ElOut;
+  for {t in TIME}{
+    printf "%f,",El_Sell[t,s] >> ElOut;
+  }
+  printf "\n" >> ElOut;
+  printf "\n" >> ElOut;
+}
+
+printf "Costs[kCHF] \n" >> CoOut;
+printf "SCENARIO" >> CoOut;
+for {s in SCENARIO}{
+  printf "%s,",s >> CoOut;
+}
+printf "\n" >> CoOut;
+printf "FUELCOST," >> CoOut;
+for {s in SCENARIO}{
+  printf "%f,",Fuel_cost[s] >> CoOut;
+}
+printf "\n" >> CoOut;
+printf "ELECCOST," >> CoOut;
+for {s in SCENARIO}{
+  printf "%f,",Elec_cost[s] >> CoOut;
+}
+printf "\n" >> CoOut;
+printf "CAPEX," >> CoOut;
+for {s in SCENARIO}{
+  printf "%f,",an_CAPEX_Tot[s] >> CoOut;
+}
+printf "\n" >> CoOut;
 
 end;
