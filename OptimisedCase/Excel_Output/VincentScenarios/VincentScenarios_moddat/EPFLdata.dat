@@ -20,9 +20,9 @@ set ELEC_UTIL := SOLAR;
 set HP := HPLOW HPHIGH; #Can be used as buildingslist also
 set FUEL_USERS := BOILER SOFC TURBINE ICENGINE;
 set NG_USERS := BOILER SOFC TURBINE;
-set SCENARIO := 1 2 3 4 5 6 7 8 9 10 11 12 13 14; #Electricity
+set SCENARIO := BAU LOW_E HIGH_E LOW_N HIGH_N LOW_D HIGH_D LOW_I HIGH_I HIGH_E_HIGH_ND HIGH_E_LOW_ND LOW_E_HIGH_ND LOW_E_LOW_ND; #Electricity
 set BaseC := c_el_in c_el_out c_ng_in c_ds_in;
-set Rate := 1 2 3 4 5 6 7 8 9 10 11 12 13 14;
+set Rate := el_high el_low ng_high ng_low d_high d_low;
 
 ############################################################################################
 # PARAMETERS
@@ -79,23 +79,14 @@ c_el_out 0.1275
 c_ng_in 0.0662
 c_ds_in 0.1045
 ;
-param elscen := 1;
-param ngscen := 0;
+
 param rate :=
-1 0.5
-2 0.6
-3 0.8
-4 0.92
-5 0.925
-6 0.926
-7 0.935
-8 0.93
-9 1.0
-10 1.02
-11 1.1
-12 1.35
-13 1.5
-14 2
+el_high 1.5
+el_low 0.5
+ng_high 1.5
+ng_low 0.5
+d_high 1.5
+d_low 0.5
 
 ;
 
@@ -219,9 +210,20 @@ ICENGINE 0.50 # dimitri GE jenbacher type 2, everage value
 
 #INVESTMENT COST DATA - USD
 param ex_USD_CHF := 1; #Exchange rate 31 March
-param interest_rate := 
- 0.00235
-
+param: interest_rate := 
+BAU 0.00235
+LOW_E 0.00235
+HIGH_E 0.00235
+LOW_N 0.00235
+HIGH_N 0.00235
+LOW_D 0.00235
+HIGH_D 0.00235
+LOW_I 0.00001
+HIGH_I 0.05
+HIGH_E_HIGH_ND 0.00235
+HIGH_E_LOW_ND 0.00235
+LOW_E_HIGH_ND 0.00235
+LOW_E_LOW_ND 0.00235
 ; #20 year Swiss bond 31 March
 param lifetime := 20;
 

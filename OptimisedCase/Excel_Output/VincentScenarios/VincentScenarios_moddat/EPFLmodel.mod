@@ -46,7 +46,7 @@ param Heat_Demand { h in HP, t in TIME} :=
     else 0;
 # Parameter Investment
 param ex_USD_CHF;
-param interest_rate;
+param interest_rate{s in SCENARIO};
 param lifetime;
 param Year_ind;
 param Ref_ind;
@@ -75,28 +75,34 @@ param solarfarm_area;
 #Cost Sensitivity
 param base_case{b in BaseC};
 param rate{r in Rate};
-param elscen;
-param ngscen;
 
 param c_el_in{s in SCENARIO} :=
-  if elscen = 1
-    then base_case["c_el_in"]*rate[s]
+  if s="LOW_E" || s="LOW_E_HIGH_ND" || s="LOW_E_LOW_ND"
+    then base_case["c_el_in"]*rate["el_low"]
+  else if s="HIGH_E"|| s="HIGH_E_HIGH_ND" || s="HIGH_E_LOW_ND"
+    then base_case["c_el_in"]*rate["el_high"]
   else base_case["c_el_in"];
 
 param c_el_out{s in SCENARIO} :=
-  if elscen = 1
-    then base_case["c_el_out"]*rate[s]
+  if s="LOW_E" || s="LOW_E_HIGH_ND" || s="LOW_E_LOW_ND"
+    then base_case["c_el_out"]*rate["el_low"]
+  else if s="HIGH_E" || s="HIGH_E_HIGH_ND" || s="HIGH_E_LOW_ND"
+    then base_case["c_el_out"]*rate["el_high"]
   else base_case["c_el_out"];
 
 param c_ng_in{s in SCENARIO} :=
-  if ngscen = 1
-    then base_case["c_ng_in"]*rate[s]
+  if s="LOW_N" || s="LOW_E_LOW_ND" || s="HIGH_E_LOW_ND"
+    then base_case["c_ng_in"]*rate["ng_low"]
+  else if s="HIGH_N" || s="LOW_E_HIGH_ND" || s="HIGH_E_HIGH_ND"
+    then base_case["c_ng_in"]*rate["ng_high"]
   else base_case["c_ng_in"];
 
 
 param c_ds_in{s in SCENARIO} :=
-  if ngscen = 1
-    then base_case["c_ds_in"]*rate[s]
+  if s="LOW_D" || s="LOW_E_LOW_ND" || s="HIGH_E_LOW_ND"
+    then base_case["c_ds_in"]*rate["d_low"]
+  else if s="HIGH_D" || s="LOW_E_HIGH_ND" || s="HIGH_E_HIGH_ND"
+    then base_case["c_ds_in"]*rate["d_high"]
   else base_case["c_ds_in"];
 
 
@@ -198,7 +204,7 @@ subject to BM_C_Con{c in COMPONENTS,s in SCENARIO}:
 subject to GR_C_Con{c in COMPONENTS,s in SCENARIO}:
   GR_C[c,s] = BM_C[c,s]*(alpha_1*alpha_2 + 1);    #Total cost (Goss cost)
 subject to an_CAPEX_Con{c in COMPONENTS,s in SCENARIO}:
-  an_CAPEX[c,s] = GR_C[c,s]*((interest_rate*(1+interest_rate)^lifetime)/((1+interest_rate)^lifetime - 1));  #Cout annualisés
+  an_CAPEX[c,s] = GR_C[c,s]*((interest_rate[s]*(1+interest_rate[s])^lifetime)/((1+interest_rate[s])^lifetime - 1));  #Cout annualisés
 subject to an_CAPEXTot_Con{s in SCENARIO}:
   an_CAPEX_Tot[s] = (sum{c in COMPONENTS} an_CAPEX[c,s])/1000;
 
@@ -345,7 +351,7 @@ for {s in SCENARIO}{
 }
 
 printf "Costs[kCHF] \n" >> CoOut;
-printf "SCENARIO," >> CoOut;
+printf "SCENARIO" >> CoOut;
 for {s in SCENARIO}{
   printf "%s,",s >> CoOut;
 }
