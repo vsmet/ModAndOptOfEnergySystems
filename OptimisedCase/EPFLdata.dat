@@ -20,9 +20,9 @@ set ELEC_UTIL := SOLAR;
 set HP := HPLOW HPHIGH; #Can be used as buildingslist also
 set FUEL_USERS := BOILER SOFC TURBINE ICENGINE;
 set NG_USERS := BOILER SOFC TURBINE;
-set SCENARIO := 1 2 3 4 5 6 7 8 9 10 11 12 13 14; #Electricity
+set SCENARIO := 1 2 ; #Electricity
 set BaseC := c_el_in c_el_out c_ng_in c_ds_in;
-set Rate := 1 2 3 4 5 6 7 8 9 10 11 12 13 14;
+set Rate := 1 2;
 
 ############################################################################################
 # PARAMETERS
@@ -82,90 +82,25 @@ c_ds_in 0.1045
 param elscen := 1;
 param ngscen := 0;
 param rate :=
-1 0.5
-2 0.6
-3 0.8
-4 0.92
-5 0.925
-6 0.926
-7 0.935
-8 0.93
-9 1.0
-10 1.02
-11 1.1
-12 1.35
-13 1.5
-14 2
+1 1.0
+2 1.2
+# 1 0.5
+# 2 0.6
+# 3 0.8
+# 4 0.92
+# 5 0.925
+# 6 0.926
+# 7 0.935
+# 8 0.93
+# 9 1.0
+# 10 1.02
+# 11 1.1
+# 12 1.35
+# 13 1.5
+# 14 2
 
 ;
 
-/*
-param change_szenario :=
-Bau 1 1 1 1;
-Low_E 1
-
-
-param: c_el_in := 
-BAU 0.15
-LOW_E 0.075
-HIGH_E 0.225
-LOW_N 0.15
-HIGH_N 0.15
-LOW_D 0.15
-HIGH_D 0.15
-LOW_I 0.15
-HIGH_I 0.15
-HIGH_E_HIGH_ND 0.225
-HIGH_E_LOW_ND 0.225
-LOW_E_HIGH_ND 0.075
-LOW_E_LOW_ND 0.075
-;         	    # http://exploitation-energies.epfl.ch/files/content/sites/exploitation-energies/files/Documents%20pdf/electricite_grilles_tarifs_2016.pdf  #dimitri vincent
-param: c_el_out := 
-BAU 0.1275
-LOW_E 0.064
-HIGH_E 0.191
-LOW_N 0.1275
-HIGH_N 0.1275
-LOW_D 0.1275
-HIGH_D 0.1275
-LOW_I 0.1275
-HIGH_I 0.1275
-HIGH_E_HIGH_ND 0.191
-HIGH_E_LOW_ND 0.191
-LOW_E_HIGH_ND 0.064
-LOW_E_LOW_ND 0.064
-;         	# 0.85* c_el_in # vincent dimitri
-param: c_ng_in := 
-BAU 0.0662
-LOW_E 0.0662
-HIGH_E 0.0662
-LOW_N 0.033
-HIGH_N 0.099
-LOW_D 0.0662
-HIGH_D 0.0662
-LOW_I 0.0662
-HIGH_I 0.0662
-HIGH_E_HIGH_ND 0.099
-HIGH_E_LOW_ND 0.033
-LOW_E_HIGH_ND 0.099
-LOW_E_LOW_ND 0.033
-;         	# ct/kwh http://www.sig-ge.ch/nous-connaitre/support-et-communications/Documents/Tarifs%20et%20r%C3%A9glements/Gaz%20et%20chaleur/tarifs_fourniture_gaz_naturel.pdf #dimitri vincent
-param: c_ds_in := 
-BAU 0.1045
-LOW_E 0.1045
-HIGH_E 0.1045
-LOW_N 0.1045
-HIGH_N 0.1045
-LOW_D 0.052
-HIGH_D 0.157
-LOW_I 0.1045
-HIGH_I 0.1045
-HIGH_E_HIGH_ND 0.157
-HIGH_E_LOW_ND 0.052
-LOW_E_HIGH_ND 0.157
-LOW_E_LOW_ND 0.052
-;
-*/
 
 
 /*******************************************************/
@@ -224,9 +159,24 @@ param interest_rate :=
 
 ; #20 year Swiss bond 31 March
 param lifetime := 20;
-
-param  Ref_ind := 1179;  #Assumed this to be same for all components
-param  Year_ind:= 1462.9; #2009 Index
+param  Ref_ind := 
+BOILER  1179 # JZ Matalb 2004
+HPHIGH 1069.9 #JZ Matlab 1998
+HPLOW 1069.9 #JZ Matlab 1998
+SOFC 1
+TURBINE 1179 # JZ Matlab file
+SOLAR 1
+ICENGINE 397 # JZ Matlab CEPCI 2001
+;  #Assumed this to be same for all components
+param  Year_ind:= 
+BOILER  1895.3# JZ AE exercise 1
+HPHIGH 1895.3 # JZ PDF Download
+HPLOW 1895.3 # JZ PDF Download
+SOFC 1
+TURBINE 1895.3 # JZ 
+SOLAR 1
+ICENGINE 698.920 # JZ
+;
 param  F_BM    := 
 BOILER 1.8 #VINCENT Packaged Boiler cost_SteamBoiler.m, Ref: G.D.Ulrich, A Guide to Chemical Engineering Process Design and Economics, Wiley, NJ, 1984
 HPHIGH 1.6 #VINCENT Medium Sized Heatpump cost_heat_pump_medium_size.m, Ref: Mod?lisation et optimisation environomiques de syst?mes de chauffage urbain aliment?s par pompe ? chaleur, V. Curti,EPFL phd thesis, 1998, chapter 4.
