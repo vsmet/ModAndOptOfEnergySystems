@@ -48,8 +48,8 @@ param Heat_Demand { h in HP, t in TIME} :=
 param ex_USD_CHF;
 param interest_rate{s in SCENARIO};
 param lifetime;
-param Year_ind{c in COMPONENTS};
-param Ref_ind{c in COMPONENTS};
+param Year_ind;
+param Ref_ind;
 param F_P{c in COMPONENTS};
 param F_T{c in COMPONENTS};
 param F_BM {c in COMPONENTS};
@@ -59,7 +59,7 @@ param C_min{c in COMPONENTS};
 param C_max{c in COMPONENTS};
 param PC_min {c in COMPONENTS};
 param PC_max {c in COMPONENTS};  
-param f_act{c in COMPONENTS} := Year_ind[c]/Ref_ind[c];
+param f_act := Year_ind/Ref_ind;
 param Component_temp {c in COMPONENTS, t in TIME};
 # COP and FUEL_using efficiencies
 param lake_temp;
@@ -134,7 +134,7 @@ var Elec_Demand{t in TIME,s in SCENARIO} >=0;
 #Emissions
 var Emissions{e in emissioncase,s in SCENARIO};
 var Total_Emission;
-var Oper_Cost;
+var Total_Cost;
 
 ############################################################################################
 # CONSTRAINTS
@@ -190,7 +190,7 @@ subject to Electricity_balance_Constr{t in TIME,s in SCENARIO}:
 
 #Investment
 subject to PC_Con{c in COMPONENTS,s in SCENARIO}:
-  PC[c,s] = f_act[c]*((PC_max[c] - PC_min[c])*(Capacity[c,s]/(C_max[c] - C_min[c])) + Component_Use[c,s]*PC_min[c]); #USD   # Purchase Cost
+  PC[c,s] = f_act*((PC_max[c] - PC_min[c])*(Capacity[c,s]/(C_max[c] - C_min[c])) + Component_Use[c,s]*PC_min[c]); #USD   # Purchase Cost
 # We use a linear interpolation for  the purchase cost between min and max capacity
 subject to BM_C_Con{c in COMPONENTS,s in SCENARIO}:
   BM_C[c,s] = F_P[c]*F_T[c]*F_BM[c]*PC[c,s];      #Baremoddule Cost  
@@ -219,7 +219,7 @@ subject to totalEm_Con:
 
 #Cost
 subject to totalCost_Con:
- Oper_Cost=sum{t in TIME} ((sum{u in NG_USERS}(c_ng_in['BAU']*FUEL_Demand[u,t,'BAU'])+ c_ds_in['BAU']*FUEL_Demand["ICENGINE",t,'BAU'] + c_el_in['BAU']*El_Buy[t,'BAU'] - c_el_out['BAU']*El_Sell[t,'BAU'])*TIMEsteps[t]); 
+ Total_Cost=sum{t in TIME} ((sum{u in NG_USERS}(c_ng_in['BAU']*FUEL_Demand[u,t,'BAU'])+ c_ds_in['BAU']*FUEL_Demand["ICENGINE",t,'BAU'] + c_el_in['BAU']*El_Buy[t,'BAU'] - c_el_out['BAU']*El_Sell[t,'BAU'])*TIMEsteps[t])+ an_CAPEX_Tot['BAU']; 
 
 #Initialise File
 param CapOut, symbolic := "Capacity.csv";
@@ -239,7 +239,7 @@ solve;
 ############################################################################################
 
 minimize COST:
-Oper_Cost+an_CAPEX_Tot['BAU'];
+Total_Cost;
 solve;
 
 
@@ -274,6 +274,6 @@ for {c in COMPONENTS} {
 printf "end;\n" >> CapOut;
 
 display Total_Emission;
-display an_CAPEX_Tot['BAU'];
-display Oper_Cost;
+display Total_Cost;
+
 end;

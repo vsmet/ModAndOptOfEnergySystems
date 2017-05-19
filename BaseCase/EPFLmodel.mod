@@ -169,7 +169,7 @@ subject to SizeLT{s in SCENARIO}:
 
 #88% constraint
 subject to EightyeightPerc_Constr{s in SCENARIO}:
-  sum{h in HP, t in TIME}(ComponentSize_t[h,t,s]*TIMEsteps[t]) >= 0.88*sum{b in HP,t in TIME}(Heat_Demand[b,t]*TIMEsteps[t]); #SYSTEM REQUIREMENTS
+  sum{h in HP, t in TIME}(ComponentSize_t[h,t,s]*TIMEsteps[t]) == 0.73*sum{b in HP,t in TIME}(Heat_Demand[b,t]*TIMEsteps[t]); #SYSTEM REQUIREMENTS
 #Fuel Constraint
 subject to FUEL_heat_balance_constr{u in FUEL_USERS, t in TIME,s in SCENARIO}: 
  ComponentSize_t[u,t,s] = FUEL_th_eff[u]*FUEL_Demand[u,t,s]; #dim #kW
@@ -230,6 +230,7 @@ param CapOut, symbolic := "Capacity.csv";
 # OBJECTIVE FUNCTION
 
 /*
+
 minimize Cost:
 Total_Emission;
 solve;
@@ -241,6 +242,9 @@ solve;
 minimize COST:
 Oper_Cost+an_CAPEX_Tot['BAU'];
 solve;
+
+
+
 
 
 
@@ -276,4 +280,5 @@ printf "end;\n" >> CapOut;
 display Total_Emission;
 display an_CAPEX_Tot['BAU'];
 display Oper_Cost;
+
 end;

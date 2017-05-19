@@ -137,7 +137,7 @@ param vol_cooling_water := 190.800; #en m3/h, Sylvain
 /*******************************************************/
 param: FUEL_el_eff :=
 BOILER 0
-SOFC 0.60 # Fuel cell class, Lecture 2, Slide 34 (Jannik)
+SOFC 0.64 # Fuel cell class, Lecture 2, Slide 34 (Jannik)
 TURBINE 0.36 #dimitri /EEGJulyrevisedFINAL1
 ICENGINE 0.38 # dimitri GE jenbacher type 2, everage value
 ;
@@ -154,11 +154,11 @@ ICENGINE 0.50 # dimitri GE jenbacher type 2, everage value
 
 #INVESTMENT COST DATA - USD
 param ex_USD_CHF := 1; #Exchange rate 31 March
-param interest_rate := 
- 0.00235
+param interest_rate := 0.00235
 
 ; #20 year Swiss bond 31 March
 param lifetime := 20;
+<<<<<<< HEAD
 param  Ref_ind := 
 BOILER  1179 # JZ Matalb 2004
 HPHIGH 1069.9 #JZ Matlab 1998
@@ -168,6 +168,9 @@ TURBINE 1179 # JZ Matlab file
 SOLAR 1
 ICENGINE 397 # JZ Matlab CEPCI 2001
 ;  #Assumed this to be same for all components
+=======
+
+>>>>>>> origin/master
 param  Year_ind:= 
 BOILER  1895.3# JZ AE exercise 1
 HPHIGH 1895.3 # JZ PDF Download
@@ -177,6 +180,23 @@ TURBINE 1895.3 # JZ
 SOLAR 1
 ICENGINE 698.920 # JZ
 ;
+<<<<<<< HEAD
+=======
+
+#585.7 #2009 JZ Exercises AE
+#1462.9; #2009 Index
+
+param  Ref_ind := 
+BOILER  1179 # JZ Matalb 2004
+HPHIGH 1069.9 #JZ Matlab 1998
+HPLOW 1069.9 #JZ Matlab 1998
+SOFC 1
+TURBINE 1179 # JZ Matlab file
+SOLAR 1
+ICENGINE 397 # JZ Matlab CEPCI 2001
+;
+
+>>>>>>> origin/master
 param  F_BM    := 
 BOILER 1.8 #VINCENT Packaged Boiler cost_SteamBoiler.m, Ref: G.D.Ulrich, A Guide to Chemical Engineering Process Design and Economics, Wiley, NJ, 1984
 HPHIGH 1.6 #VINCENT Medium Sized Heatpump cost_heat_pump_medium_size.m, Ref: Mod?lisation et optimisation environomiques de syst?mes de chauffage urbain aliment?s par pompe ? chaleur, V. Curti,EPFL phd thesis, 1998, chapter 4.
