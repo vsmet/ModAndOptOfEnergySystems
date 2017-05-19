@@ -14,20 +14,27 @@
 # SETS
 ############################################################################################
 set TIME := 1 2 3 4 5 6 7 8 9 10 11 12 ;
-set COMPONENTS := TURBINE1 HPHIGH HPLOW SOFC TURBINE2 SOLAR ICENGINE;
-set HEAT_UTIL := TURBINE1 HPHIGH HPLOW SOFC TURBINE2 ICENGINE;
+set COMPONENTS := BOILER HPHIGH HPLOW SOFC TURBINE SOLAR ICENGINE;
+set HEAT_UTIL := BOILER HPHIGH HPLOW SOFC TURBINE ICENGINE;
 set ELEC_UTIL := SOLAR;
 set HP := HPLOW HPHIGH; #Can be used as buildingslist also
-set FUEL_USERS := TURBINE1 SOFC TURBINE2 ICENGINE;
-set NG_USERS := TURBINE1 SOFC TURBINE2;
-set SCENARIO := 1 2 3 4 5 6 7 8 9 10 11 12 13 14; #Electricity
+set FUEL_USERS := BOILER SOFC TURBINE ICENGINE;
+set NG_USERS := BOILER SOFC TURBINE;
+set SCENARIO := BAU LOW_E HIGH_E LOW_N HIGH_N LOW_D HIGH_D LOW_I HIGH_I HIGH_E_HIGH_ND HIGH_E_LOW_ND LOW_E_HIGH_ND LOW_E_LOW_ND; #Electricity
 set BaseC := c_el_in c_el_out c_ng_in c_ds_in;
-set Rate := 1 2 3 4 5 6 7 8 9 10 11 12 13 14;
-set Base_case:=1 2;
+set Rate := el_high el_low ng_high ng_low d_high d_low;
+set emissioncase := Gas Diesel El_out El_in;
 
 ############################################################################################
 # PARAMETERS
 ############################################################################################
+
+param: emissionfactors :=
+Gas 233 #CO2 per kWH JZ http://www.engineeringtoolbox.com/co2-emission-fuels-d_1085.html	
+Diesel 2680 #CO" per KWH JZ https://people.exeter.ac.uk/TWDavies/energy_conversion/Calculation%20of%20CO2%20emissions%20from%20fuels.htm		 	
+El_in 143  #CO2 per kWH  JZ https://www.co2-monitor.ch/de/information/glossar/
+El_out -143
+;
 
 param: TIMEsteps := 	
 1 55					# hours per year #Vincent
@@ -80,23 +87,14 @@ c_el_out 0.1275
 c_ng_in 0.0662
 c_ds_in 0.1045
 ;
-param elscen := 1;
-param ngscen := 0;
+
 param rate :=
-1 1
-2 1
-3 1
-4 1
-5 1
-6 1
-7 1
-8 1
-9 1
-10 1
-11 1
-12 1
-13 1
-14 1
+el_high 1.3
+el_low 1
+ng_high 1
+ng_low 1
+d_high 1
+d_low 1
 
 ;
 
@@ -202,15 +200,15 @@ param vol_cooling_water := 190.800; #en m3/h, Sylvain
 # FUEL USERS unit parameters
 /*******************************************************/
 param: FUEL_el_eff :=
-TURBINE1 0.36
-SOFC 0.64 # Fuel cell class, Lecture 2, Slide 34 (Jannik)
-TURBINE2 0.36 #dimitri /EEGJulyrevisedFINAL1
+BOILER 0
+SOFC  0.64# Fuel cell class, Lecture 2, Slide 34 (Jannik)
+TURBINE 0.36 #dimitri /EEGJulyrevisedFINAL1
 ICENGINE 0.38 # dimitri GE jenbacher type 2, everage value
 ;
 param: FUEL_th_eff :=
-TURBINE1 0.48
+BOILER 0.98
 SOFC 0.26 # Fuel cell class, Lecture 2, Slide 34 (Jannik)
-TURBINE2 0.48 # dimitri /EEGJulyrevisedFINAL1
+TURBINE 0.48 # dimitri /EEGJulyrevisedFINAL1
 ICENGINE 0.50 # dimitri GE jenbacher type 2, everage value
 ;
 
@@ -220,17 +218,31 @@ ICENGINE 0.50 # dimitri GE jenbacher type 2, everage value
 
 #INVESTMENT COST DATA - USD
 param ex_USD_CHF := 1; #Exchange rate 31 March
-param interest_rate := 0.00235
-
+param: interest_rate := 
+BAU 0.00235
+LOW_E 0.00235
+HIGH_E 0.00235
+LOW_N 0.00235
+HIGH_N 0.00235
+LOW_D 0.00235
+HIGH_D 0.00235
+LOW_I 0.00001
+HIGH_I 0.05
+HIGH_E_HIGH_ND 0.00235
+HIGH_E_LOW_ND 0.00235
+LOW_E_HIGH_ND 0.00235
+LOW_E_LOW_ND 0.00235
 ; #20 year Swiss bond 31 March
 param lifetime := 20;
 
+
+
 param  Year_ind:= 
-TURBINE1  1895.3# JZ AE exercise 1
+BOILER  1895.3# JZ AE exercise 1
 HPHIGH 1895.3 # JZ PDF Download
 HPLOW 1895.3 # JZ PDF Download
 SOFC 1
-TURBINE2 1895.3 # JZ 
+TURBINE 1895.3 # JZ 
 SOLAR 1
 ICENGINE 698.920 # JZ
 ;
@@ -239,81 +251,86 @@ ICENGINE 698.920 # JZ
 #1462.9; #2009 Index
 
 param  Ref_ind := 
-TURBINE1  1179 # JZ Matalb 2004
+BOILER  1179 # JZ Matalb 2004
 HPHIGH 1069.9 #JZ Matlab 1998
 HPLOW 1069.9 #JZ Matlab 1998
 SOFC 1
-TURBINE2 1179 # JZ Matlab file
+TURBINE 1179 # JZ Matlab file
 SOLAR 1
 ICENGINE 397 # JZ Matlab CEPCI 2001
 ;
 
+
 param  F_BM    := 
-TURBINE1 6 #VINCENT Packaged Boiler cost_SteamBoiler.m, Ref: G.D.Ulrich, A Guide to Chemical Engineering Process Design and Economics, Wiley, NJ, 1984
+BOILER 1.8 #VINCENT Packaged Boiler cost_SteamBoiler.m, Ref: G.D.Ulrich, A Guide to Chemical Engineering Process Design and Economics, Wiley, NJ, 1984
 HPHIGH 1.6 #VINCENT Medium Sized Heatpump cost_heat_pump_medium_size.m, Ref: Mod?lisation et optimisation environomiques de syst?mes de chauffage urbain aliment?s par pompe ? chaleur, V. Curti,EPFL phd thesis, 1998, chapter 4.
 HPLOW 1.6 # VINCENT See HPHIGH
 SOFC 1 # VINCENT estimate bloom (conservative) https://www.greentechmedia.com/articles/read/Fuel-Cells-2016-Within-Striking-Distance-of-Profitability
-TURBINE2 6 #Dimitri cost_GasTurbines.m, G.D.Ulrich, A Guide to Chemical Engineering Process Design and Economics, Wiley, NJ, 1984R. Turton, Analysis, Synthesis and Design of chemical processes, Prentice Hall, NJ, 1998 stainless steel
+TURBINE 6 #Dimitri cost_GasTurbines.m, G.D.Ulrich, A Guide to Chemical Engineering Process Design and Economics, Wiley, NJ, 1984R. Turton, Analysis, Synthesis and Design of chemical processes, Prentice Hall, NJ, 1998 stainless steel
 SOLAR 1
 ICENGINE 1 #VINCENT Cost_EngineIC.m, Ref: R. Turton, Analysis, Synthesis and Design of chemical  processes, Prentice Hall, NJ, 2012
 ;
 
 param  F_T     := 
-TURBINE1 1 #VINCENT See F_BM
+BOILER 1.15 #VINCENT See F_BM
 HPHIGH 1 #VINCENT See F_BM
 HPLOW 1 #VINCENT See F_BM
 SOFC 1 #okay, matlab file
-TURBINE2 1 #dimitri see F_BM
+TURBINE 1 #dimitri see F_BM
 SOLAR 1
 ICENGINE 1 #VINCENT See F_BM
 ;
 
 
 param  F_P     := 
-TURBINE1 1 #VINCENT See F_BM
+BOILER 1.13 #VINCENT See F_BM
 HPHIGH 1 #VINCENT See F_BM
 HPLOW 1 #VINCENT See F_BM
 SOFC 1 #okay, matlab file
-TURBINE2 1 #dimitri see F_BM
+TURBINE 1 #dimitri see F_BM
 SOLAR 1
 ICENGINE 1 #VINCENT See F_BM
 ;
 param  C_min   := 
-TURBINE1 100 #VINCENT See F_BM
+BOILER 0 #VINCENT See F_BM
 HPHIGH 1500 #VINCENT See F_BM
 HPLOW 1500 #VINCENT See F_BM
-SOFC 100 #This is the heatCapacity -> Electrical capacity is calculated in the modFile
-TURBINE2 1000 #dimitri See F_BM
+SOFC 0 #This is the heatCapacity -> Electrical capacity is calculated in the modFile
+TURBINE 100 #dimitri See F_BM
 SOLAR 0
-ICENGINE 100 #VINCENT See F_BM
+ICENGINE 0 #VINCENT See F_BM
 ;
 param  C_max   := 
-TURBINE1 15000 
+BOILER 0.1 
 HPHIGH 12000 
 HPLOW 13000	
-SOFC 10000 
-TURBINE2 15000 #dimitri , matlab
-SOLAR 1
-ICENGINE 15000 #VINCENT See F_BM
+SOFC 0.1
+TURBINE 15000 #dimitri , matlab
+SOLAR 0.1
+ICENGINE 0.1 #VINCENT See F_BM
 ;
+
 param  alpha_2 := 0.35; #LectureNotes Advanced Energetics p5 CostOfEq
 param  alpha_1 := 0.18; #LectureNotes Advanced Energetics p5 CostOfEq
+
+
+
 param PC_min :=
-TURBINE1 36571.0512241442  #VINCENT See F_BM
+BOILER 31988.9510969140  #VINCENT See F_BM
 HPHIGH 178544.428736573 #VINCENT See F_BM
 HPLOW 178544.428736573 #VINCENT See F_BM
 SOFC 1600000.00000000 #VINCENT See F_BM  
-TURBINE2  36571.0512241442 
+TURBINE  36571.0512241442 
 SOLAR 0
 ICENGINE 21950.4014925240 #VINCENT See F_BM
 ;
 
 param PC_max := 
-TURBINE1  781923.780991901#VINCENT See F_BM
+BOILER  344096.081034843#VINCENT See F_BM
 HPHIGH 1160185.12077869#VINCENT See F_BM
 HPLOW 1246847.06417074 #VINCENT See F_BM
 SOFC 160000000 #VINCENT See F_BM
-TURBINE2 781923.780991901
+TURBINE 781923.780991901
 SOLAR 1540000 #Approx Cost using 4CHF/Watt and 110 Watt/m^2 as reference values
 ICENGINE 1203918.65833397 #VINCENT See F_BM
 ;

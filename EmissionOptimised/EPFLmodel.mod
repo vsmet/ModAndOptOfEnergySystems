@@ -134,7 +134,7 @@ var Elec_Demand{t in TIME,s in SCENARIO} >=0;
 #Emissions
 var Emissions{e in emissioncase,s in SCENARIO};
 var Total_Emission;
-var Total_Cost;
+var Oper_Cost;
 
 ############################################################################################
 # CONSTRAINTS
@@ -219,7 +219,7 @@ subject to totalEm_Con:
 
 #Cost
 subject to totalCost_Con:
- Total_Cost=sum{t in TIME} ((sum{u in NG_USERS}(c_ng_in['BAU']*FUEL_Demand[u,t,'BAU'])+ c_ds_in['BAU']*FUEL_Demand["ICENGINE",t,'BAU'] + c_el_in['BAU']*El_Buy[t,'BAU'] - c_el_out['BAU']*El_Sell[t,'BAU'])*TIMEsteps[t])+ an_CAPEX_Tot['BAU']; 
+ Oper_Cost=sum{t in TIME} ((sum{u in NG_USERS}(c_ng_in['BAU']*FUEL_Demand[u,t,'BAU'])+ c_ds_in['BAU']*FUEL_Demand["ICENGINE",t,'BAU'] + c_el_in['BAU']*El_Buy[t,'BAU'] - c_el_out['BAU']*El_Sell[t,'BAU'])*TIMEsteps[t]); 
 
 #Initialise File
 param CapOut, symbolic := "Capacity.csv";
@@ -239,7 +239,7 @@ solve;
 ############################################################################################
 
 minimize COST:
-Total_Cost;
+Oper_Cost+an_CAPEX_Tot['BAU'];
 solve;
 
 
@@ -274,6 +274,6 @@ for {c in COMPONENTS} {
 printf "end;\n" >> CapOut;
 
 display Total_Emission;
-display Total_Cost;
-
+display an_CAPEX_Tot['BAU'];
+display Oper_Cost;
 end;
