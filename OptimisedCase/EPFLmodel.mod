@@ -354,4 +354,6 @@ for {s in SCENARIO}{
 }
 printf "\n" >> CoOut;
 
+display AnnualCompEnergy;
+display AnnualCompEnergyEL;
 end;

@@ -20,9 +20,9 @@ set ELEC_UTIL := SOLAR;
 set HP := HPLOW HPHIGH; #Can be used as buildingslist also
 set FUEL_USERS := BOILER SOFC TURBINE ICENGINE;
 set NG_USERS := BOILER SOFC TURBINE;
-set SCENARIO := 1 2 ; #Electricity
+set SCENARIO := 1  ; #Electricity
 set BaseC := c_el_in c_el_out c_ng_in c_ds_in;
-set Rate := 1 2;
+set Rate := 1 ;
 
 ############################################################################################
 # PARAMETERS
@@ -83,7 +83,7 @@ param elscen := 1;
 param ngscen := 0;
 param rate :=
 1 1.0
-2 1.2
+#2 1.2
 # 1 0.5
 # 2 0.6
 # 3 0.8
@@ -154,11 +154,9 @@ ICENGINE 0.50 # dimitri GE jenbacher type 2, everage value
 
 #INVESTMENT COST DATA - USD
 param ex_USD_CHF := 1; #Exchange rate 31 March
-param interest_rate := 0.00235
-
-; #20 year Swiss bond 31 March
+param interest_rate := 0.00235;#20 year Swiss bond 31 March
 param lifetime := 20;
-<<<<<<< HEAD
+
 param  Ref_ind := 
 BOILER  1179 # JZ Matalb 2004
 HPHIGH 1069.9 #JZ Matlab 1998
@@ -168,9 +166,9 @@ TURBINE 1179 # JZ Matlab file
 SOLAR 1
 ICENGINE 397 # JZ Matlab CEPCI 2001
 ;  #Assumed this to be same for all components
-=======
 
->>>>>>> origin/master
+
+
 param  Year_ind:= 
 BOILER  1895.3# JZ AE exercise 1
 HPHIGH 1895.3 # JZ PDF Download
@@ -180,23 +178,11 @@ TURBINE 1895.3 # JZ
 SOLAR 1
 ICENGINE 698.920 # JZ
 ;
-<<<<<<< HEAD
-=======
+
 
 #585.7 #2009 JZ Exercises AE
 #1462.9; #2009 Index
 
-param  Ref_ind := 
-BOILER  1179 # JZ Matalb 2004
-HPHIGH 1069.9 #JZ Matlab 1998
-HPLOW 1069.9 #JZ Matlab 1998
-SOFC 1
-TURBINE 1179 # JZ Matlab file
-SOLAR 1
-ICENGINE 397 # JZ Matlab CEPCI 2001
-;
-
->>>>>>> origin/master
 param  F_BM    := 
 BOILER 1.8 #VINCENT Packaged Boiler cost_SteamBoiler.m, Ref: G.D.Ulrich, A Guide to Chemical Engineering Process Design and Economics, Wiley, NJ, 1984
 HPHIGH 1.6 #VINCENT Medium Sized Heatpump cost_heat_pump_medium_size.m, Ref: Mod?lisation et optimisation environomiques de syst?mes de chauffage urbain aliment?s par pompe ? chaleur, V. Curti,EPFL phd thesis, 1998, chapter 4.
@@ -268,3 +254,4 @@ ICENGINE 1203918.65833397 #VINCENT See F_BM
 ;
 
 end;
+
