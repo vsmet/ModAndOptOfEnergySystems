@@ -17,7 +17,7 @@ set FUEL_USERS;
 set NG_USERS;
 set SCENARIO;
 set BaseC;
-set Rate;
+
 
 
 ############################################################################################
@@ -74,7 +74,7 @@ param solarfarm_area;
 
 #Cost Sensitivity
 param base_case{b in BaseC};
-param rate{r in Rate};
+param rate{r in SCENARIO};
 param elscen;
 param ngscen;
 
@@ -232,8 +232,6 @@ param ElEnOut, symbolic := "ElecEnergy.csv";
 minimize COST:
 sum{s in SCENARIO}( sum{t in TIME} ((sum{u in NG_USERS}(c_ng_in[s]*FUEL_Demand[u,t,s])+ c_ds_in[s]*FUEL_Demand["ICENGINE",t,s] + c_el_in[s]*El_Buy[t,s] - c_el_out[s]*El_Sell[t,s])*TIMEsteps[t])+ 1000*an_CAPEX_Tot[s]); #
 solve;
-
-
 
 
 

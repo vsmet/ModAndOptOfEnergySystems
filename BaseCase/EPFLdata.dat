@@ -23,6 +23,7 @@ set NG_USERS := BOILER SOFC TURBINE;
 set BaseC := c_el_in c_el_out c_ng_in c_ds_in;
 set Rate := el_high el_low ng_high ng_low d_high d_low;
 set emissioncase := Gas Diesel El_out El_in;
+set SCENARIO := BAU LOW_E HIGH_E LOW_ND HIGH_ND LOW_E_HIGH_ND LOW_E_LOW_ND HIGH_E_HIGH_ND HIGH_E_LOW_ND;
 
 ############################################################################################
 # PARAMETERS
@@ -146,7 +147,7 @@ ICENGINE 0.50 # dimitri GE jenbacher type 2, everage value
 
 #INVESTMENT COST DATA - USD
 param ex_USD_CHF := 1; #Exchange rate 31 March
-param: interest_rate := 0.00235;
+param interest_rate := 0.00235;
 param lifetime := 20;
 
 
