@@ -196,7 +196,7 @@ subject to PC_Con{c in COMPONENTS,s in SCENARIO}:
 subject to BM_C_Con{c in COMPONENTS,s in SCENARIO}:
   BM_C[c,s] = F_P[c]*F_T[c]*F_BM[c]*PC[c,s];      #Baremoddule Cost  
 subject to GR_C_Con{c in COMPONENTS,s in SCENARIO}:
-  GR_C[c,s] = BM_C[c,s]*(alpha_1*alpha_2 + 1);    #Total cost (Goss cost)
+  GR_C[c,s] = BM_C[c,s]*(alpha_1 + 1 + alpha_2);    #Total cost (Goss cost)
 subject to an_CAPEX_Con{c in COMPONENTS,s in SCENARIO}:
   an_CAPEX[c,s] = GR_C[c,s]*((interest_rate*(1+interest_rate)^lifetime)/((1+interest_rate)^lifetime - 1));  #Cout annualisés
 subject to an_CAPEXTot_Con{s in SCENARIO}:
