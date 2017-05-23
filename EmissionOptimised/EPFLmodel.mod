@@ -261,7 +261,7 @@ solve;
 ############################################################################################
 
 minimize COST:
-Oper_Cost+an_CAPEX_Tot['BAU'];
+Total_Emission;
 solve;
 
 

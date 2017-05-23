@@ -89,7 +89,7 @@ c_ds_in 0.1045
 ;
 
 param rate :=
-el_high 1.3
+el_high 1
 el_low 1
 ng_high 1
 ng_low 1
@@ -98,73 +98,6 @@ d_low 1
 
 ;
 
-/*
-param change_szenario :=
-Bau 1 1 1 1;
-Low_E 1
-
-
-param: c_el_in := 
-BAU 0.15
-LOW_E 0.075
-HIGH_E 0.225
-LOW_N 0.15
-HIGH_N 0.15
-LOW_D 0.15
-HIGH_D 0.15
-LOW_I 0.15
-HIGH_I 0.15
-HIGH_E_HIGH_ND 0.225
-HIGH_E_LOW_ND 0.225
-LOW_E_HIGH_ND 0.075
-LOW_E_LOW_ND 0.075
-;         	    # http://exploitation-energies.epfl.ch/files/content/sites/exploitation-energies/files/Documents%20pdf/electricite_grilles_tarifs_2016.pdf  #dimitri vincent
-param: c_el_out := 
-BAU 0.1275
-LOW_E 0.064
-HIGH_E 0.191
-LOW_N 0.1275
-HIGH_N 0.1275
-LOW_D 0.1275
-HIGH_D 0.1275
-LOW_I 0.1275
-HIGH_I 0.1275
-HIGH_E_HIGH_ND 0.191
-HIGH_E_LOW_ND 0.191
-LOW_E_HIGH_ND 0.064
-LOW_E_LOW_ND 0.064
-;         	# 0.85* c_el_in # vincent dimitri
-param: c_ng_in := 
-BAU 0.0662
-LOW_E 0.0662
-HIGH_E 0.0662
-LOW_N 0.033
-HIGH_N 0.099
-LOW_D 0.0662
-HIGH_D 0.0662
-LOW_I 0.0662
-HIGH_I 0.0662
-HIGH_E_HIGH_ND 0.099
-HIGH_E_LOW_ND 0.033
-LOW_E_HIGH_ND 0.099
-LOW_E_LOW_ND 0.033
-;         	# ct/kwh http://www.sig-ge.ch/nous-connaitre/support-et-communications/Documents/Tarifs%20et%20r%C3%A9glements/Gaz%20et%20chaleur/tarifs_fourniture_gaz_naturel.pdf #dimitri vincent
-param: c_ds_in := 
-BAU 0.1045
-LOW_E 0.1045
-HIGH_E 0.1045
-LOW_N 0.1045
-HIGH_N 0.1045
-LOW_D 0.052
-HIGH_D 0.157
-LOW_I 0.1045
-HIGH_I 0.1045
-HIGH_E_HIGH_ND 0.157
-HIGH_E_LOW_ND 0.052
-LOW_E_HIGH_ND 0.157
-LOW_E_LOW_ND 0.052
-;
-*/
 
 
 /*******************************************************/
