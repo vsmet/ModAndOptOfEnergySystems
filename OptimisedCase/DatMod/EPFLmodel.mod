@@ -17,7 +17,7 @@ set FUEL_USERS;
 set NG_USERS;
 set SCENARIO;
 set BaseC;
-
+set emissioncase;
 
 
 ############################################################################################
@@ -63,7 +63,7 @@ param f_act{c in COMPONENTS} := Year_ind[c]/Ref_ind[c];
 param Component_temp {c in COMPONENTS, t in TIME};
 # COP and FUEL_using efficiencies
 param lake_temp;
-param carnot_eff := 0.5;
+param carnot_eff := 0.67375;
 param COP_th{h in HP, t in TIME} := (HPTemp[h,t]+273)/(HPTemp[h,t]-lake_temp);
 param COP{h in HP, t in TIME} := carnot_eff * COP_th [h,t];
 param FUEL_el_eff{u in FUEL_USERS}; 
@@ -77,6 +77,8 @@ param base_case{b in BaseC};
 param rate{r in SCENARIO};
 param elscen;
 param ngscen;
+
+param emissionfactors{e in emissioncase};
 
 param c_el_in{s in SCENARIO} :=
   if elscen = 1
@@ -129,7 +131,8 @@ var Elec_Demand{t in TIME,s in SCENARIO} >=0;
 var Elec_cost{s in SCENARIO};
 var Fuel_cost{s in SCENARIO} >= 0;
 
-
+var Emissions{e in emissioncase,s in SCENARIO};
+var Total_Emission{s in SCENARIO};
 
 ############################################################################################
 # CONSTRAINTS
@@ -214,6 +217,21 @@ subject to Power_EnergyELEC{c in COMPONENTS, s in SCENARIO, t in TIME}:
   El_prod[c,t,s]*TIMEsteps[t] = El_prod_e[c,t,s];
 subject to Energy_CompELEC{c in COMPONENTS, s in SCENARIO}: #GWh
   (sum{t in TIME}(El_prod_e[c,t,s]))/(10^6) = AnnualCompEnergyEL[c,s];
+
+subject to Em_Gas_Con{s in SCENARIO}:
+  Emissions["Gas",s]=sum{t in TIME, n in NG_USERS}(FUEL_Demand[n,t,s]*emissionfactors["Gas"]);
+
+subject to Em_Diesel_Con{s in SCENARIO}:
+  Emissions["Diesel",s]=sum{t in TIME}(FUEL_Demand["ICENGINE",t,s]*emissionfactors["Diesel"]);
+
+subject to EL_In_Con{s in SCENARIO}:
+  Emissions["El_in",s]=sum{t in TIME}(El_Buy[t,s]*emissionfactors["El_in"]);
+
+subject to EL_Out_Con{s in SCENARIO}:
+  Emissions["El_out",s]=sum{t in TIME}(El_Sell[t,s]*emissionfactors["El_out"]);
+
+subject to totalEm_Con{s in SCENARIO}:
+  Total_Emission[s]=sum{e in emissioncase} (Emissions[e,s]);
 
 #Initialise File
 param CapOut, symbolic := "HeatCapacity.csv";
@@ -341,6 +359,7 @@ for {s in SCENARIO}{
   printf "%f,",Fuel_cost[s] >> CoOut;
 }
 printf "\n" >> CoOut;
+
 printf "ELECCOST," >> CoOut;
 for {s in SCENARIO}{
   printf "%f,",Elec_cost[s] >> CoOut;
@@ -349,6 +368,11 @@ printf "\n" >> CoOut;
 printf "CAPEX," >> CoOut;
 for {s in SCENARIO}{
   printf "%f,",an_CAPEX_Tot[s] >> CoOut;
+}
+printf "\n" >> CoOut;
+printf "Emissions," >> CoOut;
+for {s in SCENARIO}{
+  printf "%f,",Total_Emission[s] >> CoOut;
 }
 printf "\n" >> CoOut;
 

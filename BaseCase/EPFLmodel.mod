@@ -63,7 +63,7 @@ param f_act{c in COMPONENTS} := Year_ind[c]/Ref_ind[c];
 param Component_temp {c in COMPONENTS, t in TIME};
 # COP and FUEL_using efficiencies
 param lake_temp;
-param carnot_eff := 0.5;
+param carnot_eff := 0.67375;
 param COP_th{h in HP, t in TIME} := (HPTemp[h,t]+273)/(HPTemp[h,t]-lake_temp);
 param COP{h in HP, t in TIME} := carnot_eff * COP_th [h,t];
 param FUEL_el_eff{u in FUEL_USERS}; 
@@ -389,6 +389,9 @@ printf "CAPEX," >> CoOut;
 for {s in SCENARIO}{
   printf "%f,",an_CAPEX_Tot[s] >> CoOut;
 }
+printf "\n" >> CoOut;
+printf "TotEmissions," >> CoOut;
+printf "%f,",Total_Emission>> CoOut;
 printf "\n" >> CoOut;
 
 display Total_Emission;
