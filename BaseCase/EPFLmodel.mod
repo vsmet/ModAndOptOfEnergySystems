@@ -85,14 +85,14 @@ param c_el_in{s in SCENARIO} :=
     then base_case["c_el_in"]*rate["el_low"]
   else if s="HIGH_E"|| s="HIGH_E_HIGH_ND" || s="HIGH_E_LOW_ND"
     then base_case["c_el_in"]*rate["el_high"]
-  else base_case["c_el_in"];
+  else base_case["c_el_in"]*1.25;
 
 param c_el_out{s in SCENARIO} :=
   if s="LOW_E" || s="LOW_E_HIGH_ND" || s="LOW_E_LOW_ND"
     then base_case["c_el_out"]*rate["el_low"]
   else if s="HIGH_E" || s="HIGH_E_HIGH_ND" || s="HIGH_E_LOW_ND"
     then base_case["c_el_out"]*rate["el_high"]
-  else base_case["c_el_out"];
+  else base_case["c_el_out"]*1.25;
 
 param c_ng_in{s in SCENARIO} :=
   if s="LOW_N" || s="LOW_E_LOW_ND" || s="HIGH_E_LOW_ND"

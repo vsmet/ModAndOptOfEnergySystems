@@ -233,6 +233,9 @@ subject to EL_Out_Con{s in SCENARIO}:
 subject to totalEm_Con{s in SCENARIO}:
   Total_Emission[s]=sum{e in emissioncase} (Emissions[e,s]);
 
+# subject to TotalCost:
+#   sum{s in SCENARIO}( sum{t in TIME} ((sum{u in NG_USERS}(c_ng_in[s]*FUEL_Demand[u,t,s])+ c_ds_in[s]*FUEL_Demand["ICENGINE",t,s] + c_el_in[s]*El_Buy[t,s] - c_el_out[s]*El_Sell[t,s])*TIMEsteps[t])+ 1000*an_CAPEX_Tot[s]) <=7700*1000;
+
 #Initialise File
 param CapOut, symbolic := "HeatCapacity.csv";
 param OpOut, symbolic := "HeatOperation.csv";
@@ -241,13 +244,14 @@ param EnOut, symbolic := "HeatEnergy.csv";
 param CoOut, symbolic := "Costs.csv";
 param ElbOut, symbolic := "ElecCapacity.csv";
 param ElEnOut, symbolic := "ElecEnergy.csv";
-
+param HPcsv, symbolic := "HPTEMP.csv";
 
 ############################################################################################
 # OBJECTIVE FUNCTION
 ############################################################################################
 
 minimize COST:
+#sum{s in SCENARIO}(Total_Emission[s]) ;
 sum{s in SCENARIO}( sum{t in TIME} ((sum{u in NG_USERS}(c_ng_in[s]*FUEL_Demand[u,t,s])+ c_ds_in[s]*FUEL_Demand["ICENGINE",t,s] + c_el_in[s]*El_Buy[t,s] - c_el_out[s]*El_Sell[t,s])*TIMEsteps[t])+ 1000*an_CAPEX_Tot[s]); #
 solve;
 
@@ -348,6 +352,16 @@ for {s in SCENARIO}{
   printf "\n" >> ElOut;
 }
 
+
+printf "HPTEMP [°C] \n" >> HPcsv;
+for {t in TIME}{
+  for {h in HP}{
+    printf "%f,",HPTemp[h,t] >> HPcsv;
+  }
+  printf "\n" >> HPcsv;
+}
+
+
 printf "Costs[kCHF] \n" >> CoOut;
 printf "SCENARIO," >> CoOut;
 for {s in SCENARIO}{
@@ -376,6 +390,6 @@ for {s in SCENARIO}{
 }
 printf "\n" >> CoOut;
 
-display AnnualCompEnergy;
-display AnnualCompEnergyEL;
+display HPTemp
+;
 end;
